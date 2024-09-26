@@ -1,17 +1,22 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { Montserrat } from 'next/font/google'
+import { ChakraProvider } from '@chakra-ui/react'
 
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  weight: ['400', '500', '700'], // Escolha os pesos que você quer usar
+})
 const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
+  src: "./fonts/Montserrat-Bold.woff",
   weight: "100 900",
 });
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+// const geistMono = localFont({
+//   src: "./fonts/GeistMonoVF.woff",
+//   variable: "--font-geist-mono",
+//   weight: "100 900",
+// });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -25,10 +30,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+      <body className={`${montserrat.className} bg-defaultBg   antialiased`}>
+        <ChakraProvider>
+          {children}
+        </ChakraProvider>
       </body>
     </html>
   );
