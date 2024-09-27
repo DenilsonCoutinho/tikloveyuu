@@ -30,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${montserrat.className} bg-defaultBg   antialiased`}>
+      <body className={`${montserrat.className}   antialiased`}>
         <ChakraProvider>
           {children}
         </ChakraProvider>

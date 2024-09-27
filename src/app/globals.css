@@ -42,3 +42,41 @@ body {
 .pulsando-sombra {
   animation: pulsarSombra 2s ease-in-out infinite;
 }
+
+/* Firefox (uncomment to work in Firefox, although other properties will not work!)  */
+/** {
+  scrollbar-width: thin;
+  scrollbar-color: #A61111 #DFE9EB;
+}*/
+
+/* Chrome, Edge and Safari */
+.myscroll::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+}
+.myscroll::-webkit-scrollbar-track {
+  border-radius: 5px;
+  background-color: #DFE9EB;
+}
+
+.myscroll::-webkit-scrollbar-track:hover {
+  background-color: #B8C0C2;
+}
+
+.myscroll::-webkit-scrollbar-track:active {
+  background-color: #B8C0C2;
+}
+
+.myscroll::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: #230b2e;
+  border: 2px solid #FFFFFF;
+}
+
+.myscroll::-webkit-scrollbar-thumb:hover {
+  background-color: #D01515;
+}
+
+.myscroll::-webkit-scrollbar-thumb:active {
+  background-color: #A61111;
+}
