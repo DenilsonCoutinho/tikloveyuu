@@ -19,9 +19,8 @@ export default function checkoutConfig() {
           amount: convertToSubcurrency(amount),
           currency: "brl",
         }}
-        
       >
-        <CheckoutPage  amount={amount} />
+        <CheckoutPage amount={amount} />
       </Elements>
     </>
   )
