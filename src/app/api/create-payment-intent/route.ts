@@ -34,8 +34,8 @@ export async function POST(req: NextRequest) {
             mode: 'payment',
             allow_promotion_codes: true, // Permite o uso de códigos promocionais
 
-            success_url: 'https://mytikdklover.vercel.app/', // Defina suas URLs
-            cancel_url: 'https://mytikdklover.vercel.app/',
+            success_url: 'https://mytikdklover.vercel.app/sucess', // Defina suas URLs
+            cancel_url: 'https://mytikdklover.vercel.app/cancel',
         });
 
         // Retorna o ID da sessão de checkout
