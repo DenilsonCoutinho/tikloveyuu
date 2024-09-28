@@ -9,8 +9,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
 export async function POST(req: NextRequest) {
     try {
         // Desestruturar o valor e a moeda
-        const { amount, currency, productName } = await req.json();
-        console.log(amount, currency, productName);
+        // const { amount, currency,productName} = await req.json();
         // Criação de uma sessão de checkout
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card', "boleto"],
@@ -19,14 +18,15 @@ export async function POST(req: NextRequest) {
                     price_data: {
                         currency: "brl",
                         product_data: {
-                            images: ["https://firebasestorage.googleapis.com/v0/b/imagem-tiklover.appspot.com/o/pngwing.com.png?alt=media&token=ff9c8f56-4043-4b21-bf9a-46390b2be261"],
+                            images:["https://firebasestorage.googleapis.com/v0/b/imagem-tiklover.appspot.com/o/pngwing.com.png?alt=media&token=ff9c8f56-4043-4b21-bf9a-46390b2be261"],
                             name: "Página TikerLove", // Defina o nome do produto aqui
                         },
-                        unit_amount: 1499,
+                        unit_amount: 3499,
                     },
                     quantity: 1,
                 },
             ],
+
             mode: 'payment',
             allow_promotion_codes: true, // Permite o uso de códigos promocionais
 
@@ -50,7 +50,7 @@ export async function handleWebhook(req: NextRequest) {
 
     try {
         const body = await req.text(); // Obtenha o corpo da requisição
-        event = stripe.webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET || ''); // Verifique a assinatura
+        event = stripe.webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET2 || ''); // Verifique a assinatura
     } catch (err) {
         console.error(`Webhook Error: ${err}`);
         return NextResponse.json({ error: 'Webhook Error' }, { status: 400 });

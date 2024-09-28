@@ -19,8 +19,9 @@ export default function MySwiper({ previewURLs }: any) {
                 }}
                 pagination={true}
                 autoplay={{
-                    delay: 3000,
+                    delay: 1000,
                 }}
+                speed={1000}
                 loop={true}
 
                 modules={[EffectCube, Pagination, Autoplay]}
@@ -29,7 +30,6 @@ export default function MySwiper({ previewURLs }: any) {
 
                 {
                     previewURLs.map((img: any) => {
-                        console.log(img)
                         return <SwiperSlide>
                             <div className="bg-cover text-transparent bg-no-repeat bg-center h-72" style={{ backgroundImage: `url(${img})`, backgroundPosition: "center 30%" }}>
                                 a
