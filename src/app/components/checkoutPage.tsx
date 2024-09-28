@@ -17,7 +17,7 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    fetch("/api/create-payment-intent",{
+    fetch("/api/create-payment-intent", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -81,7 +81,7 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
 
   return (
     <form onSubmit={handleSubmit} className="bg-white p-2 rounded-md">
-      {/* {clientSecret && <PaymentElement />} */}
+      {clientSecret && <PaymentElement />}
 
       {errorMessage && <div>{errorMessage}</div>}
 

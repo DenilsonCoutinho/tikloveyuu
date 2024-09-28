@@ -1,7 +1,9 @@
 import Stripe from "stripe";
 import { NextResponse, NextRequest } from "next/server";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '',{
+    apiVersion:"2024-06-20"
+});
 export async function POST(req: NextRequest) {
   const payload = await req.text();
   const res = JSON.parse(payload);
