@@ -7,6 +7,10 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
 
 // Função assíncrona para lidar com solicitações POST
 export async function POST(req: NextRequest) {
+
+    if (req.url.includes('/webhook')) {
+        return handleWebhook(req);
+    }
     try {
         // Desestruturar o valor e a moeda
         const { amount, currency, productName } = await req.json();
@@ -43,7 +47,7 @@ export async function POST(req: NextRequest) {
 }
 
 
-export async function handleWebhook(req: NextRequest) {
+ async function handleWebhook(req: NextRequest) {
     const sig:any = req.headers.get('stripe-signature');
 
     let event;
