@@ -32,8 +32,8 @@ export async function POST(req: NextRequest) {
             mode: 'payment',
             allow_promotion_codes: true, // Permite o uso de códigos promocionais
             metadata: { idUser:idUser },
-            success_url: 'https://tikdklover-95vci690g-denilsoncoutinhos-projects.vercel.app/', // Defina suas URLs
-            cancel_url: 'https://tikdklover-95vci690g-denilsoncoutinhos-projects.vercel.app/cancel?status=cancelado',
+            success_url: 'https://tikdklovertok.vercel.app/', // Defina suas URLs
+            cancel_url: 'https://tikdklovertok.vercel.app/cancel?status=cancelado',
         });
 
         // Retorna o ID da sessão de checkout
