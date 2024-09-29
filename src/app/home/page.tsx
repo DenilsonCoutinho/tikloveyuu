@@ -133,7 +133,6 @@ export default function Presentation() {
         setLoading(true);
 
         try {
-            const amount = typeProduct === 1 ? 1499 : typeProduct === 2 ? 3499 : 0; // Defina o valor correto em centavos
 
             const response = await fetch(`/api/create-payment-intent`, {
                 method: 'POST',

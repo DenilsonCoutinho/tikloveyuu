@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
 
 
     try {
-        const { amount, idUser } = await req.json();
+        const { typeProduct, idUser } = await req.json();
         // console.log(amount, currency, productName);
         // Criação de uma sessão de checkout
         const session = await stripe.checkout.sessions.create({
@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
                             images: ["https://firebasestorage.googleapis.com/v0/b/imagem-tiklover.appspot.com/o/pngwing.com.png?alt=media&token=ff9c8f56-4043-4b21-bf9a-46390b2be261"],
                             name: "Página TikerLove", // Defina o nome do produto aqui
                         },
-                        unit_amount: amount === 1 ? 1499 : 3499,
+                        unit_amount: typeProduct === 1 ? 1499 : 3499,
 
                     },
                     quantity: 1,
