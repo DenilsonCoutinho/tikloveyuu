@@ -3,7 +3,7 @@ import Presentation from "./home/page";
 
 export default function Home() {
   return (
-    <div className="p-10  bg-defaultBg ">
+    <div className="p-2  bg-defaultBg ">
       <Presentation />
     </div>
   );

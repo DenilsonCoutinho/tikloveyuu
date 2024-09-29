@@ -8,13 +8,10 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
 // Função assíncrona para lidar com solicitações POST
 export async function POST(req: NextRequest) {
 
-    if (req.url.includes('/webhook')) {
-        return handleWebhook(req);
-    }
+
     try {
-        // Desestruturar o valor e a moeda
-        const { amount, currency, productName } = await req.json();
-        console.log(amount, currency, productName);
+        const { amount, idUser } = await req.json();
+        // console.log(amount, currency, productName);
         // Criação de uma sessão de checkout
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card', "boleto"],
@@ -26,7 +23,7 @@ export async function POST(req: NextRequest) {
                             images: ["https://firebasestorage.googleapis.com/v0/b/imagem-tiklover.appspot.com/o/pngwing.com.png?alt=media&token=ff9c8f56-4043-4b21-bf9a-46390b2be261"],
                             name: "Página TikerLove", // Defina o nome do produto aqui
                         },
-                        unit_amount: amount === 1 ? 199 : 3499,
+                        unit_amount: amount === 1 ? 1499 : 3499,
 
                     },
                     quantity: 1,
@@ -34,9 +31,9 @@ export async function POST(req: NextRequest) {
             ],
             mode: 'payment',
             allow_promotion_codes: true, // Permite o uso de códigos promocionais
-
-            success_url: 'https://tikdklover.vercel.app/', // Defina suas URLs
-            cancel_url: 'https://tikdklover.vercel.app/',
+            metadata: { idUser:idUser },
+            success_url: 'http://localhost:3000/', // Defina suas URLs
+            cancel_url: 'http://localhost:3000/cancel?status=cancelado',
         });
 
         // Retorna o ID da sessão de checkout
@@ -48,30 +45,3 @@ export async function POST(req: NextRequest) {
 }
 
 
- async function handleWebhook(req: NextRequest) {
-    const sig:any = req.headers.get('stripe-signature');
-
-    let event;
-
-    try {
-        const body = await req.text(); // Obtenha o corpo da requisição
-        event = stripe.webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET || ''); // Verifique a assinatura
-    } catch (err) {
-        console.error(`Webhook Error: ${err}`);
-        return NextResponse.json({ error: 'Webhook Error' }, { status: 400 });
-    }
-
-    // Lidar com o evento
-    switch (event.type) {
-        case 'checkout.session.completed':
-            const session = event.data.object; // Acesse os detalhes da sessão
-            console.log(`Pagamento bem-sucedido para a sessão: ${session.id}`);
-            // Adicione sua lógica de processamento de pagamento aqui
-            break;
-        // Adicione mais casos para outros eventos conforme necessário
-        default:
-            console.log(`Evento não tratado: ${event.type}`);
-    }
-
-    return NextResponse.json({ received: true });
-}

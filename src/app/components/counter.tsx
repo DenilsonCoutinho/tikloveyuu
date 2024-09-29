@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
 interface CountProps {
-    initialDate: string; // Data inicial obrigatória
-    initialHour: string; // Hora inicial obrigatória
+    initialDate: string | undefined; // Data inicial obrigatória
+    initialHour: string | undefined; // Hora inicial obrigatória
 }
 
 function ContadorEterno({ initialDate, initialHour }: CountProps) {
