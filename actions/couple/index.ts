@@ -6,7 +6,7 @@ export async function createCouple(idCouple: string, nameCouple: string, initalD
     try {
         await prisma.user.create({
             data: {
-                ytbMusic: youtubeLink ,
+                ytbMusic: youtubeLink,
                 messages: message,
                 idCouple: idCouple,
                 nameCouple: nameCouple,
