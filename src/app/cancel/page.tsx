@@ -22,7 +22,7 @@ export default function pageCancel() {
     }, [])
     return (
         <div className="min-h-screen flex justify-center items-center overflow-auto bg-defaultBg bg-contain">
-            <div className="lds-heart"><div></div></div>
+            <div className="lds-heart" ><div></div></div>
         </div>
     )
 
