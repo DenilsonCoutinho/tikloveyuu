@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
                             images: ["https://firebasestorage.googleapis.com/v0/b/imagem-tiklover.appspot.com/o/pngwing.com.png?alt=media&token=ff9c8f56-4043-4b21-bf9a-46390b2be261"],
                             name: "Página TikerLove", // Defina o nome do produto aqui
                         },
-                        unit_amount: amount === 1 ? 500 : 3499,
+                        unit_amount: amount === 1 ? 1499 : 3499,
 
                     },
                     quantity: 1,
