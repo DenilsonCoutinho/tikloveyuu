@@ -141,7 +141,7 @@ export default function Presentation() {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    amount,
+                    typeProduct,
                     idUser
                 }),
             });
