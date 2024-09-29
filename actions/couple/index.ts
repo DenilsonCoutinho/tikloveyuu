@@ -17,7 +17,7 @@ export async function createCouple(idCouple: string, nameCouple: string, initalD
 
 
         })
-        return { success: "Criado com sucesso!" }
+        return { success: "Criado com sucesso! " }
     } catch (err) {
         return { error: err }
 
