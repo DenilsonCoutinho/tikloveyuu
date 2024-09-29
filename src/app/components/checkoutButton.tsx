@@ -45,7 +45,7 @@ export default function CheckoutButton({ url, productName, productPrice }: Check
 
     return (
         <Button bg={"slategray"} textColor={'white'} className="border text-white mt-3" onClick={handleCheckout} disabled={loading}>
-            {loading ? 'Carregando...' : `Criar meu site `}
+            {loading ? 'Carregando...' : `Criar meu site. `}
         </Button>
     );
 }
