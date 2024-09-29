@@ -32,10 +32,10 @@ export default function MySwiper({ previewURLs }: any) {
                 {
                     previewURLs.map((img: any) => {
                         return <SwiperSlide>
-                            <div className="bg-cover text-transparent bg-no-repeat bg-center h-72" style={{ backgroundImage: `url(${img.replace(/ /g, '%20')})`, backgroundPosition: "center 30%" }}>
+                            {/* <div className="bg-cover text-transparent bg-no-repeat bg-center h-72" style={{ backgroundImage: `url(${img.replace(/ /g, '%20')})`, backgroundPosition: "center 30%" }}> */}
                                 a
-                                {/* <Image quality={100} className='bg-cover text-transparent bg-no-repeat bg-center h-' style={{ backgroundImage: `url(${img.replace(/ /g, '%20')})`, backgroundPosition: "center 30%" }} width={222} height={222} alt='323' src={img}/> */}
-                            </div>
+                                <Image quality={100} className='bg-cover text-transparent bg-no-repeat bg-center h-' style={{ backgroundImage: `url(${img.replace(/ /g, '%20')})`, backgroundPosition: "center 30%" }} width={222} height={222} alt='323' src={img}/>
+                            {/* </div> */}
                         </SwiperSlide>
                     })
                 }
