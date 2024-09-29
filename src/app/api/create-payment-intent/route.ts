@@ -8,9 +8,9 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
 // Função assíncrona para lidar com solicitações POST
 export async function POST(req: NextRequest) {
 
-    // if (req.url.includes('/webhook')) {
-    //     return handleWebhook(req);
-    // }
+    if (req.url.includes('/webhook')) {
+        return handleWebhook(req);
+    }
     try {
         // Desestruturar o valor e a moeda
         const { amount, currency, productName } = await req.json();
@@ -34,8 +34,8 @@ export async function POST(req: NextRequest) {
             mode: 'payment',
             allow_promotion_codes: true, // Permite o uso de códigos promocionais
 
-            success_url: 'https://mytikdklover.vercel.app/', // Defina suas URLs
-            cancel_url: 'https://mytikdklover.vercel.app/',
+            success_url: 'https://tikdklover.vercel.app/', // Defina suas URLs
+            cancel_url: 'https://tikdklover.vercel.app/',
         });
 
         // Retorna o ID da sessão de checkout
@@ -47,30 +47,30 @@ export async function POST(req: NextRequest) {
 }
 
 
-//  async function handleWebhook(req: NextRequest) {
-//     const sig:any = req.headers.get('stripe-signature');
+ async function handleWebhook(req: NextRequest) {
+    const sig:any = req.headers.get('stripe-signature');
 
-//     let event;
+    let event;
 
-//     try {
-//         const body = await req.text(); // Obtenha o corpo da requisição
-//         event = stripe.webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET || ''); // Verifique a assinatura
-//     } catch (err) {
-//         console.error(`Webhook Error: ${err}`);
-//         return NextResponse.json({ error: 'Webhook Error' }, { status: 400 });
-//     }
+    try {
+        const body = await req.text(); // Obtenha o corpo da requisição
+        event = stripe.webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET || ''); // Verifique a assinatura
+    } catch (err) {
+        console.error(`Webhook Error: ${err}`);
+        return NextResponse.json({ error: 'Webhook Error' }, { status: 400 });
+    }
 
-//     // Lidar com o evento
-//     switch (event.type) {
-//         case 'checkout.session.completed':
-//             const session = event.data.object; // Acesse os detalhes da sessão
-//             console.log(`Pagamento bem-sucedido para a sessão: ${session.id}`);
-//             // Adicione sua lógica de processamento de pagamento aqui
-//             break;
-//         // Adicione mais casos para outros eventos conforme necessário
-//         default:
-//             console.log(`Evento não tratado: ${event.type}`);
-//     }
+    // Lidar com o evento
+    switch (event.type) {
+        case 'checkout.session.completed':
+            const session = event.data.object; // Acesse os detalhes da sessão
+            console.log(`Pagamento bem-sucedido para a sessão: ${session.id}`);
+            // Adicione sua lógica de processamento de pagamento aqui
+            break;
+        // Adicione mais casos para outros eventos conforme necessário
+        default:
+            console.log(`Evento não tratado: ${event.type}`);
+    }
 
-//     return NextResponse.json({ received: true });
-// }
+    return NextResponse.json({ received: true });
+}
