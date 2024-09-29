@@ -2,11 +2,11 @@
 import { db as prisma } from "../../src/lib/db";
 
 
-export async function createCouple(idCouple: string, nameCouple: string, initalDate: string, initalHours: string, images: string[], message: string, youtubeLink: string) {
+export async function createCouple(idCouple: string, nameCouple: string, initalDate: string, initalHours: string, images: string[], message: string, youtubeLink: string | undefined) {
     try {
         await prisma.user.create({
             data: {
-                ytbMusic: youtubeLink || undefined,
+                ytbMusic: youtubeLink ,
                 messages: message,
                 idCouple: idCouple,
                 nameCouple: nameCouple,
