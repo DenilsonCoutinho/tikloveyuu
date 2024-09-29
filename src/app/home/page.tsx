@@ -154,7 +154,7 @@ export default function Presentation() {
                             {hour && <ContadorEterno initialDate={dataCouple} initialHour={hour} />}
                         </div>
 
-                        <CheckoutButton url={typeProduct === 1 ? "create-payment-intent":"create-payment-another"} productName={typeProduct === 1 ? "1 ano, 3 fotos e sem música - R$14,99" : "Pra sempre, 7 fotos e com música - R$34,99"} productPrice={typeProduct === 1 ? 1499 : 3499} /> 
+                        <CheckoutButton url={typeProduct === 1 ? "create-payment-intent":"create-payment-another"} productName={typeProduct === 1 ? "1 ano, 3 fotos e sem música - R$14,99" : "Pra sempre, 7 fotos e com música - R$34,99"} productPrice={typeProduct} /> 
 
                         <Button bg={"slategray"} onClick={() => handleUpload()} textColor={'white'} className="border text-white mt-3"> Criar meu site</Button>
                         <Button bg={"slategray"} onClick={() => deleteFolder(idUser)} textColor={'white'} className="border text-white mt-3"> deletar</Button>

@@ -8,7 +8,7 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY 
 type CheckoutButtonProps = {
     productName: string;
     url: string;
-    productPrice: number;
+    productPrice: number | undefined;
 };
 
 export default function CheckoutButton({ url, productName, productPrice }: CheckoutButtonProps) {
@@ -18,7 +18,7 @@ export default function CheckoutButton({ url, productName, productPrice }: Check
         setLoading(true);
 
         try {
-            const response = await fetch(`/api/${url}`, {
+            const response = await fetch(`/api/create-payment-intent`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
