@@ -61,13 +61,21 @@ export default function Presentation() {
     useEffect(() => {
         setPreviewURLs([])
         const idUserLocal = localStorage.getItem("idUserMyLoverTik");
-        if (idUserLocal) return setIdUser(idUserLocal)
 
-        const newId = localStorage.setItem("idUserMyLoverTik", uuidv4());
-        if (newId !== null) {
-            return
+        if (idUserLocal) {
+            setIdUser(idUserLocal);
+            return;
         }
-        setIdUser(newId)
+
+        // Gera um novo UUID e define no localStorage
+        const newId = uuidv4();
+        try {
+            localStorage.setItem("idUserMyLoverTik", newId);
+            setIdUser(newId); // Atualiza o estado com o novo ID
+        } catch (error) {
+            console.error("Erro ao armazenar o ID do usuário:", error);
+            // Aqui você pode implementar um fallback, como redirecionar ou notificar o usuário
+        }
 
     }, [])
 
