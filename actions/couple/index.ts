@@ -24,16 +24,18 @@ export async function createCouple(idCouple: string, nameCouple: string, initalD
 
     }
 }
-export async function updateEmailCouple(email: string, idCouple: string) {
+export async function updateEmailCouple(email: string, id: string) {
     try {
         await prisma.user.update({
-            where: { idCouple },
+            where: { id },
             data: {
                 email
             }
         })
+        console.log('atualizou')
         return { success: "Criado com sucesso!" }
     } catch (err) {
+        console.log('atualizouErro:' ,err)
         return { error: err }
 
     }
@@ -42,6 +44,13 @@ export async function updateEmailCouple(email: string, idCouple: string) {
 export async function getCoupleById(idCouple: string) {
     const res = await prisma.user.findFirst({
         where: { idCouple }
+    })
+    return res
+}
+
+export async function getCoupleByUniqueId(id: string) {
+    const res = await prisma.user.findFirst({
+        where: { id }
     })
     return res
 }

@@ -32,8 +32,8 @@ export async function POST(req: NextRequest) {
             mode: 'payment',
             allow_promotion_codes: true, // Permite o uso de códigos promocionais
             metadata: { idUser:idUser },
-            success_url: 'https://tikdklovertok.vercel.app/', // Defina suas URLs
-            cancel_url: 'https://tikdklovertok.vercel.app/cancel?status=cancelado',
+            success_url: 'http://localhost:3000/', // Defina suas URLs
+            cancel_url: 'http://localhost:3000/cancel?status=cancelado',
         });
 
         // Retorna o ID da sessão de checkout

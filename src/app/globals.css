@@ -143,3 +143,10 @@ body {
   }
 }
 
+input {
+  color-scheme: #fff;
+}
+
+::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}

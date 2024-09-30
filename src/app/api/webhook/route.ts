@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
-import { updateEmailCouple } from "../../../../actions/couple";
+import { getCoupleById, getCoupleByUniqueId, updateEmailCouple } from "../../../../actions/couple";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
     apiVersion: '2024-06-20',
@@ -20,12 +20,18 @@ export async function POST(req: NextRequest) {
 
     // Lidar com o evento
     switch (event.type) {
-        case 'checkout.session.completed':
+        case 'charge.updated':
             const session = event.data.object; // Acesse os detalhes da sessão
-            if (session.metadata && session.customer_email) {
-                await updateEmailCouple(session?.customer_email, session.metadata.idCouple)
-                console.log(`Pagamento bem-sucedido para a sessão: ${session.id}`);
+            if (session.status === 'succeeded') {
+                // console.log('Pagamento bem-sucedido após atualização.');
+                // Atualizar o banco de dados ou executar outras ações necessárias
+                const res = await getCoupleByUniqueId(session.metadata.idUser)
+                await updateEmailCouple(session?.billing_details.email, res?.id)
+            } else {
+                break
             }
+            console.log(`Pagamento bem-sucedido para a sessão: ${session}`);
+
             break;
         case 'checkout.session.expired':
             const sessionExpired = event.data.object; // Acesse os detalhes da sessão
@@ -34,7 +40,9 @@ export async function POST(req: NextRequest) {
             break;
         // Adicione mais casos para outros eventos conforme necessário
         default:
-
+            const sessionCon = event.data.object; // Acesse os detal
+            console.log("Eventos: ", event.type)
+            console.log(sessionCon)
             console.log(`Evento não tratado: ${event.type}`);
     }
 
