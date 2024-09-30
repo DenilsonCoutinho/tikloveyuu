@@ -26,7 +26,9 @@ export async function POST(req: NextRequest) {
                 // console.log('Pagamento bem-sucedido após atualização.');
                 // Atualizar o banco de dados ou executar outras ações necessárias
                 const res = await getCoupleByUniqueId(session.metadata.idUser)
-                await updateEmailCouple(session?.billing_details.email, res?.id)
+                if (session.billing_details?.email && res?.id) {
+                    await updateEmailCouple(session?.billing_details.email, res?.id)
+                }
             } else {
                 break
             }

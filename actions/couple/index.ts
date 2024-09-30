@@ -29,7 +29,7 @@ export async function updateEmailCouple(email: string, id: string) {
         await prisma.user.update({
             where: { id },
             data: {
-                email
+                email: email || null,
             }
         })
         console.log('atualizou')
