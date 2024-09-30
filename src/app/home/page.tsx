@@ -59,6 +59,7 @@ export default function Presentation() {
         }
     };
     useEffect(() => {
+        setPreviewURLs([])
         const idUserLocal = localStorage.getItem("idUserMyLoverTik");
         if (idUserLocal) return setIdUser(idUserLocal)
 
