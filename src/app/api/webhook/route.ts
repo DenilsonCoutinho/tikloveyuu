@@ -22,8 +22,8 @@ export async function POST(req: NextRequest) {
     switch (event.type) {
         case 'checkout.session.completed':
             const session = event.data.object; // Acesse os detalhes da sessão
-                if (session.metadata && session.customer_email) {
-                    await updateEmailCouple(session.metadata.idCouple, session?.customer_email)
+            if (session.metadata && session.customer_email) {
+                await updateEmailCouple(session?.customer_email, session.metadata.idCouple)
                 console.log(`Pagamento bem-sucedido para a sessão: ${session.id}`);
             }
             break;
