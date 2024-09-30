@@ -13,7 +13,7 @@ export async function createCouple(idCouple: string, nameCouple: string, initalD
                 images: images,
                 initialHours: initalHours,
                 initialDate: initalDate,
-                email: undefined
+                email: null
             },
 
 
