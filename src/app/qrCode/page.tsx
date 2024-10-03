@@ -2,9 +2,9 @@
 import { Button } from '@chakra-ui/react';
 import html2canvas from 'html2canvas';
 import { useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import QRCode from 'react-qr-code';
-export default function Qrcode() {
+function QrcodeComponet() {
     useEffect(() => {
         localStorage.removeItem('idUserMyLoverTik');
     }, [])
@@ -56,4 +56,10 @@ export default function Qrcode() {
             </div>
         </div>
     )
+}
+
+export default function qrCode() {
+    <Suspense fallback={<div className="h-screen flex flex-col bg-defaultBg justify-center items-center"><div className="lds-heart" ><div></div></div></div >}>
+        <QrcodeComponet />
+    </Suspense>
 }

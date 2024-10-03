@@ -1,9 +1,10 @@
 "use client"
-import { useEffect, useRef, useState } from "react"
+import { Suspense, useEffect, useRef, useState } from "react"
 import { getCoupleById } from "../../../actions/couple"
 import ContadorEterno from "../components/counter"
 import MySwiper from "../components/mySwiper";
 import { useRouter, useSearchParams } from "next/navigation";
+import { Button } from "@chakra-ui/react";
 
 
 interface UserViewProps {
@@ -17,34 +18,39 @@ interface UserViewProps {
     ytbMusic: string | null;
     createdAt: Date;
 }
-type Player = {
-    playVideo: () => void;
-    pauseVideo: () => void;
-    // Você pode adicionar mais métodos se necessário
-};
 
-export default function UserView() {
+function UserViewComponent() {
     const [data, setData] = useState<UserViewProps | null>(null)
-    const playerRef = useRef<Player | null>(null);
-    const buttonRef = useRef<HTMLButtonElement | null>(null);
+    const [loading, setLoading] = useState<boolean>(false)
     const route = useRouter()
     const searchParams = useSearchParams();
+    const id = searchParams.get("id");
+
+
 
     useEffect(() => {
-        const id = searchParams.get("id");
+        setLoading(true)
         if (!id) {
-            route.push("/")
+            // route.push("/")
             return
         }
+
         async function getDataCouple() {
             if (!id) return
-                const response = await getCoupleById(id)
+            const response = await getCoupleById(id)
             setData(response)
         }
         getDataCouple()
+        setLoading(false)
     }, [])
 
-    console.log(data)
+
+    if (loading) {
+        return <div className="max-h-min bg-defaultBg justify-center items-center">
+
+            <div className="lds-heart" ><div></div></div>;
+        </div>
+    }
     return (
         <div className={` ${data?.ytbMusic ? "" : ""} min-h-screen overflow-auto bg-defaultBg bg-contain py-10 flex justify-center items-center`}>
             <div className="flex flex-col-reverse">
@@ -68,4 +74,13 @@ export default function UserView() {
             </div>
         </div>
     )
+}
+
+
+export default function UserView() {
+    return (
+        <Suspense fallback={<div className="h-screen flex flex-col bg-defaultBg justify-center items-center"><div className="lds-heart" ><div></div></div></div >}>
+            <UserViewComponent />
+        </Suspense>
+    );
 }

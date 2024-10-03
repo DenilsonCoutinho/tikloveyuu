@@ -3,9 +3,11 @@ import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import { deleteCoupleById } from "../../../actions/couple";
 import { deleteFolder } from "@/lib/deleteimagesfirebase";
+import { useRouter } from "next/navigation";
 
 export default function pageCancel() {
     const [idUser, setIdUser] = useState<string>("")
+    const route = useRouter()
 
     async function executeFunctionUser(idUserLocal: string) {
         await deleteCoupleById(idUserLocal);
@@ -13,11 +15,10 @@ export default function pageCancel() {
     }
 
     useEffect(() => {
-        console.log('aqui')
         const idUserLocal = localStorage.getItem("idUserMyLoverTik");
         if (idUserLocal) {
-           executeFunctionUser(idUserLocal)
-
+            executeFunctionUser(idUserLocal)
+            route.push('/')
         }
 
     }, [])
