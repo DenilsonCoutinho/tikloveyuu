@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
-
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
     apiVersion: '2024-06-20',
 });
@@ -8,10 +7,9 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
 // Função assíncrona para lidar com solicitações POST
 export async function POST(req: NextRequest) {
 
-
     try {
-        const { typeProduct, idUser } = await req.json();
-        // console.log(amount, currency, productName);
+        const { typeProduct, idUser, imageCouple } = await req.json();
+       
         // Criação de uma sessão de checkout
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card', "boleto"],
@@ -31,9 +29,9 @@ export async function POST(req: NextRequest) {
             ],
             mode: 'payment',
             allow_promotion_codes: true, // Permite o uso de códigos promocionais
-            metadata: { idUser:idUser },
-            success_url: 'https://tikdklovertok.vercel.app/', // Defina suas URLs
-            cancel_url: 'https://tikdklovertok.vercel.app/cancel?status=cancelado',
+            metadata: { idUser: idUser, images: imageCouple },
+            success_url: `http://localhost:3000/qrCode?code=${idUser}`, // Defina suas URLs
+            cancel_url: 'http://localhost:3000/cancel?status=cancelado',
         });
 
         // Retorna o ID da sessão de checkout

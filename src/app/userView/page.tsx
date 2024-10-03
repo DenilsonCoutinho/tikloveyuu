@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react"
 import { getCoupleById } from "../../../actions/couple"
 import ContadorEterno from "../components/counter"
 import MySwiper from "../components/mySwiper";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 
 interface UserViewProps {
@@ -28,16 +28,17 @@ export default function UserView() {
     const playerRef = useRef<Player | null>(null);
     const buttonRef = useRef<HTMLButtonElement | null>(null);
     const route = useRouter()
-    useEffect(() => {
+    const searchParams = useSearchParams();
 
-        const idUserLocal = localStorage.getItem("idUserMyLoverTik");
-        if (!idUserLocal) {
+    useEffect(() => {
+        const id = searchParams.get("id");
+        if (!id) {
             route.push("/")
             return
         }
         async function getDataCouple() {
-            if (!idUserLocal) return
-            const response = await getCoupleById(idUserLocal)
+            if (!id) return
+                const response = await getCoupleById(id)
             setData(response)
         }
         getDataCouple()

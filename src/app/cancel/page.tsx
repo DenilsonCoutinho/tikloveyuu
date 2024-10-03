@@ -16,7 +16,8 @@ export default function pageCancel() {
         console.log('aqui')
         const idUserLocal = localStorage.getItem("idUserMyLoverTik");
         if (idUserLocal) {
-            executeFunctionUser(idUserLocal)
+           executeFunctionUser(idUserLocal)
+
         }
 
     }, [])

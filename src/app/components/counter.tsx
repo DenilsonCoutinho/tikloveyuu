@@ -76,7 +76,7 @@ function ContadorEterno({ initialDate, initialHour }: CountProps) {
         <div>
             <h1 className='text-white text-center'>Juntos</h1>
             {mostrarContador && (
-                <p className='text-white text-center text-sm'>
+                <p className='text-white font-semibold text-center text-xs'>
                     {tempo.anos} anos, {tempo.meses} meses, {tempo.dias} dias, {tempo.horas} horas, {tempo.minutos} minutos e {tempo.segundos} segundos
                 </p>
             )}

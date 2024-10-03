@@ -1,11 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
-import { getCoupleById, getCoupleByUniqueId, updateEmailCouple } from "../../../../actions/couple";
+import { deleteCoupleById, getCoupleById, getCoupleByUniqueId, updateEmailCouple } from "../../../../actions/couple";
+import { getEmail } from "../../../../utils/getEmail";
+import { deleteFolder } from "@/lib/deleteimagesfirebase";
+const nodemailer = require("nodemailer");
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
     apiVersion: '2024-06-20',
 });
 export async function POST(req: NextRequest) {
+    const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+            user: "denidesenvolvimentos@gmail.com",
+            pass: process.env.PASSWORDNODEMAILER
+        },
+        port: 587,
+    });
     const sig: any = req.headers.get('stripe-signature');
 
     let event;
@@ -17,35 +28,65 @@ export async function POST(req: NextRequest) {
         console.error(`Webhook Error: ${err}`);
         return NextResponse.json({ error: 'Webhook Error' }, { status: 400 });
     }
-
     // Lidar com o evento
     switch (event.type) {
-        case 'charge.updated':
-            const session = event.data.object; // Acesse os detalhes da sessão
-            if (session.status === 'succeeded') {
-                // console.log('Pagamento bem-sucedido após atualização.');
-                // Atualizar o banco de dados ou executar outras ações necessárias
-                const res = await getCoupleByUniqueId(session.metadata.idUser)
-                if (session.billing_details?.email && res?.id) {
-                    await updateEmailCouple(session?.billing_details.email, res?.id)
-                }
-            } else {
-                break
-            }
-            console.log(`Pagamento bem-sucedido para a sessão: ${session}`);
 
-            break;
+        case 'checkout.session.completed':
+            const checkout_session_completed = event.data.object; // Acesse os detalhes da sessão
+            if (checkout_session_completed.customer_details?.email && checkout_session_completed?.metadata) {
+                await updateEmailCouple(checkout_session_completed?.customer_details.email, checkout_session_completed?.metadata.idUser)
+                await transporter.sendMail({
+                    from: 'deni-desenvolvimentos <denidesenvolvimentos@gmail.com>', // sender address
+                    to: checkout_session_completed?.customer_details.email, // list of receivers
+                    subject: "Seu link e QR Code", // Subject line
+                    html: `
+                      <div style="font-family: Arial, sans-serif; color: #333;">
+                        <div style="background-color: #0E0813; padding: 20px; text-align: center;">
+                          <h1 style="color: #A61111;">Obrigado por sua compra!</h1>
+                        </div>
+                        <div style="padding: 20px;">
+                          <p>Olá,</p>
+                          <p>Seu pedido foi processado com sucesso. Clique no botão abaixo para acessar o seu link e QR Code:</p>
+                          <div style="text-align: center; margin: 20px 0;">
+                            <a 
+                              href="http://localhost:3000/"
+                              style="
+                                background-color: #A61111;
+                                color: white;
+                                padding: 15px 30px;
+                                text-decoration: none;
+                                border-radius: 5px;
+                                font-size: 16px;
+                              ">
+                              Acessar seu Link
+                            </a>
+                          </div>
+                          <p style="margin-top: 20px;">Caso tenha algum problema, entre em contato conosco em <a href="mailto:denidesenvolvimentos@gmail.com" style="color: #A61111;">denidesenvolvimentos@gmail.com</a>.</p>
+                          <p>Atenciosamente,<br>deni-desenvolvimentos</p>
+                        </div>
+                        <div style="background-color: #f1f1f1; padding: 10px; text-align: center; color: #777; font-size: 12px;">
+                          <p>Este é um e-mail automático, por favor, não responda.</p>
+                        </div>
+                      </div>
+                    `,
+                });
+            }
+
+            break
         case 'checkout.session.expired':
             const sessionExpired = event.data.object; // Acesse os detalhes da sessão
-            console.log(sessionExpired.metadata)
+            if (sessionExpired.metadata) {
+                console.log("checkout.session.expired")
+                await deleteFolder(sessionExpired.metadata.idUser)
+                await deleteCoupleById(sessionExpired.metadata.idUser)
+            }
 
             break;
         // Adicione mais casos para outros eventos conforme necessário
         default:
             const sessionCon = event.data.object; // Acesse os detal
             console.log("Eventos: ", event.type)
-            console.log(sessionCon)
-            console.log(`Evento não tratado: ${event.type}`);
+
     }
 
     return NextResponse.json({ received: true });
