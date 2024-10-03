@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
 
         case 'checkout.session.completed':
             const checkout_session_completed = event.data.object; // Acesse os detalhes da sessão
-            // if (checkout_session_completed.customer_details?.email && checkout_session_completed?.metadata) {
+            if (checkout_session_completed.customer_details?.email && checkout_session_completed?.metadata) {
                 await updateEmailCouple(checkout_session_completed?.customer_details.email, checkout_session_completed?.metadata.idUser)
                 await transporter.sendMail({
                     from: 'deni-desenvolvimentos <denidesenvolvimentos@gmail.com>', // sender address
@@ -70,7 +70,7 @@ export async function POST(req: NextRequest) {
                       </div>
                     `,
                 });
-            // }
+            }
 
             break
         case 'checkout.session.expired':
