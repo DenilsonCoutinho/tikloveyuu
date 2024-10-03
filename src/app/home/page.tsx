@@ -252,7 +252,7 @@ export default function Presentation() {
                                 }
                             </div>
                             {hour && <ContadorEterno initialDate={dataCouple} initialHour={hour} />}
-                            {hour && <p className=' text-white text-justify mt-3 text-xs'>{message}</p>}
+                            {hour && <p className=' text-white text-center mt-3 text-xs'>{message}</p>}
                         </div>
 
 
