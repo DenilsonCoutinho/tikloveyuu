@@ -31,7 +31,7 @@ function UserViewComponent() {
     useEffect(() => {
         setLoading(true)
         if (!id) {
-            // route.push("/")
+            route.push("/")
             return
         }
 
