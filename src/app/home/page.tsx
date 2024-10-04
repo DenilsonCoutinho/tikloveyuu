@@ -102,7 +102,7 @@ export default function Presentation() {
             //     throw new Error('Erro ao criar a sessão de pagamento');
             // }
             const stripeClient = await loadStripe(
-                process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string
+                process.env.NEXT_PUBLIC_STRIPE_PUB_KEY as string
             );
             console.log(stripeClient)
             if (!stripeClient) throw new Error("Stripe failed to initialize.");
