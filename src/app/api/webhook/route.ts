@@ -5,9 +5,8 @@ import { deleteFolder } from "@/lib/deleteimagesfirebase";
 import { headers } from "next/headers";
 const nodemailer = require("nodemailer");
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
-  apiVersion: '2024-06-20',
-});
+import stripe from '@/lib/stripe';
+
 export async function POST(req: NextRequest) {
   const transporter = nodemailer.createTransport({
     service: "gmail",
