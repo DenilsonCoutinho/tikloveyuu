@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import Stripe from 'stripe';
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
-    apiVersion: '2024-06-20',
-});
+import stripe from '@/lib/stripe';
+  
 
 // Função assíncrona para lidar com solicitações POST
 export async function POST(req: NextRequest) {
