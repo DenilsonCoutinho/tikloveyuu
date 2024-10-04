@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
        
         // Criação de uma sessão de checkout
         const session = await stripe.checkout.sessions.create({
-            payment_method_types: ['card', "boleto"],
+            payment_method_types: ['card'],
             line_items: [
                 {
                     // price_data: {

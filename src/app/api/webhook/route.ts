@@ -6,6 +6,7 @@ import { headers } from "next/headers";
 const nodemailer = require("nodemailer");
 
 import stripe from '@/lib/stripe';
+import { db as prisma } from "@/lib/db";
 const secret = process.env.STRIPE_WEBHOOK_SECRET;
 
 export async function POST(req: NextRequest) {
@@ -106,7 +107,14 @@ export async function POST(req: NextRequest) {
                       `,
           });
           if (checkout_session_completed.customer_details?.email && checkout_session_completed?.metadata) {
-            await updateEmailCouple(checkout_session_completed?.customer_details?.email as string, checkout_session_completed?.metadata?.idUser as string)
+            let idCouple = checkout_session_completed.metadata.idUser
+            await prisma.user.update({
+              where: { idCouple },
+              data: {
+                  email: checkout_session_completed.customer_details?.email || null,
+              }
+          })
+            // await updateEmailCouple(checkout_session_completed?.customer_details?.email as string, checkout_session_completed?.metadata?.idUser as string)
           }
         }
 
