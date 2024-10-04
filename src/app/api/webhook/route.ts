@@ -6,6 +6,7 @@ import { headers } from "next/headers";
 const nodemailer = require("nodemailer");
 
 import stripe from '@/lib/stripe';
+const secret = process.env.STRIPE_WEBHOOK_SECRET;
 
 export async function POST(req: NextRequest) {
   const transporter = nodemailer.createTransport({
@@ -21,9 +22,11 @@ export async function POST(req: NextRequest) {
 
   try {
     const sig = headers().get('stripe-signature');
-    if (!sig) return
+    if (!sig || !secret) {
+      throw new Error("Missing secret or signature");
+    }
     const body = await req.text(); // Obtenha o corpo da requisição
-    event = stripe.webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET || ''); // Verifique a assinatura
+    event = stripe.webhooks.constructEvent(body, sig, secret); // Verifique a assinatura
   } catch (err) {
     console.error(`Webhook Error: ${err}`);
     return NextResponse.json({ error: 'Webhook Error' }, { status: 400 });
