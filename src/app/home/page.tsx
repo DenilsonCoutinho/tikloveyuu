@@ -18,7 +18,7 @@ interface responseUpload {
     imgUpload?: string[] | undefined; // Propriedade opcional para URLs de imagem
     errorImg?: string; // Propriedade opcional para mensagens de erro
 }
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '');
+
 
 export default function Presentation() {
     const storage = getStorage(app)
