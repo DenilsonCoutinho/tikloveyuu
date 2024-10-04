@@ -1,4 +1,5 @@
 "use server"
+import { error } from "console";
 import { db as prisma } from "../../src/lib/db";
 
 
@@ -32,8 +33,11 @@ export async function updateEmailCouple(email: string, idCouple: string) {
                 email: email || null,
             }
         })
+        console.log("Updatoud certo")
         return { success: "Criado com sucesso!" }
     } catch (err) {
+        console.log("Deur merda",err)
+
         return { error: err }
 
     }
