@@ -1,45 +1,46 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { deleteCoupleById, getCoupleById, getCoupleByUniqueId, updateEmailCouple } from "../../../../actions/couple";
-import { getEmail } from "../../../../utils/getEmail";
 import { deleteFolder } from "@/lib/deleteimagesfirebase";
+import { headers } from "next/headers";
 const nodemailer = require("nodemailer");
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
-    apiVersion: '2024-06-20',
+  apiVersion: '2024-06-20',
 });
 export async function POST(req: NextRequest) {
-    const transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-            user: "denidesenvolvimentos@gmail.com",
-            pass: process.env.PASSWORDNODEMAILER
-        },
-        port: 587,
-    });
-    const sig: any = req.headers.get('stripe-signature');
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: "denidesenvolvimentos@gmail.com",
+      pass: process.env.PASSWORDNODEMAILER
+    },
+    port: 587,
+  });
 
-    let event;
+  let event;
 
-    try {
-        const body = await req.text(); // Obtenha o corpo da requisição
-        event = stripe.webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET || ''); // Verifique a assinatura
-    } catch (err) {
-        console.error(`Webhook Error: ${err}`);
-        return NextResponse.json({ error: 'Webhook Error' }, { status: 400 });
-    }
-    // Lidar com o evento
-    switch (event.type) {
+  try {
+    const sig = headers().get('stripe-signature');
+    if(!sig) return
+    const body = await req.text(); // Obtenha o corpo da requisição
+    event = stripe.webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET || ''); // Verifique a assinatura
+  } catch (err) {
+    console.error(`Webhook Error: ${err}`);
+    return NextResponse.json({ error: 'Webhook Error' }, { status: 400 });
+  }
+  // Lidar com o evento
+  switch (event.type) {
 
-        case 'checkout.session.completed':
-            const checkout_session_completed = event.data.object; // Acesse os detalhes da sessão
-            if (checkout_session_completed.customer_details?.email && checkout_session_completed?.metadata) {
-                // await updateEmailCouple(checkout_session_completed?.customer_details.email, checkout_session_completed?.metadata.idUser)
-                await transporter.sendMail({
-                    from: 'deni-desenvolvimentos <denidesenvolvimentos@gmail.com>', // sender address
-                    to: checkout_session_completed?.customer_details.email, // list of receivers
-                    subject: "Seu link e QR Code", // Subject line
-                    html: `
+    case 'checkout.session.completed':
+      const checkout_session_completed = event.data.object; // Acesse os detalhes da sessão
+      if (checkout_session_completed.customer_details?.email && checkout_session_completed?.metadata) {
+        await updateEmailCouple(checkout_session_completed?.customer_details.email, checkout_session_completed?.metadata.idUser)
+        await transporter.sendMail({
+          from: 'deni-desenvolvimentos <denidesenvolvimentos@gmail.com>', // sender address
+          to: checkout_session_completed?.customer_details.email, // list of receivers
+          subject: "Seu link e QR Code", // Subject line
+          html: `
                       <div style="font-family: Arial, sans-serif; color: #333;">
                         <div style="background-color: #0E0813; padding: 20px; text-align: center;">
                           <h1 style="color: #A61111;">Obrigado por sua compra!</h1>
@@ -69,25 +70,25 @@ export async function POST(req: NextRequest) {
                         </div>
                       </div>
                     `,
-                });
-            }
+        });
+      }
 
-            break
-        case 'checkout.session.expired':
-            const sessionExpired = event.data.object; // Acesse os detalhes da sessão
-            if (sessionExpired.metadata) {
-                console.log("checkout.session.expired")
-                await deleteFolder(sessionExpired.metadata.idUser)
-                await deleteCoupleById(sessionExpired.metadata.idUser)
-            }
+      break
+    case 'checkout.session.expired':
+      const sessionExpired = event.data.object; // Acesse os detalhes da sessão
+      if (sessionExpired.metadata) {
+        console.log("checkout.session.expired")
+        await deleteFolder(sessionExpired.metadata.idUser)
+        await deleteCoupleById(sessionExpired.metadata.idUser)
+      }
 
-            break;
-        // Adicione mais casos para outros eventos conforme necessário
-        default:
-            const sessionCon = event.data.object; // Acesse os detal
-            console.log("Eventos: ", event.type)
+      break;
+    // Adicione mais casos para outros eventos conforme necessário
+    default:
+      const sessionCon = event.data.object; // Acesse os detal
+      console.log("Eventos: ", event.type)
 
-    }
+  }
 
-    return NextResponse.json({ received: true });
+  return NextResponse.json({ received: true });
 }
