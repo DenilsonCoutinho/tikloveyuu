@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
                     //     unit_amount: typeProduct === 1 ? 1499 : 3499,
 
                     // },
-                    price: "price_1Q63MOHt6s00L0BLPtTARX2O",
+                    price: "price_1Q6BpIHt6s00L0BLq9WwBnGA",
 
                     quantity: 1,
                 },
