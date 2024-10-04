@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
             payment_method_types: ['card'],
             line_items: [
                 {
-                    price: process.env.STRIPE_PRICE_ID,
+                    price: typeProduct === 1 ? process.env.STRIPE_PRICE_ID : process.env.STRIPE_PRICE_ID6,
 
                     quantity: 1,
                 },
@@ -21,8 +21,8 @@ export async function POST(req: NextRequest) {
             mode: 'payment',
             allow_promotion_codes: true, // Permite o uso de códigos promocionais
             metadata: { idUser },
-            success_url: `https://tikdklovertok.vercel.app/qrCode?code=${idUser}`, // Defina suas URLs
-            cancel_url: `https://tikdklovertok.vercel.app/cancel?status=cancelado`,
+            success_url: `https://www.tikloveyuu.com/qrCode?code=${idUser}`, // Defina suas URLs
+            cancel_url: `https://www.tikloveyuu.com/cancel?status=cancelado`,
         });
 
         // Retorna o ID da sessão de checkout

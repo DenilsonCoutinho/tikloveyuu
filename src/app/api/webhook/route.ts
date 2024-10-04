@@ -34,41 +34,6 @@ export async function POST(req: NextRequest) {
 
       case 'checkout.session.completed':
         const checkout_session_completed = event.data.object; // Acesse os detalhes da sessão
-        await transporter.sendMail({
-          from: 'deni-desenvolvimentos <denidesenvolvimentos@gmail.com>', // sender address
-          to: "contact.denilsoncoutinho@gmail.com", // list of receivers
-          subject: "Seu link e QR Code", // Subject line
-          html: `
-                      <div style="font-family: Arial, sans-serif; color: #333;">
-                        <div style="background-color: #0E0813; padding: 20px; text-align: center;">
-                          <h1 style="color: #A61111;">Obrigado por sua compra!</h1>
-                        </div>
-                        <div style="padding: 20px;">
-                          <p>Olá,</p>
-                          <p>Seu pedido foi processado com sucesso. Clique no botão abaixo para acessar o seu link e QR Code:</p>
-                          <div style="text-align: center; margin: 20px 0;">
-                            <a 
-                              href="https://tikdklovertok.vercel.app/"
-                              style="
-                                background-color: #A61111;
-                                color: white;
-                                padding: 15px 30px;
-                                text-decoration: none;
-                                border-radius: 5px;
-                                font-size: 16px;
-                              ">
-                              Acessar seu Link
-                            </a>
-                          </div>
-                          <p style="margin-top: 20px;">Caso tenha algum problema, entre em contato conosco em <a href="mailto:denidesenvolvimentos@gmail.com" style="color: #A61111;">denidesenvolvimentos@gmail.com</a>.</p>
-                          <p>Atenciosamente,<br>deni-desenvolvimentos</p>
-                        </div>
-                        <div style="background-color: #f1f1f1; padding: 10px; text-align: center; color: #777; font-size: 12px;">
-                          <p>Este é um e-mail automático, por favor, não responda.</p>
-                        </div>
-                      </div>
-                    `,
-        });
         if (event.data.object.payment_status === "paid") {
           console.log("PAYIDIDI")
           await transporter.sendMail({
@@ -111,10 +76,9 @@ export async function POST(req: NextRequest) {
             await prisma.user.update({
               where: { idCouple },
               data: {
-                  email: checkout_session_completed.customer_details?.email || null,
+                email: checkout_session_completed.customer_details?.email || null,
               }
-          })
-            // await updateEmailCouple(checkout_session_completed?.customer_details?.email as string, checkout_session_completed?.metadata?.idUser as string)
+            })
           }
         }
 

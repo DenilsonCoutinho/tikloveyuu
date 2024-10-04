@@ -1,12 +1,13 @@
 "use client"
 import { v4 as uuidv4 } from 'uuid';
-import { Button, Input, Textarea, useToast } from "@chakra-ui/react";
+import { Button, Divider, Input, Textarea, useToast } from "@chakra-ui/react";
 import FormPaymentInputs from "../components/formPaymentInputs";
 import { useEffect, useRef, useState } from "react";
 import regexEmoji from "../../../utils/maskEmoji";
 import { deleteObject, getDownloadURL, getStorage, listAll, ref, uploadBytes } from "firebase/storage";
 import ContadorEterno from "../components/counter";
 import iconImg from '../../assets/photo (1).png'
+import logo from '../../assets/logoLove.png'
 import comovaificar from '../../assets/como vai ficar 👇.png'
 import Image from "next/image";
 import MySwiper from "../components/mySwiper";
@@ -61,15 +62,7 @@ export default function Presentation() {
     };
     useEffect(() => {
         setPreviewURLs([])
-        const idUserLocal = localStorage.getItem("idUserMyLoverTik");
-
-        // if (idUserLocal) {
-        //     setIdUser(idUserLocal);
-        //     setLink(idUserLocal)
-        //     return;
-        // }
-
-        // Gera um novo UUID e define no localStorage
+       
         const newId = uuidv4();
         try {
             localStorage.setItem("idUserMyLoverTik", newId);
@@ -98,9 +91,6 @@ export default function Presentation() {
                 }),
             });
 
-            // if (!response.ok) {
-            //     throw new Error('Erro ao criar a sessão de pagamento');
-            // }
             const stripeClient = await loadStripe(
                 process.env.NEXT_PUBLIC_STRIPE_PUB_KEY as string
             );
@@ -173,14 +163,10 @@ export default function Presentation() {
     }
 
 
-    {/* <CheckoutButton productName={typeProduct === 1 ? "1 ano, 3 fotos e sem música - R$14,99" : "Pra sempre, 7 fotos e com música - R$34,99"} productPrice={typeProduct} /> */ }
 
-
-
-    function handleGenerator() {
-    }
     return (
-        <main className=" md:p-10">
+        <main className=" md:px-10">
+            <div><Image alt='logo' width={150} className='m-auto pb-10 py-2' src={logo}/></div>
             <section className="">
                 <h1 className="text-redDefault md:text-6xl text-3xl font-black pulsando-sombra">Surpreenda alguém especial!</h1>
                 <p className="text-white md:text-xl text-sm max-w-[900px] font-medium md:leading-7 leading-2 pt-2">
@@ -207,6 +193,9 @@ export default function Presentation() {
                                     <Input onChange={(e) => setDataCouple(e.target.value)} value={dataCouple} type="date" id="date_couple" className=" text-white " />
                                 </label>
                                 <label className="text-white max-w-44 w-full">
+                                <p className="text-white md:text- text-sm max-w-[900px] font-medium md:leading-7 leading-2 pt-2">
+                                        Hora:
+                                    </p>
                                     <Input onChange={(e) => setHour(e.target.value)} value={hour} type="time" id="time_couple" className="text-white " />
                                 </label>
                             </div>
@@ -231,15 +220,15 @@ export default function Presentation() {
                 <aside className='flex gap-4 flex-col items-center'>
                     <Image width={180} quality={100} alt='comovaificar ' src={comovaificar} />
                     <div className="flex flex-col">
-                        <div className=" border bg-[#180d21]  border-white rounded-xl max-h-[450px] myscroll overflow-y-auto w-80 px-10">
+                        <div className=" border bg-[#180d21]  border-white rounded-xl max-h-[540px] myscroll overflow-y-auto w-80 px-7">
                             <div className="mt-4 bg-white h-7 w-full flex justify-center items-center rounded-md">
                                 <div className="w-96 h-7 overflow-hidden myscroll overflow-x-auto whitespace-nowrap">
                                     <p className="text-center px-2 ">
-                                        dominio.com/{nameCouple.trim().replaceAll(" ", "-")}
+                                    tikloveyuu.com/{nameCouple.trim().replaceAll(" ", "-")}
                                     </p>
                                 </div>
                             </div>
-                            <div className={`previewURLsPhoto my-10 flex justify-center items-center mt-4 ${previewURLs.length > 0 ? "" : "h-96"} rounded-md  w-full px-4 `}>
+                            <div className={`previewURLsPhoto my-10 flex justify-center items-center mt-4 ${previewURLs.length > 0 ? "" : "h-60"} rounded-md  w-full px-4 `}>
                                 {
                                     previewURLs.length > 0 ?
                                         <MySwiper previewURLs={previewURLs} />
@@ -248,6 +237,7 @@ export default function Presentation() {
                                 }
                             </div>
                             {hour && <ContadorEterno initialDate={dataCouple} initialHour={hour} />}
+                            <Divider orientation='horizontal' className='mt-3' />
                             {hour && <p className=' text-white text-center mt-3 text-xs'>{message}</p>}
                         </div>
 
