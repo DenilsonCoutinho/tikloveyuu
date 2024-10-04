@@ -34,8 +34,8 @@ export async function POST(req: NextRequest) {
 
     case 'checkout.session.completed':
       const checkout_session_completed = event.data.object; // Acesse os detalhes da sessão
-      if (checkout_session_completed.customer_details?.email ) {
-        // await updateEmailCouple(checkout_session_completed?.customer_details.email, checkout_session_completed?.metadata.idUser)
+      if (checkout_session_completed.customer_details?.email && checkout_session_completed?.metadata) {
+        await updateEmailCouple(checkout_session_completed?.customer_details.email, checkout_session_completed?.metadata.idUser)
         await transporter.sendMail({
           from: 'deni-desenvolvimentos <denidesenvolvimentos@gmail.com>', // sender address
           to: checkout_session_completed?.customer_details.email, // list of receivers
@@ -50,7 +50,7 @@ export async function POST(req: NextRequest) {
                           <p>Seu pedido foi processado com sucesso. Clique no botão abaixo para acessar o seu link e QR Code:</p>
                           <div style="text-align: center; margin: 20px 0;">
                             <a 
-                              href="https://tikdklovertok.vercel.app/"
+                              href="https://tikdklovertok.vercel.app/${checkout_session_completed?.metadata.idUser}"
                               style="
                                 background-color: #A61111;
                                 color: white;

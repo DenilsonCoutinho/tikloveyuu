@@ -95,24 +95,19 @@ export default function Presentation() {
                 body: JSON.stringify({
                     typeProduct,
                     idUser,
-                    imageCouple
                 }),
             });
 
-            if (!response.ok) {
-                throw new Error('Erro ao criar a sessão de pagamento');
-            }
+            // if (!response.ok) {
+            //     throw new Error('Erro ao criar a sessão de pagamento');
+            // }
+            const stripeClient = await loadStripe(
+                process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string
+            );
+            if (!stripeClient) throw new Error("Stripe failed to initialize.");
+            const { sessionId } = await response.json();
 
-            const { id } = await response.json();
-            localStorage.setItem("texte", id);
-
-            const stripe: Stripe | null = await stripePromise;
-            if (stripe) {
-                const { error } = await stripe.redirectToCheckout({ sessionId: id });
-                if (error) {
-                    console.error('Erro ao redirecionar para o checkout:', error);
-                }
-            }
+            await stripeClient.redirectToCheckout({ sessionId });
         } catch (error) {
             console.error('Erro ao redirecionar para o checkout:', error);
             toast({
@@ -243,7 +238,7 @@ export default function Presentation() {
                                     </p>
                                 </div>
                             </div>
-                            <div className={`previewURLsPhoto my-10 flex justify-center items-center mt-4 ${previewURLs.length > 0? "":"h-96"} rounded-md  w-full px-4 `}>
+                            <div className={`previewURLsPhoto my-10 flex justify-center items-center mt-4 ${previewURLs.length > 0 ? "" : "h-96"} rounded-md  w-full px-4 `}>
                                 {
                                     previewURLs.length > 0 ?
                                         <MySwiper previewURLs={previewURLs} />

@@ -8,22 +8,24 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
 export async function POST(req: NextRequest) {
 
     try {
-        const { typeProduct, idUser, imageCouple } = await req.json();
+        const { typeProduct, idUser } = await req.json();
        
         // Criação de uma sessão de checkout
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card', "boleto"],
             line_items: [
                 {
-                    price_data: {
-                        currency: "brl",
-                        product_data: {
-                            images: ["https://firebasestorage.googleapis.com/v0/b/imagem-tiklover.appspot.com/o/pngwing.com.png?alt=media&token=ff9c8f56-4043-4b21-bf9a-46390b2be261"],
-                            name: "Página TikerLove", // Defina o nome do produto aqui
-                        },
-                        unit_amount: typeProduct === 1 ? 1499 : 3499,
+                    // price_data: {
+                    //     currency: "brl",
+                    //     product_data: {
+                    //         images: ["https://firebasestorage.googleapis.com/v0/b/imagem-tiklover.appspot.com/o/pngwing.com.png?alt=media&token=ff9c8f56-4043-4b21-bf9a-46390b2be261"],
+                    //         name: "Página TikerLove", // Defina o nome do produto aqui
+                    //     },
+                    //     unit_amount: typeProduct === 1 ? 1499 : 3499,
 
-                    },
+                    // },
+                    price: "price_1Q63MOHt6s00L0BLPtTARX2O",
+
                     quantity: 1,
                 },
             ],
@@ -35,7 +37,7 @@ export async function POST(req: NextRequest) {
         });
 
         // Retorna o ID da sessão de checkout
-        return NextResponse.json({ id: session.id });
+        return NextResponse.json({ sessionId: session.id });
     } catch (error) {
         console.error('Erro ao criar a sessão de checkout:', error);
         return NextResponse.json({ error: 'Erro ao criar a sessão de checkout' }, { status: 500 });
