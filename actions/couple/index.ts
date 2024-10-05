@@ -15,7 +15,7 @@ export async function createCouple(idCouple: string, nameCouple: string, initalD
                 initialHours: initalHours,
                 initialDate: initalDate,
                 email: "",
-                idSession: "",
+                // idSession: "",
             },
 
 
