@@ -87,16 +87,16 @@ export async function POST(req: NextRequest) {
         const sessionExpired = event.data.object; // Acesse os detalhes da sessão
 
         console.log("checkout.session.expired: ", sessionExpired)
-        const res = await prisma.user.findUnique({
+        const res = await prisma.user.findMany({
           where: { idSession: sessionExpired.id as string },
         })
 
         if (!res) {
           return NextResponse.json({ message: "Session not found" }, { status: 404 });
         }
-        console.log(res?.id)
-        await deleteFolder(res?.idCouple)
-        await deleteCoupleById(res?.idCouple)
+        console.log(res[0]?.id)
+        await deleteFolder(res[0]?.idCouple)
+        await deleteCoupleById(res[0]?.idCouple)
 
         break;
       // Adicione mais casos para outros eventos conforme necessário

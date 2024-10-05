@@ -24,5 +24,5 @@ model User {
   messages     String
   ytbMusic     String?
   createdAt    DateTime @default(now())
-  // idSession    String? @unique
+  idSession    String? 
 }
