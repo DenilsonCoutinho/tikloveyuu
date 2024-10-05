@@ -15,6 +15,7 @@ import app from "../../lib/firebase";
 
 import { createCouple } from '../../../actions/couple';
 import { loadStripe, Stripe } from '@stripe/stripe-js';
+import stripe from '@/lib/stripe';
 interface responseUpload {
     imgUpload?: string[] | undefined; // Propriedade opcional para URLs de imagem
     errorImg?: string; // Propriedade opcional para mensagens de erro
@@ -88,8 +89,8 @@ export default function Presentation() {
                 body: JSON.stringify({
                     typeProduct,
                     idUser,
-                    previewURLs
-                    
+
+
                 }),
             });
 
@@ -119,15 +120,15 @@ export default function Presentation() {
         setLoading(true)
         const { imgUpload, errorImg } = await handleUpload()
         if (imgUpload && !errorImg) {
-            // const { error, success } = await createCouple(idUser, nameCouple, dataCouple, hour, imgUpload, message, youtubeLink)
-            // if (error) {
-            //     setLoading(false)
-            //     return alert(error);
-            // }
-            // if (success) {
+            const { error, success } = await createCouple(idUser, nameCouple, dataCouple, hour, imgUpload, message, youtubeLink)
+            if (error) {
+                setLoading(false)
+                return alert(error);
+            }
+            if (success) {
                 return handleCheckout()
 
-            // }
+            }
             setLoading(false)
             // console.log(error)
             return
@@ -166,9 +167,9 @@ export default function Presentation() {
     }
 
 
-
     return (
         <main className=" md:px-10">
+            <Button  >teste</Button>
             <div><Image alt='logo' width={150} className='m-auto pb-10 py-2' src={logo} /></div>
             <section className="">
                 <h1 className="text-redDefault md:text-6xl text-3xl font-black pulsando-sombra">Surpreenda alguém especial!</h1>
@@ -247,7 +248,7 @@ export default function Presentation() {
 
                         {/* <Button bg={"slategray"} onClick={() => handleUpload()} textColor={'white'} className="border text-white mt-3"> enviar fotos</Button> */}
 
-                        <button disabled={false} onClick={() => handlerSubmit()} className="border flex gap-2 items-center justify-center font-bold h-12 rounded-lg text-xl hover:bg-[#A61111] bg-[#a61111c1] text-white mt-3">{loading ? `Salvando fotos ${countLength}/${typeProduct === 1 ? "3" : "6"}` : "Salvar meu site"}
+                        <button disabled={loading} onClick={() => handlerSubmit()} className="border flex gap-2 items-center justify-center font-bold h-12 rounded-lg text-xl hover:bg-[#A61111] bg-[#a61111c1] text-white mt-3">{loading ? `Salvando fotos ${countLength}/${typeProduct === 1 ? "3" : "6"}` : "Salvar meu site"}
                             {loading && <div className="pt-1 lds-circle"><div></div></div>}
                         </button>
                         {/* <Button disabled={true}   fontSize={13} textColor={'white'} > </Button> */}

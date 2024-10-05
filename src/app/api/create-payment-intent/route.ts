@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import stripe from '@/lib/stripe';
-
+import { db as prisma } from '@/lib/db';
 
 // Função assíncrona para lidar com solicitações POST
 export async function POST(req: NextRequest) {
@@ -25,6 +25,10 @@ export async function POST(req: NextRequest) {
             cancel_url: `https://www.tikloveyuu.com/cancel?status=cancelado`,
         });
 
+        await prisma.user.update({
+            where: { idCouple: idUser },
+            data: { idSession: session.id }
+        });
         // Retorna o ID da sessão de checkout
         return NextResponse.json({ sessionId: session.id });
     } catch (error) {

@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
       case 'checkout.session.completed':
         const checkout_session_completed = event.data.object; // Acesse os detalhes da sessão
         if (event.data.object.payment_status === "paid") {
-        
+
           await transporter.sendMail({
             from: 'deni-desenvolvimentos <denidesenvolvimentos@gmail.com>', // sender address
             to: "contact.denilsoncoutinho@gmail.com", // list of receivers
@@ -76,7 +76,7 @@ export async function POST(req: NextRequest) {
             await prisma.user.update({
               where: { idCouple },
               data: {
-                email: checkout_session_completed.customer_details?.email || null,
+                email: checkout_session_completed.customer_details?.email,
               }
             })
           }
@@ -85,20 +85,26 @@ export async function POST(req: NextRequest) {
         break
       case 'checkout.session.expired':
         const sessionExpired = event.data.object; // Acesse os detalhes da sessão
-        if (sessionExpired.metadata) {
-          console.log("checkout.session.expired")
-          await deleteFolder(sessionExpired.metadata.idUser)
-          await deleteCoupleById(sessionExpired.metadata.idUser)
+
+        console.log("checkout.session.expired: ", sessionExpired)
+        const res = await prisma.user.findUnique({
+          where: { idSession: sessionExpired.id as string },
+        })
+
+        if (!res) {
+          return NextResponse.json({ message: "Session not found" }, { status: 404 });
         }
+        console.log(res?.id)
+        await deleteFolder(res?.idCouple)
+        await deleteCoupleById(res?.idCouple)
 
         break;
       // Adicione mais casos para outros eventos conforme necessário
       default:
         const sessionCon = event.data.object; // Acesse os detal
-        console.log("Eventos: ", event.type)
 
     }
-    return NextResponse.json({ result: event, id: event.data.object });
+    return NextResponse.json({ result: event, ok: true });
 
   } catch (err) {
     console.error(`Webhook Error: ${err}`);
