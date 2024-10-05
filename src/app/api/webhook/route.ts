@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
       case 'checkout.session.completed':
         const checkout_session_completed = event.data.object; // Acesse os detalhes da sessão
         if (event.data.object.payment_status === "paid") {
-          console.log("PAYIDIDI")
+        
           await transporter.sendMail({
             from: 'deni-desenvolvimentos <denidesenvolvimentos@gmail.com>', // sender address
             to: "contact.denilsoncoutinho@gmail.com", // list of receivers
@@ -98,7 +98,7 @@ export async function POST(req: NextRequest) {
         console.log("Eventos: ", event.type)
 
     }
-    return NextResponse.json({ result: event, ok: true });
+    return NextResponse.json({ result: event, id: event.data.object });
 
   } catch (err) {
     console.error(`Webhook Error: ${err}`);

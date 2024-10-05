@@ -62,7 +62,7 @@ export default function Presentation() {
     };
     useEffect(() => {
         setPreviewURLs([])
-       
+
         const newId = uuidv4();
         try {
             localStorage.setItem("idUserMyLoverTik", newId);
@@ -88,6 +88,8 @@ export default function Presentation() {
                 body: JSON.stringify({
                     typeProduct,
                     idUser,
+                    previewURLs
+                    
                 }),
             });
 
@@ -117,17 +119,17 @@ export default function Presentation() {
         setLoading(true)
         const { imgUpload, errorImg } = await handleUpload()
         if (imgUpload && !errorImg) {
-            const { error, success } = await createCouple(idUser, nameCouple, dataCouple, hour, imgUpload, message, youtubeLink)
-            if (error) {
-                setLoading(false)
-                return alert(error);
-            }
-            if (success) {
+            // const { error, success } = await createCouple(idUser, nameCouple, dataCouple, hour, imgUpload, message, youtubeLink)
+            // if (error) {
+            //     setLoading(false)
+            //     return alert(error);
+            // }
+            // if (success) {
                 return handleCheckout()
 
-            }
+            // }
             setLoading(false)
-            console.log(error)
+            // console.log(error)
             return
         }
 
@@ -147,6 +149,7 @@ export default function Presentation() {
         let images: string[] = []; // Definindo o tipo das imagens como string[]
 
         for (const image of imageCouple) {
+            console.log(imageCouple)
             const storageRef = ref(storage, `user/${idUser}/images/${image?.name}`);
             await uploadBytes(storageRef, image);
 
@@ -166,7 +169,7 @@ export default function Presentation() {
 
     return (
         <main className=" md:px-10">
-            <div><Image alt='logo' width={150} className='m-auto pb-10 py-2' src={logo}/></div>
+            <div><Image alt='logo' width={150} className='m-auto pb-10 py-2' src={logo} /></div>
             <section className="">
                 <h1 className="text-redDefault md:text-6xl text-3xl font-black pulsando-sombra">Surpreenda alguém especial!</h1>
                 <p className="text-white md:text-xl text-sm max-w-[900px] font-medium md:leading-7 leading-2 pt-2">
@@ -193,7 +196,7 @@ export default function Presentation() {
                                     <Input onChange={(e) => setDataCouple(e.target.value)} value={dataCouple} type="date" id="date_couple" className=" text-white " />
                                 </label>
                                 <label className="text-white max-w-44 w-full">
-                                <p className="text-white md:text- text-sm max-w-[900px] font-medium md:leading-7 leading-2 pt-2">
+                                    <p className="text-white md:text- text-sm max-w-[900px] font-medium md:leading-7 leading-2 pt-2">
                                         Hora:
                                     </p>
                                     <Input onChange={(e) => setHour(e.target.value)} value={hour} type="time" id="time_couple" className="text-white " />
@@ -224,11 +227,11 @@ export default function Presentation() {
                             <div className="mt-4 bg-white h-7 w-full flex justify-center items-center rounded-md">
                                 <div className="w-96 h-7 overflow-hidden myscroll overflow-x-auto whitespace-nowrap">
                                     <p className="text-center px-2 ">
-                                    tikloveyuu.com/{nameCouple.trim().replaceAll(" ", "-")}
+                                        tikloveyuu.com/{nameCouple.trim().replaceAll(" ", "-")}
                                     </p>
                                 </div>
                             </div>
-                            <div className={`previewURLsPhoto my-10 flex justify-center items-center mt-4 ${previewURLs.length > 0 ? "" : "h-60"} rounded-md  w-full px-4 `}>
+                            <div className={`previewURLsPhoto my-10 flex justify-center items-center mt-4 ${previewURLs.length > 0 ? "" : "h-80"} rounded-md  w-full px-4 `}>
                                 {
                                     previewURLs.length > 0 ?
                                         <MySwiper previewURLs={previewURLs} />
@@ -243,7 +246,11 @@ export default function Presentation() {
 
 
                         {/* <Button bg={"slategray"} onClick={() => handleUpload()} textColor={'white'} className="border text-white mt-3"> enviar fotos</Button> */}
-                        <Button bg={"#DA4A4A"} _hover={"black"} fontSize={13} onClick={() => handlerSubmit()} textColor={'white'} className="border text-xs hover:bg-[#A61111] text-white mt-3"> {loading ? `Salvando fotos ${countLength}/${typeProduct === 1 ? "3" : "6"}` : "Salvar"}</Button>
+
+                        <button disabled={false} onClick={() => handlerSubmit()} className="border flex gap-2 items-center justify-center font-bold h-12 rounded-lg text-xl hover:bg-[#A61111] bg-[#a61111c1] text-white mt-3">{loading ? `Salvando fotos ${countLength}/${typeProduct === 1 ? "3" : "6"}` : "Salvar meu site"}
+                            {loading && <div className="pt-1 lds-circle"><div></div></div>}
+                        </button>
+                        {/* <Button disabled={true}   fontSize={13} textColor={'white'} > </Button> */}
                     </div>
                 </aside>
             </div>
