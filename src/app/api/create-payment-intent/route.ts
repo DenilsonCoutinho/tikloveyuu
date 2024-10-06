@@ -13,24 +13,17 @@ export async function POST(req: NextRequest) {
             payment_method_types: ['card'],
             line_items: [
                 {
-                    price_data: {
-                        currency: 'brl', // A moeda que você deseja usar
-                        product_data: {
-                            name: 'Produto de Teste', // Nome do seu produto
-                            description: 'Descrição do produto de teste.', // Descrição opcional
-                        },
-                        unit_amount: typeProduct === 1 ? 1499 : 3499, // Preço em centavos (R$20,00)
-                    },
-                    quantity: 1, // Quantidade do produto
+                    price: typeProduct === 1 ? process.env.STRIPE_PRICE_ID : process.env.STRIPE_PRICE_ID6,
+
+                    quantity: 1,
                 },
             ],
             mode: 'payment',
             allow_promotion_codes: true, // Permite o uso de códigos promocionais
             metadata: { idUser },
-            success_url: `https://www.tikloveyuu.com/qrCode?code=${idUser}`, // URL de sucesso
-            cancel_url: `https://www.tikloveyuu.com/cancel?status=cancelado`, // URL de cancelamento
+            success_url: `https://www.tikloveyuu.com/qrCode?code=${idUser}`, // Defina suas URLs
+            cancel_url: `https://www.tikloveyuu.com/cancel?status=cancelado`,
         });
-
 
         await prisma.user.update({
             where: { idCouple: idUser },
