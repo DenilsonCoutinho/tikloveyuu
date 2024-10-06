@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
             payment_method_types: ['card'],
             line_items: [
                 {
-                    price: "price_1Q63MOHt6s00L0BLPtTARX2O",
+                    price: "price_1Q6mvPHt6s00L0BLyWHJOdiS",
                     quantity: 1
                 },
             ],
