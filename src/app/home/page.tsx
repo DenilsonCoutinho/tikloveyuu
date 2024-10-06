@@ -97,7 +97,6 @@ export default function Presentation() {
             const stripeClient = await loadStripe(
                 process.env.NEXT_PUBLIC_STRIPE_PUB_KEY as string
             );
-            console.log(stripeClient)
             if (!stripeClient) throw new Error("Stripe failed to initialize.");
             const { sessionId } = await response.json();
 
