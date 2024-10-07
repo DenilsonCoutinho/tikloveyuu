@@ -6,7 +6,7 @@ if (!process.env.STRIPE_SECRET_KEY) {
     );
 }
 
-const stripe = new Stripe("sk_test_51P873pHt6s00L0BLowYV94i8i0r41W2mDTPk8XlifvfMxTGBrVI0f7BbUTTH1MMLqizdCyXXYVf2J25ACilrq2NS00PJeLheUT", {
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
     apiVersion: "2024-09-30.acacia",
 });
 
