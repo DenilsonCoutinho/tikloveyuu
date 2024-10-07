@@ -55,8 +55,8 @@ function UserViewComponent() {
         <div className={` ${data?.ytbMusic ? "" : ""} min-h-screen overflow-auto bg-defaultBg bg-contain py-10 flex justify-center items-center`}>
             <div className="flex flex-col-reverse">
                 <div>
-                    <div className=" border bg-[#180d21] my-3  border-white rounded-xl m-auto w-80 px-10">
-                        <div className="previewURLsPhoto my-10 flex justify-center items-center mt-4 h-72 rounded-md  w-full px-4 ">
+                    <div className=" border bg-[#180d21] my-3 overflow-hidden  border-white rounded-xl m-auto w-80 px-10">
+                        <div className="previewURLsPhoto my-10 flex justify-center items-center mt-4  rounded-md  w-full px-4 ">
                             {
                                 data &&
                                 data?.images.length > 0 &&
