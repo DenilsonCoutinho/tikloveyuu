@@ -156,7 +156,7 @@ export default function Presentation() {
             setCountLength(images.length)
         }
 
-        if (images.length > 2) {
+        if (images.length > 0) {
             return { imgUpload: images }; // Retorna o array de imagens se houver mais de 2
         }
 
@@ -206,7 +206,7 @@ export default function Presentation() {
                             </Textarea>
                             <div className="flex flex-col">
                                 <p className="text-white">Escolha até {typeProduct === 1 ? "3" : "6"} fotos</p>
-                                <Input ref={fileInputRef} onChange={handleFileChange} type="file" accept="image/*" multiple={true} className="placeholder:text-white text-white flex justify-center items-center" />
+                                <Input ref={fileInputRef} onChange={handleFileChange} type="file"  accept=".png, .jpg, .jpeg"  multiple={true} className="placeholder:text-white text-white flex justify-center items-center" />
                                 {typeProduct === 2 &&
                                     <label className="text-white  w-full mt-3">
                                         <p className="text-white">Música Youtube: (Opcional)</p>
