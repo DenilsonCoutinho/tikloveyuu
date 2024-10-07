@@ -32,7 +32,7 @@ export default function Presentation() {
     const [countLength, setCountLength] = useState<number>(0);
     const [nameCouple, setNameCouple] = useState<string>("")
     const [youtubeLink, setYoutubeLink] = useState<string>("")
-    const [typeProduct, setTypeProduct] = useState<number | undefined>(undefined)
+    const [typeProduct, setTypeProduct] = useState<number>(1)
     const [dataCouple, setDataCouple] = useState<string>("")
     const [imageCouple, setImageCouple] = useState<any>([])
     const [message, setMessage] = useState<string>("")
@@ -88,9 +88,7 @@ export default function Presentation() {
                 },
                 body: JSON.stringify({
                     typeProduct,
-                    idUser,
-
-
+                    idUser
                 }),
             });
 
