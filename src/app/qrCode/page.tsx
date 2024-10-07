@@ -44,12 +44,12 @@ function QrcodeComponet() {
         <div className={` min-h-screen overflow-auto bg-defaultBg bg-contain py-10 flex justify-center items-center`}>
             <div className='flex flex-col items-center gap-4'>
                 <div id="capture" style={{ width: "295px", height: "295px", padding: '20px', backgroundColor: '#f5f5f5' }}>
-                    <QRCode value={`https://tikdklovertok.vercel.app/userView?id=${code}`} />
+                    <QRCode value={`https://www.tikloveyuu.com/userView?id=${code}`} />
                 </div>
                 <div className='flex  md:flex-row flex-col items-center gap-3'>
                     <Button onClick={() => captureScreen()}>Baixar QRcode</Button>
-                    <Button onClick={() => copyToClipboard(`https://tikdklovertok.vercel.app/userView?id=${code}`)}>Copiar Link</Button>
-                    <a href={`https://tikdklovertok.vercel.app/userView?id=${code}`}>
+                    <Button onClick={() => copyToClipboard(`https://www.tikloveyuu.com/userView?id=${code}`)}>Copiar Link</Button>
+                    <a href={`https://www.tikloveyuu.com/userView?id=${code}`}>
                         <Button >Ver meu site</Button>
                     </a>
                 </div>
