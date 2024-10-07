@@ -108,7 +108,7 @@ export async function POST(req: NextRequest) {
 
   } catch (err) {
     console.error(`Webhook Error: ${err}`);
-    return NextResponse.json({ error: 'Webhook Error' }, { status: 400 });
+    // return NextResponse.json({ error: 'Webhook Error' }, { status: 400 });
   }
   // Lidar com o evento
 

@@ -99,7 +99,7 @@ export default function Presentation() {
             );
             if (!stripeClient) throw new Error("Stripe failed to initialize.");
             const { sessionId } = await response.json();
-
+            console.log(sessionId)
             await stripeClient.redirectToCheckout({ sessionId });
         } catch (error) {
             console.error('Erro ao redirecionar para o checkout:', error);
