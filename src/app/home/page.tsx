@@ -1,6 +1,7 @@
 "use client"
 import { v4 as uuidv4 } from 'uuid';
 import { Button, Divider, Input, Textarea, useToast } from "@chakra-ui/react";
+import Confetti from "react-confetti"
 import FormPaymentInputs from "../components/formPaymentInputs";
 import { useEffect, useRef, useState } from "react";
 import regexEmoji from "../../../utils/maskEmoji";
@@ -28,6 +29,7 @@ export default function Presentation() {
     const toast = useToast()
     const [hour, setHour] = useState<string>("")
     const [link, setLink] = useState<string>("")
+    const [showConfetti, setShowConfetti] = useState(false);
     const [loading, setLoading] = useState(false);
     const [countLength, setCountLength] = useState<number>(0);
     const [nameCouple, setNameCouple] = useState<string>("")
@@ -45,6 +47,7 @@ export default function Presentation() {
     };
     const handleFileChange = async (event: any) => {
         if (event.target.files) {
+            startConfetti()
             const files: any = Array.from(event.target.files); // Converte FileList para array de File
             if (typeProduct == 1) {
                 let fileTruncated3 = files.slice(0, 3)
@@ -163,7 +166,14 @@ export default function Presentation() {
         return { errorImg: "Sem imagem carregada!" }; // Retorna mensagem de erro se não houver imagens
     }
 
+    async function startConfetti() {
+        setShowConfetti(true);
 
+        setTimeout(() => {
+            setShowConfetti(false);
+        }, 5000);
+
+    }
     return (
         <main className=" md:px-10">
             <div><Image alt='logo' width={150} className='m-auto pb-10 py-2' src={logo} /></div>
@@ -206,7 +216,7 @@ export default function Presentation() {
                             </Textarea>
                             <div className="flex flex-col">
                                 <p className="text-white">Escolha até {typeProduct === 1 ? "3" : "6"} fotos</p>
-                                <Input ref={fileInputRef} onChange={handleFileChange} type="file"  accept=".png, .jpg, .jpeg"  multiple={true} className="placeholder:text-white text-white flex justify-center items-center" />
+                                <Input ref={fileInputRef} onChange={handleFileChange} type="file" accept=".png, .jpg, .jpeg" multiple={true} className="placeholder:text-white text-white flex justify-center items-center" />
                                 {typeProduct === 2 &&
                                     <label className="text-white  w-full mt-3">
                                         <p className="text-white">Música Youtube: (Opcional)</p>
@@ -220,7 +230,8 @@ export default function Presentation() {
                 <aside className='flex gap-4 flex-col items-center'>
                     <Image width={180} quality={100} alt='comovaificar ' src={comovaificar} />
                     <div className="flex flex-col">
-                        <div className=" border bg-[#180d21]  border-white rounded-xl max-h-[540px] myscroll overflow-y-auto w-80 px-7">
+                        <div className=" overflow-hidden relative border bg-[#180d21]  border-white rounded-xl max-h-[540px] myscroll overflow-y-auto w-80 px-7">
+                            {showConfetti && <Confetti />}
                             <div className="mt-4 bg-white h-7 w-full flex justify-center items-center rounded-md">
                                 <div className="w-96 h-7 overflow-hidden myscroll overflow-x-auto whitespace-nowrap">
                                     <p className="text-center px-2 ">
@@ -228,7 +239,9 @@ export default function Presentation() {
                                     </p>
                                 </div>
                             </div>
-                            <div className={`previewURLsPhoto my-10 flex justify-center items-center mt-4 ${previewURLs.length > 0 ? "" : "h-80"} rounded-md  w-full px-4 `}>
+                            <div className={`previewURLsPhoto my-10 flex relative justify-center items-center mt-4 ${previewURLs.length > 0 ? "" : "h-80"} rounded-md  w-full px-4 `}>
+
+
                                 {
                                     previewURLs.length > 0 ?
                                         <MySwiper previewURLs={previewURLs} />
@@ -240,14 +253,9 @@ export default function Presentation() {
                             <Divider orientation='horizontal' className='mt-3' />
                             {hour && <p className=' text-white text-center mt-3 text-xs'>{message}</p>}
                         </div>
-
-
-                        {/* <Button bg={"slategray"} onClick={() => handleUpload()} textColor={'white'} className="border text-white mt-3"> enviar fotos</Button> */}
-
-                        <button disabled={false} onClick={() => handlerSubmit()} className="border flex gap-2 items-center justify-center font-bold h-12 rounded-lg text-xl hover:bg-[#A61111] bg-[#a61111c1] text-white mt-3">{loading ? `Salvando fotos ${countLength}/${typeProduct === 1 ? "3" : "6"}` : "Salvar meu site"}
+                        <button disabled={loading} onClick={() => handlerSubmit()} className="border flex gap-2 items-center justify-center font-bold h-12 rounded-lg text-xl hover:bg-[#A61111] bg-[#a61111c1] text-white mt-3">{loading ? `Salvando fotos ${countLength}/${typeProduct === 1 ? "3" : "6"}` : "Salvar meu site"}
                             {loading && <div className="pt-1 lds-circle"><div></div></div>}
                         </button>
-                        {/* <Button disabled={true}   fontSize={13} textColor={'white'} > </Button> */}
                     </div>
                 </aside>
             </div>

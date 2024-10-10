@@ -8,6 +8,7 @@ import Image from 'next/image';
 export default function MySwiper({ previewURLs }: any) {
     return (
         <>
+        
             <Swiper
                 effect={'cube'}
                 grabCursor={true}
