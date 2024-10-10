@@ -70,8 +70,9 @@ function UserViewComponent() {
                     <div>
                         <div className="relative border bg-[#180d21] my-3 overflow-hidden  border-slate-600 rounded-xl m-auto w-80 px-5">
                             {showConfetti && <Confetti />}
+                                <p className="text-white text-center font- text-xl">{data?.nameCouple}</p>
 
-                            <div className="previewURLsPhoto my-10 flex justify-center items-center mt-4  rounded-md  w-full px-4 ">
+                            <div className="previewURLsPhoto my-10 flex flex- justify-center items-center mt-4  rounded-md  w-full px-4 ">
                                 {
                                     data &&
                                     data?.images.length > 0 &&
