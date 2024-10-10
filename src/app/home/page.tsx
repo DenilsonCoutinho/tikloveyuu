@@ -230,7 +230,7 @@ export default function Presentation() {
                 <aside className='flex gap-4 flex-col items-center'>
                     <Image width={180} quality={100} alt='comovaificar ' src={comovaificar} />
                     <div className="flex flex-col">
-                        <div className=" overflow-hidden relative border bg-[#180d21]  border-white rounded-xl max-h-[540px] myscroll overflow-y-auto w-80 px-7">
+                        <div className=" overflow-hidden relative border bg-[#180d21]  border-white rounded-xl max-h-[540px] myscroll overflow-y-auto w-80 px-4">
                             {showConfetti && <Confetti />}
                             <div className="mt-4 bg-white h-7 w-full flex justify-center items-center rounded-md">
                                 <div className="w-96 h-7 overflow-hidden myscroll overflow-x-auto whitespace-nowrap">
