@@ -33,7 +33,7 @@ export default function MySwiper({ previewURLs }: any) {
                 {
                     previewURLs.map((img: any, i: any) => {
                         return <SwiperSlide id='' key={"image" + i}>
-                            {/* <div className="relative bg-cover text-transparent bg-no-repeat bg-center h-[360px]" style={{ backgroundImage: `url(${img.replace(/ /g, '%20')})`, backgroundPosition: "center 30%" }}> */}
+                            <div className="relative bg-cover text-transparent bg-no-repeat bg-center h-[360px]" style={{ backgroundImage: `url(${img.replace(/ /g, '%20')})`, backgroundPosition: "center 30%" }}>
                                 <Image
                                     quality={100}
                                     className=" w-full h-full object-cover"
@@ -43,7 +43,7 @@ export default function MySwiper({ previewURLs }: any) {
                                     src={img}
                                     style={{ opacity: 110 }} 
                                 />
-                            {/* </div> */}
+                            </div>
                             {/* <div className="bg-cover text-transparent bg-no-repeat bg-center h-72" style={{ backgroundImage: `url(${img.replace(/ /g, '%20')})`, backgroundPosition: "center 30%" }}>
                                 
                             </div>
