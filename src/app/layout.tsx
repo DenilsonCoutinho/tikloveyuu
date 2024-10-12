@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Montserrat } from 'next/font/google'
 import { ChakraProvider } from '@chakra-ui/react'
-
+import { Analytics } from "@vercel/analytics/react"
 const montserrat = Montserrat({
   subsets: ['latin'],
   weight: ['400', '500', '700'], // Escolha os pesos que você quer usar
@@ -29,6 +29,7 @@ export default function RootLayout({
         <ChakraProvider>
           {children}
         </ChakraProvider>
+        <Analytics />
       </body>
     </html>
   );

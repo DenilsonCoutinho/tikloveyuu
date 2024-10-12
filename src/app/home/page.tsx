@@ -17,6 +17,7 @@ import app from "../../lib/firebase";
 import { createCouple } from '../../../actions/couple';
 import { loadStripe, Stripe } from '@stripe/stripe-js';
 import stripe from '@/lib/stripe';
+import Footer from '../components/footer';
 interface responseUpload {
     imgUpload?: string[] | undefined; // Propriedade opcional para URLs de imagem
     errorImg?: string; // Propriedade opcional para mensagens de erro
@@ -120,22 +121,16 @@ export default function Presentation() {
         setLoading(true)
         const { imgUpload, errorImg } = await handleUpload()
         if (imgUpload && !errorImg) {
-            const { error, success } = await createCouple(idUser, nameCouple, dataCouple, hour, imgUpload, message, youtubeLink)
-            if (error) {
-                setLoading(false)
-                return alert(error);
-            }
+            const {success } = await createCouple(idUser, nameCouple, dataCouple, hour, imgUpload, message, youtubeLink)
             if (success) {
                 return handleCheckout()
-
             }
             setLoading(false)
-            // console.log(error)
             return
         }
 
         toast({
-            title: 'Algo deu errado',
+            title: 'Algum dado não foi preenchido',
             description: "",
             status: 'error',
             duration: 9000,
@@ -175,91 +170,91 @@ export default function Presentation() {
 
     }
     return (
-        <main className=" md:px-10">
-            <div><Image alt='logo' width={150} className='m-auto pb-10 py-2' src={logo} /></div>
-            <section className="">
-                <h1 className="text-redDefault md:text-6xl text-3xl font-black pulsando-sombra">Surpreenda alguém especial!</h1>
-                <p className="text-white md:text-xl text-sm max-w-[900px] font-medium md:leading-7 leading-2 pt-2">
-                    Crie um contador dinâmico para acompanhar o tempo do seu relacionamento. Preencha o formulário e receba seu site personalizado, junto com um QR Code para compartilhar com a pessoa especial!🙂
-                </p>
-            </section>
-            <div className="flex md:flex-row flex-col justify- items-center md:gap-10 gap-4">
-                <section className="max-w-[800px] w-full">
-                    <div>
-                        <FormPaymentInputs setSelectedInput={(e) => setTypeProduct(e)} />
-                        <div className="flex md:flex-row flex-col items-end md:gap-5 mt-5">
-                            <label className="w-full text-white">
-                                <p className="text-white md:text- text-sm max-w-[900px] font-medium md:leading-7 leading-2 pt-2">
-                                    Nome do casal:
-                                </p>
-                                <Input onChange={handleChange} value={nameCouple} type="text" id="name_couple" placeholder="Nome do casal (Não use emoji)" className="text-white placeholder:text-white " />
-                            </label>
-                            <div className='flex flex-row items-end w-full gap-3 justify-center'>
-                                <label className="max-w-56 w-full text-white flex flex-col  ">
-
-                                    <p className="text-white md:text- text-sm max-w-[900px] font-medium md:leading-7 leading-2 pt-2">
-                                        Inicio do relacionamento:
-                                    </p>
-                                    <Input onChange={(e) => setDataCouple(e.target.value)} value={dataCouple} type="date" id="date_couple" className=" text-white " />
-                                </label>
-                                <label className="text-white max-w-44 w-full">
-                                    <p className="text-white md:text- text-sm max-w-[900px] font-medium md:leading-7 leading-2 pt-2">
-                                        Hora:
-                                    </p>
-                                    <Input onChange={(e) => setHour(e.target.value)} value={hour} type="time" id="time_couple" className="text-white " />
-                                </label>
-                            </div>
-                        </div>
-                        <div className="flex flex-col gap-3 ">
-                            <Textarea onChange={(e) => setMessage(e.target.value)} value={message} height={250} placeholder="Escreva sua mensagem para sua pessoa especial ❤" className="mt-10 h-80 max-h-[250px] text-white placeholder:text-white">
-
-                            </Textarea>
-                            <div className="flex flex-col">
-                                <p className="text-white">Escolha até {typeProduct === 1 ? "3" : "6"} fotos</p>
-                                <Input ref={fileInputRef} onChange={handleFileChange} type="file" accept=".png, .jpg, .jpeg" multiple={true} className="placeholder:text-white text-white flex justify-center items-center" />
-                                {typeProduct === 2 &&
-                                    <label className="text-white  w-full mt-3">
-                                        <p className="text-white">Música Youtube: (Opcional)</p>
-                                        <Input onChange={(e) => setYoutubeLink(e.target.value)} type="text" value={youtubeLink} className="placeholder:text-white text-white flex justify-center items-center" />
-                                    </label>}
-                            </div>
-                        </div>
-                    </div>
-
+        <>
+            <main className=" md:px-10 px-3">
+                <div><Image alt='logo' width={150} className='m-auto pb-10 py-2' src={logo} /></div>
+                <section className="">
+                    <h1 className="text-redDefault md:text-6xl text-3xl font-black pulsando-sombra">Surpreenda alguém especial!</h1>
+                    <p className="text-white md:text-xl text-sm max-w-[900px] font-medium md:leading-7 leading-2 pt-2">
+                        Crie um contador dinâmico para acompanhar o tempo do seu relacionamento. Preencha o formulário e receba seu site personalizado, junto com um QR Code para compartilhar com a pessoa especial!🙂
+                    </p>
                 </section>
-                <aside className='flex gap-4 flex-col items-center'>
-                    <Image width={180} quality={100} alt='comovaificar ' src={comovaificar} />
-                    <div className="flex flex-col">
-                        <div className=" overflow-hidden relative border bg-[#180d21]  border-white rounded-xl max-h-[540px] myscroll overflow-y-auto w-80 px-4">
-                            {showConfetti && <Confetti />}
-                            <div className="mt-4 bg-white h-7 w-full flex justify-center items-center rounded-md">
-                                <div className="w-96 h-7 overflow-hidden myscroll overflow-x-auto whitespace-nowrap">
-                                    <p className="text-center px-2 ">
-                                        tikloveyuu.com/{nameCouple.trim().replaceAll(" ", "-")}
+                <div className="flex md:flex-row flex-col justify- items-center md:gap-10 gap-4">
+                    <section className="max-w-[800px] w-full">
+                        <div>
+                            <FormPaymentInputs setSelectedInput={(e) => setTypeProduct(e)} />
+                            <div className="flex md:flex-row flex-col items-end md:gap-5 mt-5">
+                                <label className="w-full text-white">
+                                    <p className="text-white md:text- text-sm max-w-[900px] font-medium md:leading-7 leading-2 pt-2">
+                                        Nome do casal:
                                     </p>
+                                    <Input onChange={handleChange} value={nameCouple} type="text" id="name_couple" placeholder="Nome do casal (Não use emoji)" className="text-white placeholder:text-white " />
+                                </label>
+                                <div className='flex flex-row items-end w-full gap-3 justify-center'>
+                                    <label className="max-w-56 w-full text-white flex flex-col  ">
+
+                                        <p className="text-white md:text- text-sm max-w-[900px] font-medium md:leading-7 leading-2 pt-2">
+                                            Inicio do relacionamento:
+                                        </p>
+                                        <Input onChange={(e) => setDataCouple(e.target.value)} value={dataCouple} type="date" id="date_couple" className=" text-white " />
+                                    </label>
+                                    <label className="text-white max-w-44 w-full">
+                                        <p className="text-white md:text- text-sm max-w-[900px] font-medium md:leading-7 leading-2 pt-2">
+                                            Hora:
+                                        </p>
+                                        <Input onChange={(e) => setHour(e.target.value)} value={hour} type="time" id="time_couple" className="text-white " />
+                                    </label>
                                 </div>
                             </div>
-                            <div className={`previewURLsPhoto my-10 flex relative justify-center items-center mt-4 ${previewURLs.length > 0 ? "" : "h-80"} rounded-md  w-full px-4 `}>
+                            <div className="flex flex-col gap-3 ">
+                                <Textarea onChange={(e) => setMessage(e.target.value)} value={message} height={250} placeholder="Escreva sua mensagem para sua pessoa especial ❤" className="mt-10 h-80 max-h-[250px] text-white placeholder:text-white">
 
-
-                                {
-                                    previewURLs.length > 0 ?
-                                        <MySwiper previewURLs={previewURLs} />
-                                        :
-                                        <Image alt="icon-imagem" src={iconImg} width={40} height={40} />
-                                }
+                                </Textarea>
+                                <div className="flex flex-col">
+                                    <p className="text-white">Escolha até {typeProduct === 1 ? "3" : "6"} fotos</p>
+                                    <Input ref={fileInputRef} onChange={handleFileChange} type="file" accept=".png, .jpg, .jpeg" multiple={true} className="placeholder:text-white text-white flex justify-center items-center" />
+                                    {typeProduct === 2 &&
+                                        <label className="text-white  w-full mt-3">
+                                            <p className="text-white">Música Youtube: (Opcional)</p>
+                                            <Input onChange={(e) => setYoutubeLink(e.target.value)} type="text" value={youtubeLink} className="placeholder:text-white text-white flex justify-center items-center" />
+                                        </label>}
+                                </div>
                             </div>
-                            {hour && <ContadorEterno initialDate={dataCouple} initialHour={hour} />}
-                            <Divider orientation='horizontal' className='mt-3' />
-                            {hour && <p className=' text-white text-center mt-3 text-xs'>{message}</p>}
                         </div>
-                        <button disabled={loading} onClick={() => handlerSubmit()} className="border flex gap-2 items-center justify-center font-bold h-12 rounded-lg text-xl hover:bg-[#A61111] bg-[#a61111c1] text-white mt-3">{loading ? `Salvando fotos ${countLength}/${typeProduct === 1 ? "3" : "6"}` : "Salvar meu site"}
-                            {loading && <div className="pt-1 lds-circle"><div></div></div>}
-                        </button>
-                    </div>
-                </aside>
-            </div>
 
-        </main>
+                    </section>
+                    <aside className='flex gap-4 flex-col items-center'>
+                        <Image width={180} quality={100} alt='comovaificar ' src={comovaificar} />
+                        <div className="flex flex-col">
+                            <div className=" overflow-hidden relative border bg-[#180d21]  border-white rounded-xl max-h-[540px] myscroll overflow-y-auto w-80 px-4">
+                                {showConfetti && <Confetti />}
+                                <div className="mt-4 bg-white h-7 w-full flex justify-center items-center rounded-md">
+                                    <div className="w-96 h-7 overflow-hidden myscroll overflow-x-auto whitespace-nowrap">
+                                        <p className="text-center px-2 ">
+                                            tikloveyuu.com/{nameCouple.trim().replaceAll(" ", "-")}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className={`previewURLsPhoto my-10 flex relative justify-center items-center mt-4 ${previewURLs.length > 0 ? "" : "h-80"} rounded-md  w-full px-4 `}>
+                                    {
+                                        previewURLs.length > 0 ?
+                                            <MySwiper previewURLs={previewURLs} />
+                                            :
+                                            <Image alt="icon-imagem" src={iconImg} width={40} height={40} />
+                                    }
+                                </div>
+                                {hour && <ContadorEterno initialDate={dataCouple} initialHour={hour} />}
+                                <Divider orientation='horizontal' className='mt-3' />
+                                {hour && <p className=' text-white text-center mt-3 text-xs'>{message}</p>}
+                            </div>
+                            <button disabled={loading} onClick={() => handlerSubmit()} className="border flex gap-2 items-center justify-center font-bold h-12 rounded-lg text-xl hover:bg-slate-600 bg-transparent duration-200 text-white mt-3">{loading ? `Salvando fotos ${countLength}/${typeProduct === 1 ? "3" : "6"}` : "Criar meu site"}
+                                {loading && <div className="pt-1 lds-circle"><div></div></div>}
+                            </button>
+                        </div>
+                    </aside>
+                </div>
+            </main>
+            <Footer />
+        </>
     )
 }
