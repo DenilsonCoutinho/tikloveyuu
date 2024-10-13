@@ -19,7 +19,7 @@ import { loadStripe, Stripe } from '@stripe/stripe-js';
 import stripe from '@/lib/stripe';
 import Footer from '../components/footer';
 interface responseUpload {
-    imgUpload?: string[] | undefined; // Propriedade opcional para URLs de imagem
+    imgUpload?: string[] | undefined // Propriedade opcional para URLs de imagem
     errorImg?: string; // Propriedade opcional para mensagens de erro
 }
 
@@ -121,7 +121,7 @@ export default function Presentation() {
         setLoading(true)
         const { imgUpload, errorImg } = await handleUpload()
         if (imgUpload && !errorImg) {
-            const {success } = await createCouple(idUser, nameCouple, dataCouple, hour, imgUpload, message, youtubeLink)
+            const { success } = await createCouple(idUser, nameCouple, dataCouple, hour, imgUpload, message, youtubeLink)
             if (success) {
                 return handleCheckout()
             }
@@ -142,24 +142,44 @@ export default function Presentation() {
 
 
     async function handleUpload(): Promise<responseUpload> {
-        let images: string[] = []; // Definindo o tipo das imagens como string[]
-
-        for (const image of imageCouple) {
-            console.log(imageCouple)
+        const uploads = imageCouple.map((image: any) => {
             const storageRef = ref(storage, `user/${idUser}/images/${image?.name}`);
-            await uploadBytes(storageRef, image);
+            return uploadBytes(storageRef, image) // Faz o upload de cada foto
+                .then((snapshot) => {
 
-            const downLoadURL = await getDownloadURL(storageRef);
-            images.push(downLoadURL);
-            setCountLength(images.length)
+                    return getDownloadURL(snapshot.ref); // Obtém a URL de download
+                })
+                .catch((error) => {
+                    console.error(`Erro ao enviar foto ${image}:`, error);
+                });
+        })
+
+        try {
+            const urls = await Promise.all(uploads);
+            console.log("Todas as fotos foram enviadas!", urls);
+            return { imgUpload: urls };; // Retorna as URLs das fotos salvas
+        } catch (error) {
+            console.error("Erro ao enviar as fotos:", error);
+            return { errorImg: "Algo deu errado!" }
         }
-
-        if (images.length > 0) {
-            return { imgUpload: images }; // Retorna o array de imagens se houver mais de 2
-        }
-
-        return { errorImg: "Sem imagem carregada!" }; // Retorna mensagem de erro se não houver imagens
     }
+
+    // for (const image of imageCouple) {
+    //     console.log(imageCouple)
+    //     const storageRef = ref(storage, `user/${idUser}/images/${image?.name}`);
+    //     await uploadBytes(storageRef, image);
+
+    //     const downLoadURL = await getDownloadURL(storageRef);
+    //     images.push(downLoadURL);
+    //     setCountLength(images.length)
+    // }
+
+    // if (images.length > 0) {
+    //     return { imgUpload: images }; 
+    // }
+
+    // return { errorImg: "Sem imagem carregada!" }; 
+
 
     async function startConfetti() {
         setShowConfetti(true);
@@ -174,7 +194,7 @@ export default function Presentation() {
             <main className=" max-w-[1000px] m-auto  px-3">
                 <div><Image alt='logo' width={150} className='m-auto pb-10 py-2' src={logo} /></div>
                 <section className="">
-                    <h1 className="text-redDefault md:text-6xl text-3xl font-black pulsando-sombra">Surpreenda alguém especial!</h1>
+                    <h1 className="text-redDefault md:text-6xl text-3xl font-black boujee-text2">Surpreenda alguém especial!</h1>
                     <p className="text-white md:text-xl text-sm max-w-[900px] font-medium md:leading-7 leading-2 pt-2">
                         Crie um contador dinâmico para acompanhar o tempo do seu relacionamento. Preencha o formulário e receba seu site personalizado, junto com um QR Code para compartilhar com a pessoa especial!🙂
                     </p>
@@ -188,20 +208,20 @@ export default function Presentation() {
                                     <p className="text-white md:text-xs text-sm max-w-[900px] font-medium md:leading-7 leading-2 pt-2">
                                         Nome do casal:
                                     </p>
-                                    <Input  onChange={handleChange} fontSize={13} value={nameCouple} type="text" id="name_couple" placeholder="Nome do casal (Não use emoji)" className="text-white placeholder:text-white text-sm" />
+                                    <Input onChange={handleChange} fontSize={13} value={nameCouple} type="text" id="name_couple" placeholder="Nome do casal (Não use emoji)" className="text-white placeholder:text-white text-sm" />
                                 </label>
                                 <div className='flex flex-row items-end w-full gap-3 justify-center'>
                                     <label className="md:max-w-40 w-full text-white flex flex-col  ">
                                         <p className="text-white md:text-xs text-sm max-w-[900px] font-medium md:leading-7 leading-2 pt-2">
                                             Inicio do relacionamento:
                                         </p>
-                                        <Input  onChange={(e) => setDataCouple(e.target.value)} fontSize={13} value={dataCouple} type="date" id="date_couple" className=" text-white text-sm" />
+                                        <Input onChange={(e) => setDataCouple(e.target.value)} fontSize={13} value={dataCouple} type="date" id="date_couple" className=" text-white text-sm" />
                                     </label>
                                     <label className="text-white md:max-w-40 w-full">
                                         <p className="text-white md:text-xs text-sm max-w-[900px] font-medium md:leading-7 leading-2 pt-2">
                                             Hora:
                                         </p>
-                                        <Input   onChange={(e) => setHour(e.target.value)} fontSize={13} value={hour} type="time" id="time_couple" className="text-white text-sm" />
+                                        <Input onChange={(e) => setHour(e.target.value)} fontSize={13} value={hour} type="time" id="time_couple" className="text-white text-sm" />
                                     </label>
                                 </div>
                             </div>
@@ -225,7 +245,7 @@ export default function Presentation() {
                     <aside className='flex gap-4 flex-col items-center'>
                         <Image width={180} quality={100} alt='comovaificar ' src={comovaificar} />
                         <div className="flex flex-col">
-                            <div className=" overflow-hidden relative border bg-[#180d21]  border rounded-xl max-h-[540px] myscroll overflow-y-auto w-80 px-4">
+                            <div className=" overflow-hidden relative border bg-[#180d21]   rounded-xl max-h-[540px] myscroll overflow-y-auto w-80 px-4">
                                 {showConfetti && <Confetti />}
                                 <div className="mt-4 bg-white h-7 w-full flex justify-center items-center rounded-md">
                                     <div className="w-96 h-7 overflow-hidden myscroll overflow-x-auto whitespace-nowrap">
@@ -246,7 +266,7 @@ export default function Presentation() {
                                 <Divider orientation='horizontal' className='mt-3' />
                                 {hour && <p className=' text-white text-center mt-3 text-xs'>{message}</p>}
                             </div>
-                            <button disabled={loading} onClick={() => handlerSubmit()} className="border flex gap-2 items-center justify-center font-bold h-12 rounded-lg text-xl hover:bg-slate-600 bg-transparent duration-200 text-white mt-3">{loading ? `Salvando fotos ${countLength}/${typeProduct === 1 ? "3" : "6"}` : "Criar meu site"}
+                            <button disabled={loading} onClick={() => handlerSubmit()} className="border flex gap-2 items-center justify-center font-bold h-12 rounded-lg text-xl hover:bg-slate-600 bg-transparent duration-200 text-white mt-3">Criar meu site
                                 {loading && <div className="pt-1 lds-circle"><div></div></div>}
                             </button>
                         </div>
