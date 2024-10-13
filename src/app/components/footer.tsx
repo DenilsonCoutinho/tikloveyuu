@@ -1,12 +1,12 @@
 import Image from "next/image";
 import logo from "../../assets/logoLove.png"
 import me from "../../assets/me.png"
-import { FaInstagram, FaLinkedin } from "react-icons/fa";
+import { FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa";
 import Link from "next/link";
 export default function Footer() {
     return (
         <footer className="border-white border-t mt-20 py-10">
-            <div className="md:px-10 px-3 m-auto flex md:flex-row justify- md:items-start items-start   flex-col md:gap-96 gap-10">
+            <div className=" px-3 m-auto flex md:flex-row  max-w-[1000px]  md:items-start items-start   flex-col md:gap-96 gap-10">
                 <div className="flex flex-col  pl-1">
                     <Image alt="logo" src={logo} quality={100} width={110} className="" />
                     <p className="text-xs text-slate-100 font-medium leading-5">Surpreenda o seu amor criando seu<br /> contador de tempo de relacionamento</p>
@@ -19,9 +19,13 @@ export default function Footer() {
                     </div>
                     <div className="flex flex-row items-center text-white gap-3 mt-2">
                         <p className="text-sm">siga-nos</p>
+                        <a href="https://www.youtube.com/@tikloveyuu/shorts">
+                            <FaYoutube />
+                        </a>
                         <a href="https://www.instagram.com/tikloveyuu/reels/">
                             <FaInstagram />
                         </a>
+                       
                         <a href="https://www.linkedin.com/in/denilson-c-silva/" className="">
                             <FaLinkedin />
                         </a>

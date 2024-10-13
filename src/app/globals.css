@@ -184,6 +184,22 @@ input {
   filter: invert(1);
 }
 
+.boujee-text2 {
+  --bg-size: 400%;
+  --color-one: hsl(0, 94%, 37%);
+  --color-two: hsl(0, 95%, 55%);
+  /* font-size: clamp(3rem, 25vmin, 8rem); */
+  background: linear-gradient(
+                90deg,
+                var(--color-one),
+                var(--color-two),
+                var(--color-one)
+              ) 0 0 / var(--bg-size) 100%;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: move-bg 4s infinite linear;
+}
 
 .boujee-text {
   --bg-size: 400%;

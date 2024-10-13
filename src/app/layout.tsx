@@ -14,7 +14,7 @@ const montserrat = Montserrat({
 // });
 
 export const metadata: Metadata = {
-  title: "tikloveyuu |",
+  title: "tikloveyuu",
   description: "Crie um contador dinâmico de tempo de relacionamento. ",
 };
 

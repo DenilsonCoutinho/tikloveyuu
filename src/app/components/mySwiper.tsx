@@ -36,12 +36,11 @@ export default function MySwiper({ previewURLs }: any) {
                             <div className="relative bg-cover text-transparent bg-no-repeat bg-center h-[360px]" >
                                 <Image
                                     quality={100}
-                                    className=" w-full h-full object-cover"
+                                    className=" w-full h-full object-cover "
                                     width={222}
                                     height={222}
                                     alt='323'
                                     src={img}
-                                    // style={{ opacity: 110 }} 
                                 />
                             </div>
                            

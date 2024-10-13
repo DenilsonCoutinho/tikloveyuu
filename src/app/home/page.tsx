@@ -171,7 +171,7 @@ export default function Presentation() {
     }
     return (
         <>
-            <main className=" md:px-10 px-3">
+            <main className=" max-w-[1000px] m-auto  px-3">
                 <div><Image alt='logo' width={150} className='m-auto pb-10 py-2' src={logo} /></div>
                 <section className="">
                     <h1 className="text-redDefault md:text-6xl text-3xl font-black pulsando-sombra">Surpreenda alguém especial!</h1>
@@ -183,31 +183,30 @@ export default function Presentation() {
                     <section className="max-w-[800px] w-full">
                         <div>
                             <FormPaymentInputs setSelectedInput={(e) => setTypeProduct(e)} />
-                            <div className="flex md:flex-row flex-col items-end md:gap-5 mt-5">
+                            <div className="flex md:flex-row flex-col items-end md:gap-4 mt-5">
                                 <label className="w-full text-white">
-                                    <p className="text-white md:text- text-sm max-w-[900px] font-medium md:leading-7 leading-2 pt-2">
+                                    <p className="text-white md:text-xs text-sm max-w-[900px] font-medium md:leading-7 leading-2 pt-2">
                                         Nome do casal:
                                     </p>
-                                    <Input onChange={handleChange} value={nameCouple} type="text" id="name_couple" placeholder="Nome do casal (Não use emoji)" className="text-white placeholder:text-white " />
+                                    <Input  onChange={handleChange} fontSize={13} value={nameCouple} type="text" id="name_couple" placeholder="Nome do casal (Não use emoji)" className="text-white placeholder:text-white text-sm" />
                                 </label>
                                 <div className='flex flex-row items-end w-full gap-3 justify-center'>
-                                    <label className="max-w-56 w-full text-white flex flex-col  ">
-
-                                        <p className="text-white md:text- text-sm max-w-[900px] font-medium md:leading-7 leading-2 pt-2">
+                                    <label className="md:max-w-40 w-full text-white flex flex-col  ">
+                                        <p className="text-white md:text-xs text-sm max-w-[900px] font-medium md:leading-7 leading-2 pt-2">
                                             Inicio do relacionamento:
                                         </p>
-                                        <Input onChange={(e) => setDataCouple(e.target.value)} value={dataCouple} type="date" id="date_couple" className=" text-white " />
+                                        <Input  onChange={(e) => setDataCouple(e.target.value)} fontSize={13} value={dataCouple} type="date" id="date_couple" className=" text-white text-sm" />
                                     </label>
-                                    <label className="text-white max-w-44 w-full">
-                                        <p className="text-white md:text- text-sm max-w-[900px] font-medium md:leading-7 leading-2 pt-2">
+                                    <label className="text-white md:max-w-40 w-full">
+                                        <p className="text-white md:text-xs text-sm max-w-[900px] font-medium md:leading-7 leading-2 pt-2">
                                             Hora:
                                         </p>
-                                        <Input onChange={(e) => setHour(e.target.value)} value={hour} type="time" id="time_couple" className="text-white " />
+                                        <Input   onChange={(e) => setHour(e.target.value)} fontSize={13} value={hour} type="time" id="time_couple" className="text-white text-sm" />
                                     </label>
                                 </div>
                             </div>
                             <div className="flex flex-col gap-3 ">
-                                <Textarea onChange={(e) => setMessage(e.target.value)} value={message} height={250} placeholder="Escreva sua mensagem para sua pessoa especial ❤" className="mt-10 h-80 max-h-[250px] text-white placeholder:text-white">
+                                <Textarea fontSize={13} onChange={(e) => setMessage(e.target.value)} value={message} height={250} placeholder="Escreva sua mensagem para sua pessoa especial ❤" className="mt-10 h-80 max-h-[250px] text-white placeholder:text-white">
 
                                 </Textarea>
                                 <div className="flex flex-col">
@@ -216,7 +215,7 @@ export default function Presentation() {
                                     {typeProduct === 2 &&
                                         <label className="text-white  w-full mt-3">
                                             <p className="text-white">Música Youtube: (Opcional)</p>
-                                            <Input onChange={(e) => setYoutubeLink(e.target.value)} type="text" value={youtubeLink} className="placeholder:text-white text-white flex justify-center items-center" />
+                                            <Input onChange={(e) => setYoutubeLink(e.target.value)} type="text" value={youtubeLink} className="placeholder:text-white text-white flex text-sm justify-center items-center" />
                                         </label>}
                                 </div>
                             </div>
@@ -226,7 +225,7 @@ export default function Presentation() {
                     <aside className='flex gap-4 flex-col items-center'>
                         <Image width={180} quality={100} alt='comovaificar ' src={comovaificar} />
                         <div className="flex flex-col">
-                            <div className=" overflow-hidden relative border bg-[#180d21]  border-white rounded-xl max-h-[540px] myscroll overflow-y-auto w-80 px-4">
+                            <div className=" overflow-hidden relative border bg-[#180d21]  border rounded-xl max-h-[540px] myscroll overflow-y-auto w-80 px-4">
                                 {showConfetti && <Confetti />}
                                 <div className="mt-4 bg-white h-7 w-full flex justify-center items-center rounded-md">
                                     <div className="w-96 h-7 overflow-hidden myscroll overflow-x-auto whitespace-nowrap">
