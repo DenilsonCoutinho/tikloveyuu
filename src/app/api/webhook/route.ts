@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
             let idCouple = checkout_session_completed.metadata.idUser
             await transporter.sendMail({
               from: 'deni-desenvolvimentos <denidesenvolvimentos@gmail.com>', // sender address
-              to: "contact.denilsoncoutinho@gmail.com", // list of receivers
+              to: checkout_session_completed.customer_details?.email, // list of receivers
               subject: "Seu link e QR Code", // Subject line
               html: `
                           <div style="font-family: Arial, sans-serif; color: #333;">

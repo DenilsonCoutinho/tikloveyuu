@@ -14,15 +14,17 @@ datasource db {
 }
 
 model User {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
-  nameCouple   String?
-  email        String?
-  idCouple     String   @unique
-  images       String[]
-  initialDate  String
-  initialHours String
-  messages     String
-  ytbMusic     String?
-  createdAt    DateTime @default(now())
-  idSession    String? 
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  nameCouple      String?
+  email           String?
+  idCouple        String   @unique
+  images          String[]
+  initialDate     String
+  initialHours    String
+  idCostumerAsaas String?
+  paid            String?
+  messages        String
+  ytbMusic        String?
+  createdAt       DateTime @default(now())
+  idSession       String?
 }

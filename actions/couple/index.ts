@@ -15,6 +15,7 @@ export async function createCouple(idCouple: string, nameCouple: string, initalD
                 initialHours: initalHours,
                 initialDate: initalDate,
                 email: null,
+                idCostumerAsaas: null,
             },
 
 
@@ -36,12 +37,38 @@ export async function updateEmailCouple(email: string, idCouple: string) {
         console.log("Updatoud certo")
         return { success: "Criado com sucesso!" }
     } catch (err) {
-        console.log("Deur merda",err)
+        console.log("Deur merda", err)
 
         return { error: err }
 
     }
 }
+
+export async function updatecustomerId(idUser: string, customerId: string, email: string) {
+    try {
+        await prisma.user.update({
+            where: { idCouple: idUser },
+            data: { idCostumerAsaas: customerId, email: email }
+        })
+        console.log("Updatoud certo")
+        return { success: "Criado com sucesso!" }
+    } catch (err) {
+
+
+        return { error: err }
+
+    }
+}
+
+export async function getBycustomerId(customerId: string, ) {
+
+    const res = await prisma.user.findFirst({
+        where: { idCostumerAsaas: customerId }
+    })
+    return res
+
+}
+
 
 export async function getCoupleById(idCouple: string) {
     const res = await prisma.user.findFirst({
@@ -56,9 +83,6 @@ export async function getCoupleByUniqueId(idCouple: string) {
     })
     return res
 }
-
-
-
 
 export const deleteCoupleById = async (id: string) => {
 
