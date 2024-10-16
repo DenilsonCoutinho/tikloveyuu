@@ -171,7 +171,7 @@ export default function Presentation() {
     async function validateFieldsPix(data: ClientProps) {
         console.log(data, errors)
         const validCpf = await validateCpf(data.cpfcnpj);
-        if (!validCpf) {
+        if (!validCpf && formPayment === "1") {
             alert("CPF inválido!")
             return { erro: "CPF inválido!" }
         }
@@ -291,7 +291,7 @@ export default function Presentation() {
             },
             body: JSON.stringify({
                 customerid: customerId,
-                value: typeProduct === 1 ? 5 : 34.99, // Certifique-se que o valor está correto (3499 representa R$ 34,99)
+                value: typeProduct === 1 ? 14.99 : 34.99, // Certifique-se que o valor está correto (3499 representa R$ 34,99)
             })
         })
         const pixCustomers = await res.json();
