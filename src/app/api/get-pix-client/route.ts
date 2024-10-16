@@ -5,7 +5,7 @@ export async function POST(req: NextRequest) {
     const { paymentId } = await req.json();
 
     try {
-        const pixCustomers = await fetch(`https://sandbox.asaas.com/api/v3/payments/${paymentId}/pixQrCode`, {
+        const pixCustomers = await fetch(`https://api.asaas.com/v3/payments/${paymentId}/pixQrCode`, {
             method: 'GET',
             mode: 'no-cors',
             headers: {

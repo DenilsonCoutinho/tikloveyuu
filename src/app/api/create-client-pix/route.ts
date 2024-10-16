@@ -4,7 +4,7 @@ export async function POST(req: NextRequest) {
     const { name, cpfCnpj } = await req.json()
     console.log("Chave completa:", `"${process.env.ASAAS_API_KEY}"`);
     try {
-        const customers = await fetch('https://sandbox.asaas.com/api/v3/customers', {
+        const customers = await fetch('	https://api.asaas.com/v3/customers', {
             method: 'POST',
             // mode: 'no-cors',
             headers: {

@@ -9,7 +9,7 @@ export async function POST(req:NextRequest) {
     const { value, customerid } = await req.json();
 
     try {
-        const pixCustomers = await fetch('https://sandbox.asaas.com/api/v3/payments', {
+        const pixCustomers = await fetch('https://api.asaas.com/v3/payments', {
             method: 'POST',
             mode: 'no-cors',
             headers: {
