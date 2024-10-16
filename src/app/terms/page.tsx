@@ -12,7 +12,7 @@ export default function PrivacyPolitc() {
 
                 <h2 className="text-2xl text-white font-semibold mb-4">2. Descrição do Serviço</h2>
                 <p className="text-white mb-6">
-                    Nossa plataforma permite que casais criem uma página personalizada preenchendo um formulário com seu nome, data de início do relacionamento, uma mensagem personalizada e até 7 fotos. Após o preenchimento, o casal é direcionado para o checkout e, ao concluir o pagamento, recebe um link com um QR Code via email.
+                    Nossa plataforma permite que casais criem uma página personalizada preenchendo um formulário com seu nome, data de início do relacionamento, uma mensagem personalizada e até 6 fotos. Após o preenchimento, o casal é direcionado para o checkout e, ao concluir o pagamento, recebe um link com um QR Code via email.
                 </p>
 
                 <h2 className="text-2xl text-white font-semibold mb-4">3. Cadastro e Segurança</h2>

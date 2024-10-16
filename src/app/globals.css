@@ -183,7 +183,18 @@ input {
 ::-webkit-calendar-picker-indicator {
   filter: invert(1);
 }
+.useViewBg{
+  background-image: url('../assets/bgView.png');
+}
+@keyframes animar {
+  0% {
+    transform: translateY(130vh)
+  }
 
+  100% {
+    transform: translateY(-300vh)
+  }
+}
 .boujee-text2 {
   --bg-size: 400%;
   --color-one: hsl(0, 90%, 15%);
