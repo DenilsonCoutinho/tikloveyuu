@@ -76,17 +76,17 @@ function UserViewComponent() {
                  <div className="flex absolute justify-between w-full  ">
                  <span style={{ "--i": "4" }as React.CSSProperties} className="bolha h-[2px] w-[2px] bg-white"></span>
                  <span style={{ "--i": "3" }as React.CSSProperties} className="bolha h-[2px] w-[2px] bg-white"></span>
-                 <span style={{ "--i": "1" }as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
                  <span style={{ "--i": "2" }as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
-                <span style={{ "--i": "3" }as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
-                <span style={{ "--i": "4" }as React.CSSProperties} className="bolha h-[2px] w-[2px] bg-white"></span>
-                <span style={{ "--i": "1" }as React.CSSProperties} className="bolha h-[2px] w-[2px] bg-white"></span>
-                <span style={{ "--i": "3" }as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
-                <span style={{ "--i": "4" }as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
+                 <span style={{ "--i": "4" }as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
                 <span style={{ "--i": "1" }as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
+                <span style={{ "--i": "1" }as React.CSSProperties} className="bolha h-[2px] w-[2px] bg-white"></span>
+                <span style={{ "--i": "5" }as React.CSSProperties} className="bolha h-[2px] w-[2px] bg-white"></span>
+                <span style={{ "--i": "8" }as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
+                <span style={{ "--i": "4" }as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
+                <span style={{ "--i": "6" }as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
                 <span style={{ "--i": "2" }as React.CSSProperties} className="bolha h-[2px] w-[2px] bg-white"></span>
-                <span style={{ "--i": "3" }as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
-                <span style={{ "--i": "2" }as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
+                <span style={{ "--i": "7" }as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
+                <span style={{ "--i": "9" }as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
                 <span style={{ "--i": "3" }as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
             </div>
                 <div className="flex flex-col-reverse">
