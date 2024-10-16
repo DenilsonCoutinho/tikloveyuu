@@ -47,7 +47,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
                                     <p>Seu pedido foi processado com sucesso. Clique no botão abaixo para acessar o seu link e QR Code:</p>
                                     <div style="text-align: center; margin: 20px 0;">
                                       <a 
-                                        href="https://www.tikloveyuu.com/userView?id=${res?.idCouple}"
+                                        href="https://www.tikloveyuu.com/qrCode?id=${res?.idCouple}"
                                         style="
                                           background-color: #A61111;
                                           color: white;
