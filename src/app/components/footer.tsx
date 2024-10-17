@@ -1,7 +1,7 @@
 import Image from "next/image";
 import logo from "../../assets/logoLove.png"
 import me from "../../assets/me.png"
-import { FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa";
+import { FaInstagram, FaLinkedin, FaTiktok, FaYoutube } from "react-icons/fa";
 import Link from "next/link";
 export default function Footer() {
     return (
@@ -19,12 +19,16 @@ export default function Footer() {
                     </div>
                     <div className="flex flex-row items-center text-white gap-3 mt-2">
                         <p className="text-sm">siga-nos</p>
+                        <a href="https://www.tiktok.com/@tikloveyuu" className="">
+                            <FaTiktok />
+                        </a>
                         <a href="https://www.youtube.com/@tikloveyuu/shorts">
                             <FaYoutube />
                         </a>
                         <a href="https://www.instagram.com/tikloveyuu/reels/">
                             <FaInstagram />
                         </a>
+                       
                        
                         <a href="https://www.linkedin.com/in/denilson-c-silva/" className="">
                             <FaLinkedin />
