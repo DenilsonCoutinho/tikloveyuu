@@ -199,7 +199,17 @@ export default function Presentation() {
         setLoading(false)
     }
 
-    async function submit(data: ClientProps) {
+    async function submit() {
+        if (!nameCouple || !hour || !dataCouple) {
+            toast({
+                title: 'Algum campo não foi preenchido',
+                description: 'Preencha todos campos!',
+                status: 'error',
+                duration: 5000,
+                isClosable: true,
+            });
+            return
+        }
         if (imageCouple.length == 0) {
             toast({
                 title: 'Preencha as imagens!',
@@ -208,13 +218,14 @@ export default function Presentation() {
                 duration: 9000,
                 isClosable: true,
             })
+            return
         }
-        const valid = (value: string) => value !== ""
-        if ([data.name_couple, data.time_couple, data.date].every(valid) && imageCouple.length > 0) {
-            onOpen()
-        }
+        onOpen()
 
-        return
+
+
+
+
     }
 
 
@@ -346,11 +357,10 @@ export default function Presentation() {
                                 <label className="w-full text-white">
                                     <p className="text-white text-xs  max-w-[900px] font-medium md:leading-7 leading-2 pt-2">
                                         Nome do casal:
-
                                     </p>
                                     <div className='relative'>
-                                        <Input borderColor={errors.name_couple ? "red" : "white"} {...register('name_couple', { required: true })} onChange={handleChange} fontSize={13} value={nameCouple} type="text" id="name_couple" placeholder="Nome do casal (Não use emoji)" className="text-white placeholder:text-white text-sm" />
-                                        {errors.name_couple && <p className='text-red-500 text-xs absolute'>Campo vazío</p>}
+                                        <Input onChange={handleChange} fontSize={13} value={nameCouple} type="text" id="name_couple" placeholder="Nome do casal (Não use emoji)" className="text-white placeholder:text-white text-sm" />
+                                        {/* {!nameCouple && <p className='text-red-500 text-xs absolute'>Campo vazío</p>} */}
                                     </div>
                                 </label>
                                 <div className='flex flex-row items-end w-full gap-3 justify-center'>
@@ -359,8 +369,8 @@ export default function Presentation() {
                                             Inicio do relacionamento:
                                         </p>
                                         <div className='relative'>
-                                            <Input borderColor={errors.date ? "red" : "white"} {...register('date', { required: true })} onChange={(e) => setDataCouple(e.target.value)} fontSize={13} value={dataCouple} type="date" id="date_couple" className=" text-white text-sm" />
-                                            {errors.date && <p className='text-red-500 text-xs absolute'>Campo vazío</p>}
+                                            <Input onChange={(e) => setDataCouple(e.target.value)} fontSize={13} value={dataCouple} type="date" id="date_couple" className=" text-white text-sm" />
+                                            {/* {!dataCouple && <p className='text-red-500 text-xs absolute'>Campo vazío</p>} */}
 
                                         </div>
                                     </label>
@@ -369,8 +379,8 @@ export default function Presentation() {
                                             Hora:
                                         </p>
                                         <div className='relative'>
-                                            <Input borderColor={errors.time_couple ? "red" : "white"} {...register('time_couple', { required: true })} onChange={(e) => setHour(e.target.value)} fontSize={13} value={hour} type="time" id="time_couple" className="text-white text-sm" />
-                                            {errors.time_couple && <p className='text-red-500 text-xs absolute'>Campo vazío</p>}
+                                            <Input onChange={(e) => setHour(e.target.value)} fontSize={13} value={hour} type="time" id="time_couple" className="text-white text-sm" />
+                                            {/* {!hour && <p className='text-red-500 text-xs absolute'>Campo vazío</p>} */}
                                         </div>
                                     </label>
                                 </div>
@@ -417,7 +427,7 @@ export default function Presentation() {
                                 <Divider orientation='horizontal' className='my-3' />
                                 {/* {hour && <p className=' text-white text-center mt-3 text-xs'>{message}</p>} */}
                             </div>
-                            <button disabled={loading} onClick={handleSubmit(submit)} className='border hover:bg-slate-600 bg-transparent duration-200 cursor-pointer flex flex-col justify-center items-center rounded-md mt-3 py-2'>
+                            <button disabled={loading} onClick={() => submit()} className='border hover:bg-slate-600 bg-transparent duration-200 cursor-pointer flex flex-col justify-center items-center rounded-md mt-3 py-2'>
                                 <p className=" flex gap-2 items-center justify-center font-bold  rounded-lg text-xl   text-white ">{loading ? "Criando site" : "Criar meu site"}
                                     {loading && <div className="pt-1 lds-circle"><div></div></div>}
                                 </p>

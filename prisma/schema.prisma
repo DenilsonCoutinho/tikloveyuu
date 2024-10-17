@@ -23,7 +23,7 @@ model User {
   initialHours    String
   idCostumerAsaas String?
   paid            String?
-  messages        String
+  messages        String?
   ytbMusic        String?
   createdAt       DateTime @default(now())
   idSession       String?

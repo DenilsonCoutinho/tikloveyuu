@@ -15,9 +15,15 @@ interface UserViewProps {
     images: string[];
     initialDate: string;
     initialHours: string;
-    messages: string;
+    messages: string | null;
     ytbMusic: string | null;
     createdAt: Date;
+    paid: string | null
+    idCostumerAsaas: string | null
+    idSession: string | null
+
+
+
 }
 
 function UserViewComponent() {
@@ -60,7 +66,7 @@ function UserViewComponent() {
 
         const elementos = document.querySelectorAll(".bolha");
 
-        elementos.forEach((elemento:any) => {
+        elementos.forEach((elemento: any) => {
             const i = getComputedStyle(elemento).getPropertyValue("--i");
             elemento.style.animation = `animar calc(30s / ${i}) linear infinite`;
         });
@@ -72,28 +78,28 @@ function UserViewComponent() {
             </div>
             :
 
-            <div  className={` ${data?.ytbMusic ? "" : ""} useViewBg overflow-y-hidden relative min-h-screen overflow-auto bg-defaultBg bg-contain py-10 flex justify-center items-center`}>
-                 <div className="flex absolute justify-between w-full  ">
-                 <span style={{ "--i": "4" }as React.CSSProperties} className="bolha h-[2px] w-[2px] bg-white"></span>
-                 <span style={{ "--i": "3" }as React.CSSProperties} className="bolha h-[2px] w-[2px] bg-white"></span>
-                 <span style={{ "--i": "2" }as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
-                 <span style={{ "--i": "4" }as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
-                <span style={{ "--i": "1" }as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
-                <span style={{ "--i": "1" }as React.CSSProperties} className="bolha h-[2px] w-[2px] bg-white"></span>
-                <span style={{ "--i": "5" }as React.CSSProperties} className="bolha h-[2px] w-[2px] bg-white"></span>
-                <span style={{ "--i": "8" }as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
-                <span style={{ "--i": "4" }as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
-                <span style={{ "--i": "6" }as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
-                <span style={{ "--i": "2" }as React.CSSProperties} className="bolha h-[2px] w-[2px] bg-white"></span>
-                <span style={{ "--i": "7" }as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
-                <span style={{ "--i": "9" }as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
-                <span style={{ "--i": "3" }as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
-            </div>
+            <div className={` ${data?.ytbMusic ? "" : ""} useViewBg overflow-y-hidden relative min-h-screen overflow-auto bg-defaultBg bg-contain py-10 flex justify-center items-center`}>
+                <div className="flex absolute justify-between w-full  ">
+                    <span style={{ "--i": "4" } as React.CSSProperties} className="bolha h-[2px] w-[2px] bg-white"></span>
+                    <span style={{ "--i": "3" } as React.CSSProperties} className="bolha h-[2px] w-[2px] bg-white"></span>
+                    <span style={{ "--i": "2" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
+                    <span style={{ "--i": "4" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
+                    <span style={{ "--i": "1" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
+                    <span style={{ "--i": "1" } as React.CSSProperties} className="bolha h-[2px] w-[2px] bg-white"></span>
+                    <span style={{ "--i": "5" } as React.CSSProperties} className="bolha h-[2px] w-[2px] bg-white"></span>
+                    <span style={{ "--i": "8" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
+                    <span style={{ "--i": "4" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
+                    <span style={{ "--i": "6" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
+                    <span style={{ "--i": "2" } as React.CSSProperties} className="bolha h-[2px] w-[2px] bg-white"></span>
+                    <span style={{ "--i": "7" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
+                    <span style={{ "--i": "9" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
+                    <span style={{ "--i": "3" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
+                </div>
                 <div className="flex flex-col-reverse">
                     <div>
                         <div className="relative border bg-transparent my-3 overflow-hidden  border-slate-600 rounded-xl m-auto w-80 px-5">
                             {showConfetti && <Confetti />}
-                                <p className="text-white text-center font- text-xl">{data?.nameCouple}</p>
+                            <p className="text-white text-center font- text-xl">{data?.nameCouple}</p>
 
                             <div className="previewURLsPhoto my-10 flex flex- justify-center items-center mt-4  rounded-md  w-full px-4 ">
                                 {
