@@ -11,8 +11,13 @@ const config: Config = {
       backgroundColor:{
         'defaultBg': '#0E0813',
       },
+      textShadow: {
+        'text': '1px 1px 2px rgba(69, 0, 229, 0.5)',
+        'md': '2px 2px 4px rgba(0, 0, 0, 0.5)',
+        'lg': '3px 3px 6px rgba(0, 0, 0, 0.5)',
+      },
       colors:{
-        'redDefault': '#A61111'
+        'redDefault': '#6638C6'
       }
     },
   },

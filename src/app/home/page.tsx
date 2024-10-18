@@ -15,6 +15,7 @@ import comovaificar from '../../assets/como vai ficar 👇.png'
 import Image from "next/image";
 import MySwiper from "../components/mySwiper";
 import app from "../../lib/firebase";
+import CountUp from 'react-countup';
 
 import { createCouple, updatecustomerId } from '../../../actions/couple';
 import { loadStripe } from '@stripe/stripe-js';
@@ -36,6 +37,7 @@ interface ClientProps {
     name_client: string;
 }
 import { useForm } from 'react-hook-form';
+import { scrollToDiv } from '../../../utils/scrollToDiv'
 import {
     Modal,
     ModalOverlay,
@@ -47,7 +49,8 @@ import {
     useDisclosure,
 } from '@chakra-ui/react'
 import { validateCpf } from '../../../utils/cpfValid';
-import { FaCopy } from 'react-icons/fa';
+import { FaCopy, FaInstagram, FaTiktok, FaYoutube } from 'react-icons/fa';
+import HowToMake from '../components/howToMake';
 
 export default function Presentation() {
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -120,6 +123,12 @@ export default function Presentation() {
         setCpfCnpj(value);
     };
     useEffect(() => {
+        const elementos = document.querySelectorAll(".bolha");
+
+        elementos.forEach((elemento: any) => {
+            const i = getComputedStyle(elemento).getPropertyValue("--i");
+            elemento.style.animation = `animar2 calc(30s / ${i}) ease-in-out infinite`;
+        });
         setPreviewURLs([])
 
         const newId = uuidv4();
@@ -341,17 +350,65 @@ export default function Presentation() {
     return (
         <>
 
-            <main className=" max-w-[1000px] m-auto  px-3">
-                <div><Image alt='logo' width={150} className='m-auto pb-10 py-2' src={logo} /></div>
-                <section className="">
-                    <h1 className="text-redDefault md:text-6xl text-3xl font-black boujee-text2">Surpreenda alguém especial!</h1>
-                    <p className="text-white md:text-xl text-sm max-w-[900px] font-medium md:leading-7 leading-2 pt-2">
-                        Crie um contador dinâmico para acompanhar o tempo do seu relacionamento. Preencha o formulário e receba seu site personalizado, junto com um QR Code para compartilhar com a pessoa especial!🙂
-                    </p>
-                </section>
-                <div className="flex md:flex-row flex-col justify- items-center md:gap-10 gap-5">
+            <main className="  m-auto  ">
+                <div className='useViewBg md:h-[33rem] relative overflow-hidden  '>
+                    <div className='max-w-[1100px] m-auto px-3'>
+                        <div className="flex absolute justify-between w-full  ">
+                            <span style={{ "--i": "4" } as React.CSSProperties} className="bolha h-[2px] w-[2px] bg-white"></span>
+                            <span style={{ "--i": "3" } as React.CSSProperties} className="bolha h-[2px] w-[2px] bg-white"></span>
+                            <span style={{ "--i": "2" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
+                            <span style={{ "--i": "4" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
+                            <span style={{ "--i": "1" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
+                            <span style={{ "--i": "1" } as React.CSSProperties} className="bolha h-[2px] w-[2px] bg-white"></span>
+                            <span style={{ "--i": "5" } as React.CSSProperties} className="bolha h-[2px] w-[2px] bg-white"></span>
+                            <span style={{ "--i": "8" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
+                            <span style={{ "--i": "4" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
+                            <span style={{ "--i": "6" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
+                            <span style={{ "--i": "2" } as React.CSSProperties} className="bolha h-[2px] w-[2px] bg-white"></span>
+                            <span style={{ "--i": "7" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
+                            <span style={{ "--i": "9" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
+                            <span style={{ "--i": "3" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
+                        </div>
+                        <div><Image alt='logo' width={150} className='m-auto pb-10 py-2' src={logo} /></div>
+                        <section className="">
+                            <div className='max-w-[700px]'>
+                                <h1 className="text-redDefault md:text-6xl text-3xl font-black  sha">Surpreenda alguém especial!</h1>
+                            </div>
+                            <p className="text-white md:text-lg text-sm max-w-[600px] font-medium md:leading-7 leading-2 pt-2">
+                                Crie um contador dinâmico para acompanhar o tempo do seu relacionamento. Preencha o formulário e receba seu site personalizado, junto com um QR Code para compartilhar com a pessoa especial!🙂
+                            </p>
+                            <Button sx={{
+                                bg: "#4500E5", textColor: "white", _hover: {
+                                    bg: '#6638C6'
+                                },
+                            }} className='shadow-[#4500E5] shadow-lg max-w-[300px] w-full mt-3' onClick={() => scrollToDiv("my_form")}>Criar meu site</Button>
+                            <div className='DESTAQUES flex flex-col md:flex-row justify-center gap-4 md:my-20 my-14 items-center'>
+                                <p className='text-white text-xl'>Em destaque no</p>
+                                <div className='flex items-center gap-4'>
+                                    <a href="https://www.tiktok.com/@tikloveyuu" className="">
+                                        <FaTiktok className='hover:scale-110 duration-150 text-white text-3xl ' />
+
+                                    </a>
+                                    <a href="https://www.youtube.com/@tikloveyuu/shorts">
+                                        <FaYoutube className='hover:scale-110 duration-150 text-white text-3xl ' />
+
+                                    </a>
+                                    <a href="https://www.instagram.com/tikloveyuu/reels/">
+                                        <FaInstagram className='hover:scale-110 duration-150 text-white text-3xl ' />
+                                    </a>
+                                </div>
+                                <div className='flex items-center flex-row gap-3'>
+                                    <CountUp prefix='+' start={0} end={9644} duration={4} className='text-xl text-white font-bold' /> <span className='text-white text-xl'>Pessoas já viram</span>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <HowToMake />
+                </div>
+                <div className="flex md:flex-row flex-col px-3 max-w-[1100px] m-auto justify- items-center md:gap-10 gap-5">
                     <section className="max-w-[800px] w-full">
-                        <div>
+                        <div id='my_form'>
                             <FormPaymentInputs setSelectedInput={(e) => setTypeProduct(e)} />
                             <form className="flex md:flex-row flex-col items-end md:gap-4 gap-4 mt-5">
                                 <label className="w-full text-white">
