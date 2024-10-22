@@ -11,6 +11,9 @@ import iconImg from '../../assets/photo (1).png'
 import logo from '../../assets/logoLove.png'
 import pix from '../../assets/Logo-Pix.png'
 import card from '../../assets/credit-card.png'
+import proof_1 from '../../assets/proof/Screenshot_2024-10-21-22-57-40-636_com.zhiliaoapp.musically.png'
+import proof_2 from '../../assets/proof/Screenshot_2024-10-21-22-58-28-883_com.zhiliaoapp.musically.png'
+import proof_3 from '../../assets/proof/Screenshot_2024-10-21-22-57-40-637_com.zhiliaoapp.musically.png'
 import comovaificar from '../../assets/como vai ficar 👇.png'
 import Image from "next/image";
 import MySwiper from "../components/mySwiper";
@@ -398,13 +401,28 @@ export default function Presentation() {
                                     </a>
                                 </div>
                                 <div className='flex items-center flex-row gap-3'>
-                                    <CountUp prefix='+' start={0} end={9644} duration={4} className='text-xl text-white font-bold' /> <span className='text-white text-xl'>Pessoas já viram</span>
+                                    <CountUp prefix='+' start={0} end={10644} duration={4} className='text-xl text-white font-bold' /> <span className='text-white text-xl'>Pessoas já viram</span>
                                 </div>
                             </div>
                         </section>
                     </div>
 
                     <HowToMake />
+                </div>
+                <div className='AnyProofs my-10 max-w-[1100px] m-auto px-3'>
+
+                    <h1 className='text-white text-2xl font-bold text-center my-5'>Algumas <span className='text-redDefault'>Surpresas!</span></h1>
+                    <div className='flex md:flex-row flex-col justify-between items-center gap-10'>
+                        <div className='rounded-md border border-white'>
+                            <Image quality={100} width={180} alt='prova-1' src={proof_1} />
+                        </div>
+                        <div className='rounded-md border border-white'>
+                            <Image  quality={100} width={180} alt='prova-2' src={proof_2} />
+                        </div>
+                        <div className='rounded-md border border-white'>
+                            <Image  quality={100} width={180} alt='prova-3' src={proof_3} />
+                        </div>
+                    </div>
                 </div>
                 <div className="flex md:flex-row flex-col px-3 max-w-[1100px] m-auto justify- items-center md:gap-10 gap-5">
                     <section className="max-w-[800px] w-full">
