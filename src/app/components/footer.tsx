@@ -5,11 +5,11 @@ import { FaInstagram, FaLinkedin, FaTiktok, FaYoutube } from "react-icons/fa";
 import Link from "next/link";
 export default function Footer() {
     return (
-        <footer className="border-white border-t mt-20 py-10">
+        <footer className="bg-defaultBg border-white border-t  py-10">
             <div className=" px-3 m-auto flex md:flex-row  max-w-[1100px]  md:items-start items-start   flex-col md:gap-96 gap-10">
                 <div className="flex flex-col  pl-1">
                     <Image alt="logo" src={logo} quality={100} width={110} className="" />
-                    <p className="text-xs text-slate-100 font-medium leading-5">Surpreenda o seu amor criando seu<br /> contador de tempo de relacionamento</p>
+                    <p className="text-xs text-slate-100 font-medium leading-5">Surpreenda o seu amor criando seu<br /> contador de tempo de relacionamento ou com um pedido</p>
                     <p className="text-xs text-slate-300 font-mono ">Copyright © 2024 - Todos os direitos reservados</p>
                     <div className="flex items-center flex-row md:mt-2 mt-10">
                         <Image alt="logo" quality={100} src={me} className="rounded-full md:h-10 md:w-10 w-8 h-8 object-cover  z-20 relative" />

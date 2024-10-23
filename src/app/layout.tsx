@@ -3,6 +3,9 @@ import "./globals.css";
 import { Montserrat } from 'next/font/google'
 import { ChakraProvider } from '@chakra-ui/react'
 import { Analytics } from "@vercel/analytics/react"
+import { Toaster } from "@/components/ui/toaster";
+import { Provider } from "@/components/ui/provider"
+
 const montserrat = Montserrat({
   subsets: ['latin'],
   weight: ['400', '500', '700'], // Escolha os pesos que você quer usar
@@ -24,12 +27,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html suppressHydrationWarning  lang="en">
       <body className={`${montserrat.className}   antialiased`}>
         <ChakraProvider>
-          {children}
+          {/* <Provider> */}
+
+            {children}
+          {/* </Provider> */}
         </ChakraProvider>
         <Analytics />
+
       </body>
     </html>
   );

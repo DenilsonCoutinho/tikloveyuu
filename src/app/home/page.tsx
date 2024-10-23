@@ -54,6 +54,7 @@ import { validateCpf } from '../../../utils/cpfValid';
 import { FaCopy, FaInstagram, FaTiktok, FaYoutube } from 'react-icons/fa';
 import HowToMake from '../components/howToMake';
 import HowItWorks from '../components/howItork';
+import Link from 'next/link';
 
 export default function Presentation() {
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -87,7 +88,6 @@ export default function Presentation() {
     const [imageCouple, setImageCouple] = useState<any>([])
     const [message, setMessage] = useState<string>("")
     const [copied, setCopied] = useState<boolean>(false)
-    const [errorCpfCpnj, setErrorcpfCnpj] = useState<boolean>(false)
     const [previewURLs, setPreviewURLs] = useState<[]>([])
     const [idUser, setIdUser] = useState<string>("")
     const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -164,7 +164,7 @@ export default function Presentation() {
             );
             if (!stripeClient) throw new Error("Stripe failed to initialize.");
             const { sessionId } = await response.json();
-            console.log(sessionId)
+            
             await stripeClient.redirectToCheckout({ sessionId });
         } catch (error) {
             console.error('Erro ao redirecionar para o checkout:', error);
@@ -234,13 +234,7 @@ export default function Presentation() {
         }
         onOpen()
 
-
-
-
-
     }
-
-
 
     async function handleUpload(): Promise<responseUpload> {
         const uploads = imageCouple.map((image: any) => {
@@ -375,18 +369,30 @@ export default function Presentation() {
                         <div><Image alt='logo' width={150} className='m-auto pb-10 py-2' src={logo} /></div>
                         <section className="">
                             <div className='max-w-[700px]'>
-                                <h1 className="text-redDefault md:text-6xl text-5xl font-black  sha">Surpreenda seu love!</h1>
+                                <h1 className="text-redDefault md:text-6xl text-5xl font-black  md:text-left text-center">Surpreenda seu love!</h1>
                             </div>
-                            <p className="text-white md:text-lg text-sm max-w-[600px] font-medium md:leading-7 leading-2 pt-2">
+                            <p className="text-white text-center md:text-lg text-xs max-w-[600px] font-medium md:leading-7 leading-5 pt-2">
+                                
                                 Crie um contador dinâmico para acompanhar o tempo do seu relacionamento. Preencha o formulário e receba seu site personalizado, junto com um QR Code para compartilhar com a pessoa especial!🙂
                             </p>
-                            <Button sx={{
-                                bg: "#4500E5", textColor: "white", _hover: {
-                                    bg: '#6638C6'
-                                },
-                            }} className='shadow-[#4500E5] shadow-lg max-w-[300px] w-full mt-3' onClick={() => scrollToDiv("my_form")}>
-                                Criar meu contador dinâmico
+                            <div className='flex flex-row items-center gap-4'>
+                                <Button sx={{
+                                    bg: "#4500E5", textColor: "white", _hover: {
+                                        bg: '#6638C6'
+                                    },
+                                }} className='shadow-[#4500E5] shadow-lg max-w-[300px] w-full mt-3' onClick={() => scrollToDiv("my_form")}>
+                                    Criar meu contador dinâmico
                                 </Button>
+                                {/* <Link href={"/sendRequest"}>
+                                    <Button sx={{
+                                        bg: "#4500E5", textColor: "white", _hover: {
+                                            bg: '#6638C6'
+                                        },
+                                    }} className='shadow-[#4500E5] shadow-lg max-w-[300px] w-full mt-3'>
+                                        Enviar um pedido especial
+                                    </Button>
+                                </Link> */}
+                            </div>
                             <div className='DESTAQUES flex flex-col md:flex-row justify-center gap-4 md:my-20 my-14 items-center'>
                                 <p className='text-white text-xl'>Em destaque no</p>
                                 <div className='flex items-center gap-4'>
@@ -496,7 +502,6 @@ export default function Presentation() {
                                         <label className="text-white  w-full mt-3">
                                             <p className="text-white">Música Youtube: (Opcional)</p>
                                             <Input onChange={(e) => setYoutubeLink(e.target.value)} type="text" value={youtubeLink} className="placeholder:text-white text-white flex text-sm justify-center items-center" />
-
                                         </label>}
                                 </div>
                             </div>

@@ -60,6 +60,8 @@ export async function updatecustomerId(idUser: string, customerId: string, email
     }
 }
 
+
+
 export async function getBycustomerId(customerId: string, ) {
 
     const res = await prisma.user.findFirst({

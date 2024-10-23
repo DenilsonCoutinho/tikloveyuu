@@ -28,3 +28,18 @@ model User {
   createdAt       DateTime @default(now())
   idSession       String?
 }
+
+model RequestSend {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  requestSend     String
+  idRequestSend   String   @unique
+  paid            String?
+  yesMove         Boolean?
+  noMove          Boolean?
+  message         String?
+  email           String?
+  idCostumerAsaas String?
+  idSession       String?
+  ytbMusic        String?
+  createdAt       DateTime @default(now())
+}
