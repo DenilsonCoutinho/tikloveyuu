@@ -11,9 +11,8 @@ import iconImg from '../../assets/photo (1).png'
 import logo from '../../assets/logoLove.png'
 import pix from '../../assets/Logo-Pix.png'
 import card from '../../assets/credit-card.png'
-import proof_1 from '../../assets/proof/Screenshot_2024-10-21-22-57-40-636_com.zhiliaoapp.musically.png'
-import proof_2 from '../../assets/proof/Screenshot_2024-10-21-22-58-28-883_com.zhiliaoapp.musically.png'
-import proof_3 from '../../assets/proof/Screenshot_2024-10-21-22-57-40-637_com.zhiliaoapp.musically.png'
+
+
 import comovaificar from '../../assets/como vai ficar 👇.png'
 import Image from "next/image";
 import MySwiper from "../components/mySwiper";
@@ -54,6 +53,7 @@ import {
 import { validateCpf } from '../../../utils/cpfValid';
 import { FaCopy, FaInstagram, FaTiktok, FaYoutube } from 'react-icons/fa';
 import HowToMake from '../components/howToMake';
+import HowItWorks from '../components/howItork';
 
 export default function Presentation() {
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -409,7 +409,7 @@ export default function Presentation() {
 
                     <HowToMake />
                 </div>
-                <div className='AnyProofs my-10 max-w-[1100px] m-auto px-3'>
+                {/* <div className='AnyProofs my-10 max-w-[1100px] m-auto px-3'>
 
                     <h1 className='text-white text-2xl font-bold text-center my-5'>Algumas <span className='text-redDefault'>Surpresas!</span></h1>
                     <div className='flex md:flex-row flex-col justify-between items-center gap-10'>
@@ -423,7 +423,30 @@ export default function Presentation() {
                             <Image  quality={100} width={180} alt='prova-3' src={proof_3} />
                         </div>
                     </div>
-                </div>
+                </div> */}
+                {/* <div className='flex md:flex-row flex-col max-w-[1100px] justify-between m-auto items-center md:items-start'>
+                    <h1 className='text-white text-center md:text-5xl text-3xl font-bold'>Como  <span className='text-redDefault'>funciona</span></h1>
+                    <div className='grid md:grid-cols-2 m-auto gap-10 '>
+                        <div className='h-80 border-gray-800 border max-w-72 flex flex-col justify-center items-center bg-gradient-to-b from-[#0E0813] to-redDefault  rounded-md overflow-hidden'>
+                            <h1 className='text-white p-5  text-center  font-bold'>1 - Preencha os dados</h1>
+                            <Image className='m-auto translate-y-10' quality={100} height={250} width={250} alt='fields' src={fields} />
+                        </div>
+                        <div className='h-80 border-gray-800 border max-w-72 flex flex-col justify-center items-center bg-gradient-to-b from-[#0E0813] to-redDefault  rounded-md overflow-hidden'>
+                            <h1 className='text-white p-5  text-center  font-bold'>2 - Faça o pagamento</h1>
+                            <Image className='m-auto  p-5 translate-y-10' quality={100} height={250} width={250} alt='payment' src={payment} />
+                        </div>
+                        <div className='h-96 border-gray-800 border max-w-72 flex flex-col justify-center items-center bg-gradient-to-b from-[#0E0813] to-redDefault  rounded-md overflow-hidden'>
+                            <h1 className='text-white p-5  text-center  font-bold'>3 - Receba seu QR Code no <br/>e-mail</h1>
+                            <Image className='m-auto  p-5 translate-y-14' quality={100} height={250} width={250} alt='email' src={emailCouple} />
+                        </div>
+                        <div className='h-96 border-gray-800 border max-w-72 flex flex-col items-end bg-gradient-to-b from-[#0E0813] to-redDefault  rounded-md overflow-hidden'>
+                            <h1 className='text-white p-5  text-center  font-bold'>4 - Surpreenda seu amor</h1>
+                            <Image className='m-auto  p-5 translate-y-' quality={100} height={250} width={250} alt='couple' src={couple} />
+                        </div>
+                    </div>
+                </div> */}
+                <HowItWorks/>
+
                 <div className="flex md:flex-row flex-col px-3 max-w-[1100px] m-auto justify- items-center md:gap-10 gap-5">
                     <section className="max-w-[800px] w-full">
                         <div id='my_form'>
