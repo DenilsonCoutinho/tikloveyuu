@@ -384,7 +384,9 @@ export default function Presentation() {
                                 bg: "#4500E5", textColor: "white", _hover: {
                                     bg: '#6638C6'
                                 },
-                            }} className='shadow-[#4500E5] shadow-lg max-w-[300px] w-full mt-3' onClick={() => scrollToDiv("my_form")}>Criar meu site</Button>
+                            }} className='shadow-[#4500E5] shadow-lg max-w-[300px] w-full mt-3' onClick={() => scrollToDiv("my_form")}>
+                                Criar meu contador dinâmico
+                                </Button>
                             <div className='DESTAQUES flex flex-col md:flex-row justify-center gap-4 md:my-20 my-14 items-center'>
                                 <p className='text-white text-xl'>Em destaque no</p>
                                 <div className='flex items-center gap-4'>

@@ -6,7 +6,7 @@ import Image from 'next/image'
 export default function HowItWorks(){
     return(
         <>
-          <div className='mb-20 md:mt-20 flex md:flex-row flex-col max-w-[1100px] justify-between m-auto items-center md:items-start'>
+          <div className='mb-20 md:mt-0 flex md:flex-row flex-col max-w-[1100px] justify-between m-auto items-center md:items-start'>
                     <h1 className='text-white text-center md:text-5xl text-3xl mb-5 font-bold'>Como  <span className='text-redDefault'>funciona</span></h1>
                     <div className='grid md:grid-cols-2 m-auto gap-10 '>
                         <div className='h-80 border-gray-800 border max-w-72 flex flex-col justify-center items-center bg-gradient-to-b from-[#0E0813] to-redDefault  rounded-md overflow-hidden'>
