@@ -375,7 +375,7 @@ export default function Presentation() {
                         <div><Image alt='logo' width={150} className='m-auto pb-10 py-2' src={logo} /></div>
                         <section className="">
                             <div className='max-w-[700px]'>
-                                <h1 className="text-redDefault md:text-6xl text-3xl font-black  sha">Surpreenda alguém especial!</h1>
+                                <h1 className="text-redDefault md:text-6xl text-5xl font-black  sha">Surpreenda seu love!</h1>
                             </div>
                             <p className="text-white md:text-lg text-sm max-w-[600px] font-medium md:leading-7 leading-2 pt-2">
                                 Crie um contador dinâmico para acompanhar o tempo do seu relacionamento. Preencha o formulário e receba seu site personalizado, junto com um QR Code para compartilhar com a pessoa especial!🙂
@@ -445,7 +445,7 @@ export default function Presentation() {
                         </div>
                     </div>
                 </div> */}
-                <HowItWorks/>
+                <HowItWorks />
 
                 <div className="flex md:flex-row flex-col px-3 max-w-[1100px] m-auto justify- items-center md:gap-10 gap-5">
                     <section className="max-w-[800px] w-full">
