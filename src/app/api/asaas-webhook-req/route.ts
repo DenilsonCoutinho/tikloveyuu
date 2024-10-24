@@ -1,43 +1,41 @@
 // pages/api/payments-webhook.js
 import { NextRequest, NextResponse } from "next/server";
-import { deleteCoupleById, getBycustomerId } from "../../../../actions/couple";
-import { deleteFolder } from "@/lib/deleteimagesfirebase";
+import { deleteFolderReq } from "@/lib/deleteimagesfirebase";
 import { db as prisma } from '@/lib/db';
-import { getReqById } from "../../../../actions/requestSend";
+import { deleteReqById, getReqById } from "../../../../actions/requestSend";
 
 const nodemailer = require("nodemailer");
 
 export async function POST(req: NextRequest, res: NextResponse) {
-    const transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-            user: "denidesenvolvimentos@gmail.com",
-            pass: process.env.PASSWORDNODEMAILER as string
-        },
-        port: 587,
-    });
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: "denidesenvolvimentos@gmail.com",
+      pass: process.env.PASSWORDNODEMAILER as string
+    },
+    port: 587,
+  });
 
-    try {
-        // res.headers.set('ngrok-skip-browser-warning', 'true');
-        // res.headers.set('User-Agent', 'CustomUserAgent/1.0');
-        const body = await req.json();
+  try {
+    // res.headers.set('ngrok-skip-browser-warning', 'true');
+    // res.headers.set('User-Agent', 'CustomUserAgent/1.0');
+    const body = await req.json();
 
-        switch (body.event) {
-            case 'PAYMENT_CREATED':
-                const paymentCreated = body.payment;
-                console.log(paymentCreated)
-                console.log(body)
+    switch (body.event) {
+      case 'PAYMENT_CREATED':
+        const paymentCreated = body.payment;
 
-                break;
-            case 'PAYMENT_RECEIVED':
-                const paymentReceived = body.payment;
-                
-                const res = await getReqById(paymentReceived.customer)
-                await transporter.sendMail({
-                  from: 'deni-desenvolvimentos <denidesenvolvimentos@gmail.com>', // sender address
-                  to: res?.email, // list of receivers
-                  subject: "Seu link para enviar para sua pessoa!", // Subject line
-                  html: `
+
+        break;
+      case 'PAYMENT_RECEIVED':
+        const paymentReceived = body.payment;
+
+        const res = await getReqById(paymentReceived.customer)
+        await transporter.sendMail({
+          from: 'deni-desenvolvimentos <denidesenvolvimentos@gmail.com>', // sender address
+          to: res?.email, // list of receivers
+          subject: "Seu link para enviar para sua pessoa!", // Subject line
+          html: `
                               <div style="font-family: Arial, sans-serif; color: #333;">
                                 <div style="background-color: #0E0813; padding: 20px; text-align: center;">
                                   <h1 style="color: #4500E5;">Obrigado por sua compra!</h1>
@@ -67,35 +65,35 @@ export async function POST(req: NextRequest, res: NextResponse) {
                                 </div>
                               </div>
                             `,
-                });
-                const resReceived = await prisma.requestSend.findFirst({
-                    where: { idCostumerAsaas: paymentReceived.customer },
-                })
-                await prisma.requestSend.update({
-                    where: { idRequestSend:resReceived?.idRequestSend },
-                    data:{paid:"PAID"}
-                })
-                break;
-            case 'PAYMENT_OVERDUE':
-                const paymentOverdue = body.payment;
-                const resOverdue = await prisma.user.findFirst({
-                    where: { idCostumerAsaas: paymentOverdue.customer },
-                })
-                if (resOverdue) {
-                    await deleteFolder(resOverdue?.idCouple)
-                    await deleteCoupleById(resOverdue?.idCouple)
-                }
-                break;
-            // ... trate outros eventos
-            default:
-                console.log(`Este evento não é aceito: ${body.event}`);
+        });
+        const resReceived = await prisma.requestSend.findFirst({
+          where: { idCostumerAsaas: paymentReceived.customer },
+        })
+        await prisma.requestSend.update({
+          where: { idRequestSend: resReceived?.idRequestSend },
+          data: { paid: "PAID" }
+        })
+        break;
+      case 'PAYMENT_OVERDUE':
+        const paymentOverdue = body.payment;
+        const resOverdue = await prisma.requestSend.findFirst({
+          where: { idCostumerAsaas: paymentOverdue.customer },
+        })
+        if (resOverdue) {
+          await deleteFolderReq(resOverdue?.idRequestSend)
+          await deleteReqById(resOverdue?.idRequestSend)
         }
-
-        // Retorne uma resposta para dizer que o webhook foi recebido
-        return NextResponse.json({ received: true }, { status: 200 });
-    } catch (err) {
-        // Responda com um erro se o método não for POST
-        return NextResponse.json({ error: 'Método não permitido' }, { status: 405 });
+        break;
+      // ... trate outros eventos
+      default:
+        console.log(`Este evento não é aceito: ${body.event}`);
     }
+
+    // Retorne uma resposta para dizer que o webhook foi recebido
+    return NextResponse.json({ received: true }, { status: 200 });
+  } catch (err) {
+    // Responda com um erro se o método não for POST
+    return NextResponse.json({ error: 'Método não permitido' }, { status: 405 });
+  }
 }
 
