@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
     const { name, cpfCnpj } = await req.json()
-    console.log("Chave completa:", `"${process.env.ASAAS_API_KEY}"`);
     try {
         const customers = await fetch('	https://api.asaas.com/v3/customers', {
             method: 'POST',

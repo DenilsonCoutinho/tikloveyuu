@@ -47,10 +47,10 @@ function QrcodeComponet() {
                     <QRCode value={`https://www.tikloveyuu.com/userView?id=${code}`} />
                 </div>
                 <div className='flex  md:flex-row flex-col items-center gap-3'>
-                    <Button onClick={() => captureScreen()}>Baixar QRcode</Button>
-                    <Button onClick={() => copyToClipboard(`https://www.tikloveyuu.com/userView?id=${code}`)}>Copiar Link</Button>
+                    <Button className='text-black px-2 bg-white' onClick={() => captureScreen()}>Baixar QRcode</Button>
+                    <Button className='text-black px-2 bg-white' onClick={() => copyToClipboard(`https://www.tikloveyuu.com/userView?id=${code}`)}>Copiar Link</Button>
                     <a href={`https://www.tikloveyuu.com/userView?id=${code}`}>
-                        <Button >Ver meu site</Button>
+                        <Button className='text-black px-2 bg-white' >Ver meu site</Button>
                     </a>
                 </div>
             </div>
