@@ -5,6 +5,7 @@ import { ChakraProvider } from '@chakra-ui/react'
 import { Analytics } from "@vercel/analytics/react"
 import { Toaster } from "@/components/ui/toaster";
 import { Provider } from "@/components/ui/provider"
+import { DialogRoot } from "@/components/ui/dialog";
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -27,16 +28,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html suppressHydrationWarning  lang="en">
+    <html suppressHydrationWarning lang="en">
       <body className={`${montserrat.className}   antialiased`}>
-        <ChakraProvider>
-          {/* <Provider> */}
-
+        <Provider>
+          <DialogRoot>
             {children}
-          {/* </Provider> */}
-        </ChakraProvider>
+          </DialogRoot>
+        </Provider>
         <Analytics />
-
       </body>
     </html>
   );

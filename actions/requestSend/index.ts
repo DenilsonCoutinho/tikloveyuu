@@ -1,3 +1,4 @@
+"use server"
 import { db as prisma } from "../../src/lib/db";
 
 export async function createReqSend(idRequestSend: string, requestSend: string, yesMove: boolean, noMove: boolean, message: string,) {

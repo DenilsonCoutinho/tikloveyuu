@@ -1,9 +1,12 @@
+import { DialogRoot } from "@chakra-ui/react";
 import Presentation from "./home/page";
 
 export default function Home() {
   return (
     <div className="bg-defaultBg ">
-      <Presentation />
+
+        <Presentation />
+     
     </div>
   );
 }

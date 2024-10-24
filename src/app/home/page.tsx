@@ -1,6 +1,6 @@
 "use client"
 import { v4 as uuidv4 } from 'uuid';
-import { Button, Divider, Input, Radio, RadioGroup, FormErrorMessage, Stack, Textarea, useToast } from "@chakra-ui/react";
+import { Button, Input, Separator, Stack, Textarea, } from "@chakra-ui/react";
 import Confetti from "react-confetti"
 import FormPaymentInputs from "../components/formPaymentInputs";
 import { useEffect, useRef, useState } from "react";
@@ -11,7 +11,18 @@ import iconImg from '../../assets/photo (1).png'
 import logo from '../../assets/logoLove.png'
 import pix from '../../assets/Logo-Pix.png'
 import card from '../../assets/credit-card.png'
-
+import { For, HStack } from "@chakra-ui/react"
+import {
+    DialogActionTrigger,
+    DialogBody,
+    DialogCloseTrigger,
+    DialogContent,
+    DialogFooter,
+    DialogHeader,
+    DialogRoot,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
 
 import comovaificar from '../../assets/como vai ficar 👇.png'
 import Image from "next/image";
@@ -41,13 +52,6 @@ interface ClientProps {
 import { useForm } from 'react-hook-form';
 import { scrollToDiv } from '../../../utils/scrollToDiv'
 import {
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
-    ModalBody,
-    ModalCloseButton,
     useDisclosure,
 } from '@chakra-ui/react'
 import { validateCpf } from '../../../utils/cpfValid';
@@ -55,9 +59,10 @@ import { FaCopy, FaInstagram, FaTiktok, FaYoutube } from 'react-icons/fa';
 import HowToMake from '../components/howToMake';
 import HowItWorks from '../components/howItork';
 import Link from 'next/link';
+import { Radio, RadioGroup } from '@/components/ui/radio';
 
 export default function Presentation() {
-    const { isOpen, onOpen, onClose } = useDisclosure()
+    const { onOpen, onClose } = useDisclosure()
     const storage = getStorage(app)
     const { register, handleSubmit, watch, getValues, formState: { errors } } = useForm({
         defaultValues: {
@@ -69,7 +74,7 @@ export default function Presentation() {
             email: ""
         }
     });
-    const toast = useToast()
+    // const toast = useToast()
     const [hour, setHour] = useState<string>("")
     const [showConfetti, setShowConfetti] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -164,17 +169,17 @@ export default function Presentation() {
             );
             if (!stripeClient) throw new Error("Stripe failed to initialize.");
             const { sessionId } = await response.json();
-            
+
             await stripeClient.redirectToCheckout({ sessionId });
         } catch (error) {
             console.error('Erro ao redirecionar para o checkout:', error);
-            toast({
-                title: 'Erro',
-                description: 'Não foi possível iniciar o checkout.',
-                status: 'error',
-                duration: 9000,
-                isClosable: true,
-            });
+            // toast({
+            //     title: 'Erro',
+            //     description: 'Não foi possível iniciar o checkout.',
+            //     status: 'error',
+            //     duration: 9000,
+            //     isClosable: true,
+            // });
         } finally {
             setLoading(false);
         }
@@ -201,35 +206,35 @@ export default function Presentation() {
             return
         }
 
-        toast({
-            title: 'Algum dado não foi preenchido',
-            description: "",
-            status: 'error',
-            duration: 9000,
-            isClosable: true,
-        })
+        // toast({
+        //     title: 'Algum dado não foi preenchido',
+        //     description: "",
+        //     status: 'error',
+        //     duration: 9000,
+        //     isClosable: true,
+        // })
         setLoading(false)
     }
 
     async function submit() {
         if (!nameCouple || !hour || !dataCouple) {
-            toast({
-                title: 'Algum campo não foi preenchido',
-                description: 'Preencha todos campos!',
-                status: 'error',
-                duration: 5000,
-                isClosable: true,
-            });
+            // toast({
+            //     title: 'Algum campo não foi preenchido',
+            //     description: 'Preencha todos campos!',
+            //     status: 'error',
+            //     duration: 5000,
+            //     isClosable: true,
+            // });
             return
         }
         if (imageCouple.length == 0) {
-            toast({
-                title: 'Preencha as imagens!',
-                description: "",
-                status: 'error',
-                duration: 9000,
-                isClosable: true,
-            })
+            // toast({
+            //     title: 'Preencha as imagens!',
+            //     description: "",
+            //     status: 'error',
+            //     duration: 9000,
+            //     isClosable: true,
+            // })
             return
         }
         onOpen()
@@ -371,27 +376,19 @@ export default function Presentation() {
                             <div className='max-w-[700px]'>
                                 <h1 className="text-redDefault md:text-6xl text-5xl font-black  md:text-left text-center">Surpreenda seu love!</h1>
                             </div>
-                            <p className="text-white text-center md:text-lg text-xs max-w-[600px] font-medium md:leading-7 leading-5 pt-2">
-                                
+                            <p className="text-white md:text-left text-center md:text-lg text-xs max-w-[600px] font-medium md:leading-7 leading-5 pt-2">
+
                                 Crie um contador dinâmico para acompanhar o tempo do seu relacionamento. Preencha o formulário e receba seu site personalizado, junto com um QR Code para compartilhar com a pessoa especial!🙂
                             </p>
                             <div className='flex flex-row items-center gap-4'>
-                                <Button sx={{
-                                    bg: "#4500E5", textColor: "white", _hover: {
-                                        bg: '#6638C6'
-                                    },
-                                }} className='shadow-[#4500E5] shadow-lg max-w-[300px] w-full mt-3' onClick={() => scrollToDiv("my_form")}>
+                                <Button className='shadow-[#4500E5] shadow-lg bg-[#4500E5] hover:bg-[#6638C6] hover:shadow-[#6638C6] text-white max-w-[300px] w-full mt-3' onClick={() => scrollToDiv("my_form")}>
                                     Criar meu contador dinâmico
                                 </Button>
-                                {/* <Link href={"/sendRequest"}>
-                                    <Button sx={{
-                                        bg: "#4500E5", textColor: "white", _hover: {
-                                            bg: '#6638C6'
-                                        },
-                                    }} className='shadow-[#4500E5] shadow-lg max-w-[300px] w-full mt-3'>
+                                <Link href={"/sendRequest"}>
+                                    <Button className='shadow-[#4500E5] shadow-lg bg-[#4500E5] hover:bg-[#6638C6] hover:shadow-[#6638C6] text-white max-w-[300px] w-full mt-3 px-4'>
                                         Enviar um pedido especial
                                     </Button>
-                                </Link> */}
+                                </Link>
                             </div>
                             <div className='DESTAQUES flex flex-col md:flex-row justify-center gap-4 md:my-20 my-14 items-center'>
                                 <p className='text-white text-xl'>Em destaque no</p>
@@ -415,7 +412,7 @@ export default function Presentation() {
                         </section>
                     </div>
 
-                    <HowToMake />
+                    {/* <HowToMake /> */}
                 </div>
                 {/* <div className='AnyProofs my-10 max-w-[1100px] m-auto px-3'>
 
@@ -455,7 +452,7 @@ export default function Presentation() {
                 </div> */}
                 <HowItWorks />
 
-                <div className="flex md:flex-row flex-col px-3 max-w-[1100px] m-auto justify- items-center md:gap-10 gap-5">
+                <div className="flex md:flex-row flex-col px-3 max-w-[1100px] pb-10 m-auto justify- items-center md:gap-10 gap-5">
                     <section className="max-w-[800px] w-full">
                         <div id='my_form'>
                             <FormPaymentInputs setSelectedInput={(e) => setTypeProduct(e)} />
@@ -465,7 +462,7 @@ export default function Presentation() {
                                         Nome do casal:
                                     </p>
                                     <div className='relative'>
-                                        <Input onChange={handleChange} fontSize={13} value={nameCouple} type="text" id="name_couple" placeholder="Nome do casal (Não use emoji)" className="text-white placeholder:text-white text-sm" />
+                                        <Input onChange={handleChange} fontSize={13} value={nameCouple} type="text" id="name_couple" placeholder="Nome do casal (Não use emoji)" className="text-white placeholder:text-white text-sm px-1 border-white border" />
                                         {/* {!nameCouple && <p className='text-red-500 text-xs absolute'>Campo vazío</p>} */}
                                     </div>
                                 </label>
@@ -475,7 +472,7 @@ export default function Presentation() {
                                             Inicio do relacionamento:
                                         </p>
                                         <div className='relative'>
-                                            <Input onChange={(e) => setDataCouple(e.target.value)} fontSize={13} value={dataCouple} type="date" id="date_couple" className=" text-white text-sm" />
+                                            <Input onChange={(e) => setDataCouple(e.target.value)} fontSize={13} value={dataCouple} type="date" id="date_couple" className=" text-white text-sm border-white border px-1" />
                                             {/* {!dataCouple && <p className='text-red-500 text-xs absolute'>Campo vazío</p>} */}
 
                                         </div>
@@ -485,19 +482,19 @@ export default function Presentation() {
                                             Hora:
                                         </p>
                                         <div className='relative'>
-                                            <Input onChange={(e) => setHour(e.target.value)} fontSize={13} value={hour} type="time" id="time_couple" className="text-white text-sm" />
+                                            <Input onChange={(e) => setHour(e.target.value)} fontSize={13} value={hour} type="time" id="time_couple" className="text-white text-sm border-white border px-1" />
                                             {/* {!hour && <p className='text-red-500 text-xs absolute'>Campo vazío</p>} */}
                                         </div>
                                     </label>
                                 </div>
                             </form>
                             <div className="flex flex-col gap-3 ">
-                                <Textarea fontSize={13} onChange={(e) => setMessage(e.target.value)} value={message} height={250} placeholder="Escreva sua mensagem para sua pessoa especial ❤" className="mt-10 h-80 max-h-[250px] text-white placeholder:text-white">
+                                <Textarea fontSize={13} onChange={(e) => setMessage(e.target.value)} value={message} height={250} placeholder="Escreva sua mensagem para sua pessoa especial ❤" className="mt-10 h-80 max-h-[250px] text-white placeholder:text-white border-white border px-2">
 
                                 </Textarea>
                                 <div className="flex flex-col">
                                     <p className="text-white">Escolha até {typeProduct === 1 ? "3" : "6"} fotos</p>
-                                    <Input id='imagesFile' ref={fileInputRef} onChange={handleFileChange} type="file" accept=".png, .jpg, .jpeg" multiple={true} className="placeholder:text-white text-white flex justify-center items-center" />
+                                    <Input id='imagesFile' ref={fileInputRef} onChange={handleFileChange} type="file" accept=".png, .jpg, .jpeg" multiple={true} className="placeholder:text-white text-white flex justify-center items-center border-white border" />
                                     {typeProduct === 2 &&
                                         <label className="text-white  w-full mt-3">
                                             <p className="text-white">Música Youtube: (Opcional)</p>
@@ -529,97 +526,111 @@ export default function Presentation() {
                                     }
                                 </div>
                                 {hour && <ContadorEterno initialDate={dataCouple} initialHour={hour} />}
-                                <Divider orientation='horizontal' className='my-3' />
-                                {/* {hour && <p className=' text-white text-center mt-3 text-xs'>{message}</p>} */}
+                                <div className='border-b border-white py-1'></div>
+                                {hour && <p className=' text-white text-center mt-3 text-xs'>{message}</p>}
                             </div>
-                            <button disabled={loading} onClick={() => submit()} className='border hover:bg-slate-600 bg-transparent duration-200 cursor-pointer flex flex-col justify-center items-center rounded-md mt-3 py-2'>
-                                <p className=" flex gap-2 items-center justify-center font-bold  rounded-lg text-xl   text-white ">{loading ? "Criando site" : "Criar meu site"}
-                                    {loading && <div className="pt-1 lds-circle"><div></div></div>}
-                                </p>
-                                <Modal isCentered isOpen={isOpen} onClose={onClose}>
-                                    <ModalOverlay onClick={onClose} />
-                                    {
-                                        !loadingPayment ?
-                                            <ModalContent>
-                                                <ModalHeader>Escolha a forma de pagamento</ModalHeader>
-                                                <ModalCloseButton />
-                                                <ModalBody>
-                                                    <RadioGroup onChange={setFormPayment} value={formPayment}>
-                                                        <Stack gap={4} direction='column'>
-                                                            <div className='flex flex-row gap-3 items-center'>
-                                                                <Image quality={100} alt='pixlogo' width={30} height={30} src={pix} />
-                                                                <Radio value='1'>Pagar com Pix</Radio>
+
+                            {
+                                !nameCouple || !dataCouple || !hour || imageCouple < 1 ?
+                                    <button disabled={true} className='border  bg-transparent duration-200  flex flex-col justify-center items-center rounded-md mt-3 py-2'>
+                                        <p className=" flex gap-2 items-center justify-center font-bold  rounded-lg text-xl   text-white ">Criar meu site</p>
+                                        <p className=" flex gap-2 items-center justify-center font-medium  rounded-lg text-xs   text-white ">Preencha os campos necessários</p>
+                                    </button>
+                                    :
+                                    <DialogTrigger asChild>
+                                        <button disabled={loading} onClick={() => submit()} className='border hover:bg-slate-600 bg-transparent duration-200 cursor-pointer flex flex-col justify-center items-center rounded-md mt-3 py-2'>
+                                            <p className=" flex gap-2 items-center justify-center font-bold  rounded-lg text-xl   text-white ">{loading ? "Criando site" : "Criar meu site"}
+                                                {loading && <div className="pt-1 lds-circle"><div></div></div>}
+                                            </p>
+                                        </button>
+                                    </DialogTrigger>
+                            }
+                            <DialogContent >
+                                {
+                                    !loadingPayment ?
+                                        <>
+                                            <DialogHeader>
+                                                <DialogTitle>Escolha a forma de pagamento</DialogTitle>
+                                            </DialogHeader>
+
+                                            <DialogBody>
+                                                <RadioGroup variant={'subtle'} defaultValue={"2"} value={formPayment} onValueChange={(e) => setFormPayment(e.value)}>
+
+                                                    <div className='flex flex-row gap-3 items-center'>
+                                                        <Image quality={100} alt='pixlogo' width={30} height={30} src={pix} />
+                                                        <Radio value='1'>Pagar com Pix</Radio>
+                                                    </div>
+                                                    {formPayment === "1" &&
+                                                        <div className='flex flex-col gap-7'>
+                                                            <div className='relative'>
+                                                                <Input className='border px-2'  {...register('name_client', { required: "Nome é obrigatório", pattern: { value: /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/, message: "Nome inválido" } })} onChange={(e) => setName(e.target.value)} value={name} placeholder='Nome' />
+                                                                {errors.name_client && <p className='text-red-500 text-xs absolute'>{errors.name_client.message}</p>}
                                                             </div>
-                                                            {formPayment === "1" &&
-                                                                <div className='flex flex-col gap-7'>
-                                                                    <div className='relative'>
-                                                                        <Input  {...register('name_client', { required: "Nome é obrigatório", pattern: { value: /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/, message: "Nome inválido" } })} onChange={(e) => setName(e.target.value)} value={name} placeholder='Nome' />
-                                                                        {errors.name_client && <p className='text-red-500 text-xs absolute'>{errors.name_client.message}</p>}
-                                                                    </div>
 
-                                                                    <div className='relative'>
-                                                                        <Input {...register('cpfcnpj', {
-                                                                            required: "CPF é obrigatório",
-                                                                            pattern: {
-                                                                                value: cpfPattern,
-                                                                                message: "CPF inválido. Ex: 123.456.789-00"
-                                                                            }
-                                                                        })} onChange={handleCpfChange} value={cpfCnpj} placeholder='CPF' />
-                                                                        {errors.cpfcnpj && <p className='text-red-500 text-xs absolute'>{errors.cpfcnpj?.message}</p>}
-                                                                    </div>
-
-                                                                    <div className='relative'>
-                                                                        <label>
-                                                                            <p className='text-black'>Digite seu e-mail para receber o QR Code
-                                                                            </p>
-                                                                            <Input {...register('email', {
-                                                                                required: "Email é obrigatório para receber seu Qrcode",
-                                                                                pattern: {
-                                                                                    value: emailPattern,
-                                                                                    message: "Email inválido."
-                                                                                }
-                                                                            })} placeholder='E-mail' onChange={(e) => setEmail(e.target.value)} value={email} />
-                                                                        </label>
-
-                                                                        {errors.email && <p className='text-red-500 text-xs absolute'>{errors.email?.message}</p>}
-                                                                    </div>
-                                                                </div>
-                                                            }
-                                                            <div className='flex gap-3 flex-row items-center'>
-                                                                <Image quality={100} alt='cardlogo' width={30} height={30} src={card} />
-                                                                <Radio value='2'>Pagar com cartão</Radio>
+                                                            <div className='relative'>
+                                                                <Input className='border px-2' {...register('cpfcnpj', {
+                                                                    required: "CPF é obrigatório",
+                                                                    pattern: {
+                                                                        value: cpfPattern,
+                                                                        message: "CPF inválido. Ex: 123.456.789-00"
+                                                                    }
+                                                                })} onChange={handleCpfChange} value={cpfCnpj} placeholder='CPF' />
+                                                                {errors.cpfcnpj && <p className='text-red-500 text-xs absolute'>{errors.cpfcnpj?.message}</p>}
                                                             </div>
-                                                        </Stack>
-                                                    </RadioGroup>
-                                                </ModalBody>
 
-                                                <ModalFooter>
-                                                    <Button colorScheme='blue' mr={3} onClick={handleSubmit(validateFieldsPix)}>
-                                                        <p className=" flex gap-2 items-center justify-center font-bold  rounded-lg text-xl   text-white ">
-                                                            ir para o Pagamento
-                                                            {loading && <div className="pt-1 lds-circle"><div></div></div>}
-                                                        </p>
-                                                    </Button>
-                                                </ModalFooter>
-                                            </ModalContent>
-                                            :
-                                            <ModalContent>
-                                                <Image width={300} height={300} className='m-auto' alt='qrCode' src={myeconder} />
-                                                <div className='flex flex-col items-center bg-gray-100'>
-                                                    <p className='font-bold text-xs text-yellow-600'>Atenção</p>
-                                                    <p className='text-center text-black text-xs font-bold px-2'>Assim que fizer o pagamento você receberá no email o QrCode do seu site!</p>
-                                                </div>
-                                                <p className='text-black text-center px-3 py-2'>{qrCode}</p>
-                                                <Button bg={"green"} onClick={handleCopy} className='select-none ' ><p className=' text-white  font-medium px-2'>{copied ? "copiado" : "Copiar"}</p> <span className=' border border-white rounded-md p-1'><FaCopy className=' text-white' /></span></Button>
-                                            </ModalContent>
-                                    }
+                                                            <div className='relative'>
+                                                                <label>
+                                                                    <p className='text-black'>Digite seu e-mail para receber o QR Code
+                                                                    </p>
+                                                                    <Input className='border px-2' {...register('email', {
+                                                                        required: "Email é obrigatório para receber seu Qrcode",
+                                                                        pattern: {
+                                                                            value: emailPattern,
+                                                                            message: "Email inválido."
+                                                                        }
+                                                                    })} placeholder='E-mail' onChange={(e) => setEmail(e.target.value)} value={email} />
+                                                                </label>
 
-                                </Modal>
-                            </button>
+                                                                {errors.email && <p className='text-red-500 text-xs absolute'>{errors.email?.message}</p>}
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                    <div className='flex gap-3 flex-row items-center pt-3'>
+                                                        <Image quality={100} alt='cardlogo' width={30} height={30} src={card} />
+                                                        <Radio className='' value='2'>Pagar com cartão</Radio>
+                                                    </div>
+                                                </RadioGroup>
+                                            </DialogBody>
+                                            <DialogFooter>
+                                                <DialogActionTrigger asChild>
+                                                    <Button variant="outline">Cancel</Button>
+                                                </DialogActionTrigger>
+                                                <Button px={2} bg={"blue.400"} mr={3} onClick={handleSubmit(validateFieldsPix)}>
+                                                    <p className=" flex gap-2 items-center justify-center font-bold  rounded-lg text-xl   text-white ">
+                                                        ir para o Pagamento
+                                                        {loading && <div className="pt-1 lds-circle"><div></div></div>}
+                                                    </p>
+                                                </Button>
+                                            </DialogFooter>
+                                            <DialogCloseTrigger />
+                                        </>
+                                        :
+                                        <>
+                                            <Image width={300} height={300} className='m-auto' alt='qrCode' src={myeconder} />
+                                            <div className='flex flex-col items-center bg-gray-100'>
+                                                <p className='font-bold text-xs text-yellow-600'>Atenção</p>
+                                                <p className='text-center text-black text-xs font-bold px-2'>Assim que fizer o pagamento você receberá no email o QrCode do seu site!</p>
+                                            </div>
+                                            <p className='text-black text-center px-3 py-2'>{qrCode}</p>
+                                            <Button bg={"green"} onClick={handleCopy} className='select-none ' ><p className=' text-white  font-medium px-2'>{copied ? "copiado" : "Copiar"}</p> <span className=' border border-white rounded-md p-1'><FaCopy className=' text-white' /></span></Button>
+                                        </>
+                                }
+                            </DialogContent>
+                            {/* </DialogRoot> */}
                         </div>
                     </aside>
-                </div>
-            </main>
+                </div >
+            </main >
             <Footer />
         </>
     )
