@@ -384,11 +384,11 @@ export default function Presentation() {
                                 <Button className='shadow-[#4500E5] shadow-lg bg-[#4500E5] hover:bg-[#6638C6] hover:shadow-[#6638C6] text-white max-w-[300px] w-full mt-3' onClick={() => scrollToDiv("my_form")}>
                                     Criar meu contador dinâmico
                                 </Button>
-                                <Link href={"/sendRequest"}>
+                                {/* <Link href={"/sendRequest"}>
                                     <Button className='shadow-[#4500E5] shadow-lg bg-[#4500E5] hover:bg-[#6638C6] hover:shadow-[#6638C6] text-white max-w-[300px] w-full mt-3 px-4'>
                                         Enviar um pedido especial
                                     </Button>
-                                </Link>
+                                </Link> */}
                             </div>
                             <div className='DESTAQUES flex flex-col md:flex-row justify-center gap-4 md:my-20 my-14 items-center'>
                                 <p className='text-white text-xl'>Em destaque no</p>
