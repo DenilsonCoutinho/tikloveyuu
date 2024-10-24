@@ -6,6 +6,7 @@ import { Analytics } from "@vercel/analytics/react"
 import { Toaster } from "@/components/ui/toaster";
 import { Provider } from "@/components/ui/provider"
 import { DialogRoot } from "@/components/ui/dialog";
+import { FileUploadRoot } from "@/components/ui/file-button";
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -31,9 +32,11 @@ export default function RootLayout({
     <html suppressHydrationWarning lang="en">
       <body className={`${montserrat.className}   antialiased`}>
         <Provider>
+
           <DialogRoot>
             {children}
           </DialogRoot>
+
         </Provider>
         <Analytics />
       </body>

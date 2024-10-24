@@ -9,28 +9,34 @@ interface customerProps {
     customerId?: string;
     erro?: string;
 }
+interface responseUpload {
+    imgUpload?: string[]
+    errorImg?: string; // Propriedade opcional para mensagens de erro
+}
 import { loadStripe } from '@stripe/stripe-js';
+import app from "../../../lib/firebase";
 
-import { Button, HStack, Input, Select, Stack, Textarea, Toast, useDisclosure } from "@chakra-ui/react"
+import { Button, Input, Textarea } from "@chakra-ui/react"
 import { Radio, RadioGroup } from '@/components/ui/radio';
 
 import { Checkbox } from "@/components/ui/checkbox"
 
-import FormPaymentInputsReq from "../components/formPaymentInputsReq"
-import logo from '../../assets/logoLove.png'
-import pix from '../../assets/Logo-Pix.png'
-import card from '../../assets/credit-card.png'
+import FormPaymentInputsReq from "../../components/formPaymentInputsReq"
+import logo from '../../../assets/logoLove.png'
+import pix from '../../../assets/Logo-Pix.png'
+import card from '../../../assets/credit-card.png'
 
 import { v4 as uuidv4 } from 'uuid';
+import { FaCamera } from "react-icons/fa";
 
 import { useEffect, useState } from "react"
-import Footer from "../components/footer"
+import Footer from "../../components/footer"
 import Image from "next/image"
 import Link from "next/link"
 import { useForm } from "react-hook-form"
-import { validateCpf } from "../../../utils/cpfValid"
+import { validateCpf } from "../../../../utils/cpfValid"
 import { FaCopy } from "react-icons/fa";
-import { createReqSend, updatecustomerReqId } from "../../../actions/requestSend";
+import { createReqSend, updatecustomerReqId } from "../../../../actions/requestSend";
 import {
     DialogActionTrigger,
     DialogBody,
@@ -38,19 +44,22 @@ import {
     DialogContent,
     DialogFooter,
     DialogHeader,
-    DialogRoot,
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
 import { useRouter } from 'next/navigation';
+import { FileUploadList, FileUploadRoot, FileUploadTrigger } from '@/components/ui/file-button';
+import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 
 export default function SendRequest() {
+    const storage = getStorage(app)
+
     const [typeRequest, setTypeRequest] = useState<string>("")
+    const [image, setImage] = useState<any>([])
     const [valueNo, setValueNo] = useState<boolean>(false)
     const [valueYes, setValueYes] = useState<boolean>(false)
     const [request, setRequest] = useState<string>("")
     const [message, setMessage] = useState<string>("")
-    const { onOpen, onClose } = useDisclosure()
     const [loadingPayment, setLoadingPayment] = useState(false);
     const [formPayment, setFormPayment] = useState<string>('');
     const [imageQrCode, setImageQrCode] = useState<string>("");
@@ -104,38 +113,47 @@ export default function SendRequest() {
         }
     }, [])
 
-    async function validateFieldsPix(data: ClientProps) {
+    // async function validateFieldsPix(data: ClientProps) {
 
+    //     const validCpf = await validateCpf(data.cpfcnpj);
+    //     if (!validCpf && formPayment === "1") {
+    //         alert("CPF inválido!")
+    //         return { erro: "CPF inválido!" }
+    //     }
+    //     // const { success } = await createReqSend(idUser, request, valueYes, valueNo, message)
+
+    //     // if (success && formPayment === "1") {
+    //     //     await generatorPix()
+    //     // } else {
+
+    //     //     // return handleCheckout()
+    //     // }
+
+
+    //     return
+
+    // }
+
+    async function validateFieldsPix(data: ClientProps) {
         const validCpf = await validateCpf(data.cpfcnpj);
         if (!validCpf && formPayment === "1") {
             alert("CPF inválido!")
             return { erro: "CPF inválido!" }
         }
-        const { success } = await createReqSend(idUser, request, valueYes, valueNo, message)
-
+        const { imgUpload } = await handleUpload()
+        if (!imgUpload) return alert("Erro na hora de enviar fotos")
+        const { success } = await createReqSend(idUser, request, valueYes, valueNo, message, typeRequest, imgUpload[0])
         if (success && formPayment === "1") {
             await generatorPix()
         } else {
-
-            // return handleCheckout()
-        }
-
-
-        return
-
-    }
-
-    async function deTeste() {
-        const { success } = await createReqSend(idUser, request, valueYes, valueNo, message)
-        if (success) {
-            route.push('/sucessSendReq')
+            return handleCheckout()
         }
     }
     const handleCheckout = async () => {
         setLoading(true);
         try {
 
-            const response = await fetch(`/api/create-payment-intent`, {
+            const response = await fetch(`/api/create-payment-intent-req`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -161,17 +179,33 @@ export default function SendRequest() {
         }
     };
 
+    async function handleUpload(): Promise<responseUpload> {
+        console.log(image)
+        const uploads = image?.map((image: any) => {
+            const storageRef = ref(storage, `requestSend/${idUser}/images/${image?.name}`);
+            return uploadBytes(storageRef, image) // Faz o upload de cada foto
+                .then((snapshot) => {
+
+                    return getDownloadURL(snapshot.ref); // Obtém a URL de download
+                })
+                .catch((error) => {
+                    console.error(`Erro ao enviar foto ${image}:`, error);
+                });
+        })
+
+        try {
+            const urls = await Promise.all(uploads);
+            return { imgUpload: urls }
+        } catch (error) {
+            console.error("Erro ao enviar as fotos:", error);
+            return { errorImg: "Algo deu errado!" }
+        }
+    }
     async function submit() {
         if (!request || !message) {
 
             return
         }
-
-        onOpen()
-
-
-
-
 
     }
     async function generatoClient(name: string, cpfCnpj: string): Promise<customerProps> {
@@ -210,7 +244,7 @@ export default function SendRequest() {
             },
             body: JSON.stringify({
                 customerid: customerId,
-                value: typeRequest === "1" ? 12.99 : 10.99, // Certifique-se que o valor está correto (3499 representa R$ 34,99)
+                value: typeRequest === "1" ? 6 : 10.99, // Certifique-se que o valor está correto (3499 representa R$ 34,99)
             })
         })
         const pixCustomers = await res.json();
@@ -236,7 +270,11 @@ export default function SendRequest() {
 
     }
     let myeconder = `data:image/png;base64,${imageQrCode}`
-
+    const handleFileChange = async (event: any) => {
+        if (event.target.files) {
+            setImage(Array.from(event.target.files))
+        }
+    };
     return (
         <>
             <DialogContent >
@@ -349,14 +387,25 @@ export default function SendRequest() {
 
                             </Textarea>
                         </label>
+                        <FileUploadRoot accept=".png, .jpg, .jpeg" onChange={handleFileChange}>
+                            <FileUploadTrigger asChild>
+                                <Button id='buttonModal' className='border border-white rounded-sm my-4 px-3 w-full text-white text-center' variant="outline" size="sm">
+                                    <FaCamera /> Selecione uma imagem caso o pedido seja "SIM"
+                                </Button>
+                            </FileUploadTrigger>
+                            <FileUploadList />
+                        </FileUploadRoot>
                         {
-                            request && message ? <button onClick={() => deTeste()} className='border text-white px-7 hover:text-black hover:bg-white bg-transparent duration-200 cursor-pointer flex flex-col justify-center items-center rounded-md mt-3 py-2'>
-                                Criar pedido
-                            </button>
+                            request && message && image.length > 0 ?
+                                <DialogTrigger asChild>
+                                    <button  className='border text-white px-2 max-w-[300px] w-full hover:text-black hover:bg-white bg-transparent duration-200 cursor-pointer flex flex-col justify-center items-center rounded-md mt-3 py-2'>
+                                        Criar pedido
+                                    </button>
+                                </DialogTrigger>
                                 :
-                                <button disabled className='border text-white px-2  bg-transparent duration-200  flex flex-col justify-center items-center rounded-md mt-3 py-2'>
+                                <button disabled className='border text-white   bg-transparent duration-200 px-2 max-w-[300px] w-full flex flex-col justify-center items-center rounded-md mt-3 py-2'>
                                     Criar pedido
-                                    {request && message ? <></> : <p className="text-slate-400 text-xs">Campos a serem preenchidos</p>}
+                                    {request && message && image.length > 0 ? <></> : <p className="text-slate-400 text-xs">Campos a serem preenchidos</p>}
                                 </button>
                         }
                     </div>

@@ -1,7 +1,7 @@
 "use client"
 import { useState } from "react";
 import styles from "../../app/reponseReceived/reponseReceived.module.css";
-import Flowers from "../components/flower";
+import Flowers from "../../components/flower";
 
 export default function reponseReceived() {
     const [isClicked, setIsClicked] = useState(false);

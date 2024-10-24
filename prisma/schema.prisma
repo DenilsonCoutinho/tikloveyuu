@@ -33,11 +33,14 @@ model RequestSend {
   id              String   @id @default(auto()) @map("_id") @db.ObjectId
   requestSend     String
   idRequestSend   String   @unique
+  typeRequestSend String?
+  responsePeople  String?
   paid            String?
   yesMove         Boolean?
   noMove          Boolean?
   message         String?
   email           String?
+  images          String?
   idCostumerAsaas String?
   idSession       String?
   ytbMusic        String?

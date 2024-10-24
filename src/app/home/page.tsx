@@ -11,7 +11,6 @@ import iconImg from '../../assets/photo (1).png'
 import logo from '../../assets/logoLove.png'
 import pix from '../../assets/Logo-Pix.png'
 import card from '../../assets/credit-card.png'
-import { For, HStack } from "@chakra-ui/react"
 import {
     DialogActionTrigger,
     DialogBody,
@@ -56,7 +55,6 @@ import {
 } from '@chakra-ui/react'
 import { validateCpf } from '../../../utils/cpfValid';
 import { FaCopy, FaInstagram, FaTiktok, FaYoutube } from 'react-icons/fa';
-import HowToMake from '../components/howToMake';
 import HowItWorks from '../components/howItork';
 import Link from 'next/link';
 import { Radio, RadioGroup } from '@/components/ui/radio';
