@@ -276,6 +276,7 @@ export default function SendRequest() {
             setImage(Array.from(event.target.files))
         }
     };
+    console.log(typeRequest)
     return (
         <>
             <DialogContent >

@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
             payment_method_types: ['card'],
             line_items: [
                 {
-                    price: typeRequest === 1 ? process.env.STRIPE_PRICE_ID_REQ : process.env.STRIPE_PRICE_ID_REQ2,
+                    price: typeRequest === "1" ? process.env.STRIPE_PRICE_ID_REQ : process.env.STRIPE_PRICE_ID_REQ2,
 
                     quantity: 1,
                 },
