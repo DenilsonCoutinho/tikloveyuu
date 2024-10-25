@@ -550,7 +550,7 @@ export default function Presentation() {
                                     !loadingPayment ?
                                         <>
                                             <DialogHeader>
-                                                <DialogTitle>Escolha a forma de pagamento</DialogTitle>
+                                                <DialogTitle className='text-black'>Escolha a forma de pagamento</DialogTitle>
                                             </DialogHeader>
 
                                             <DialogBody>
@@ -558,7 +558,7 @@ export default function Presentation() {
 
                                                     <div className='flex flex-row gap-3 items-center'>
                                                         <Image quality={100} alt='pixlogo' width={30} height={30} src={pix} />
-                                                        <Radio value='1'>Pagar com Pix</Radio>
+                                                        <Radio className='text-black' value='1'>Pagar com Pix</Radio>
                                                     </div>
                                                     {formPayment === "1" &&
                                                         <div className='flex flex-col gap-7'>
@@ -597,17 +597,17 @@ export default function Presentation() {
                                                     }
                                                     <div className='flex gap-3 flex-row items-center pt-3'>
                                                         <Image quality={100} alt='cardlogo' width={30} height={30} src={card} />
-                                                        <Radio className='' value='2'>Pagar com cartão</Radio>
+                                                        <Radio className='text-black' value='2'>Pagar com cartão</Radio>
                                                     </div>
                                                 </RadioGroup>
                                             </DialogBody>
                                             <DialogFooter>
                                                 <DialogActionTrigger asChild>
-                                                    <Button variant="outline">Cancel</Button>
+                                                    <Button className='text-black' variant="outline">Cancel</Button>
                                                 </DialogActionTrigger>
                                                 <Button px={2} bg={"blue.400"} mr={3} onClick={handleSubmit(validateFieldsPix)}>
-                                                    <p className=" flex gap-2 items-center justify-center font-bold  rounded-lg text-xl   text-white ">
-                                                        ir para o Pagamento
+                                                    <p className=" flex gap-2 items-center justify-center font-bold  rounded-lg text-xl   text-white  ">
+                                                        {loading ? "Aguarde" : "ir para o Pagamento"}
                                                         {loading && <div className="pt-1 lds-circle"><div></div></div>}
                                                     </p>
                                                 </Button>
