@@ -54,7 +54,7 @@ import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 export default function SendRequest() {
     const storage = getStorage(app)
 
-    const [typeRequest, setTypeRequest] = useState<string>("")
+    const [typeRequest, setTypeRequest] = useState<string>("1")
     const [image, setImage] = useState<any>([])
     const [valueNo, setValueNo] = useState<boolean>(false)
     const [valueYes, setValueYes] = useState<boolean>(false)
