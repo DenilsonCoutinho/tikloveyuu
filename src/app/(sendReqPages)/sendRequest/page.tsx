@@ -151,7 +151,7 @@ export default function SendRequest() {
         }
     }
     const handleCheckout = async () => {
-        
+
         try {
 
             const response = await fetch(`/api/create-payment-intent-req`, {
@@ -175,7 +175,7 @@ export default function SendRequest() {
         } catch (error) {
             console.error('Erro ao redirecionar para o checkout:', error);
 
-        } 
+        }
     };
 
     async function handleUpload(): Promise<responseUpload> {
@@ -244,7 +244,7 @@ export default function SendRequest() {
             body: JSON.stringify({
                 customerid: customerId,
                 value: typeRequest === "1" ? 12.99 : 10.99, // Certifique-se que o valor está correto (3499 representa R$ 34,99)
-                description:"2" 
+                description: "2"
             })
         })
         const pixCustomers = await res.json();
@@ -279,7 +279,7 @@ export default function SendRequest() {
     console.log(typeRequest)
     return (
         <>
-            <DialogContent >
+            <DialogContent className='bg-white'>
                 {
                     !loadingPayment ?
                         <>
@@ -292,7 +292,7 @@ export default function SendRequest() {
 
                                     <div className='flex flex-row gap-3 items-center'>
                                         <Image quality={100} alt='pixlogo' width={30} height={30} src={pix} />
-                                        <Radio  value="1">Pagar com Pix</Radio>
+                                        <Radio value="1">Pagar com Pix</Radio>
                                     </div>
                                     {formPayment === "1" &&
                                         <div className='flex flex-col gap-7'>
@@ -379,8 +379,8 @@ export default function SendRequest() {
                             </div>
                         </label>
                         <div className='bg-[#ffffff28] rounded-sm px-2 my-2'>
-                        <Checkbox defaultChecked variant={'subtle'} checked={valueNo} onCheckedChange={(e) => setValueNo(!!e.checked)} className="py-5"> <p className="text-white">A opção "Não" vai se mover quando tentar clicar</p></Checkbox>
-                        <Checkbox  variant={"subtle"} checked={valueYes} onCheckedChange={(e) => setValueYes(!!e.checked)} className=""> <p className="text-white">A opção "Sim" vai se mover quando tentar clicar (ideal para fugir do pedido de casamento🤣)</p></Checkbox>
+                            <Checkbox defaultChecked variant={'subtle'} checked={valueNo} onCheckedChange={(e) => setValueNo(!!e.checked)} className="py-5"> <p className="text-white">A opção "Não" vai se mover quando tentar clicar</p></Checkbox>
+                            <Checkbox variant={"subtle"} checked={valueYes} onCheckedChange={(e) => setValueYes(!!e.checked)} className=""> <p className="text-white">A opção "Sim" vai se mover quando tentar clicar (ideal para fugir do pedido de casamento🤣)</p></Checkbox>
                         </div>
 
                         <label className="w-full text-white">
@@ -402,7 +402,7 @@ export default function SendRequest() {
                         {
                             request && message && image.length > 0 ?
                                 <DialogTrigger asChild>
-                                    <button  className='border text-white px-2 max-w-[300px] w-full hover:text-black hover:bg-white bg-transparent duration-200 cursor-pointer flex flex-col justify-center items-center rounded-md mt-3 py-2'>
+                                    <button className='border text-white px-2 max-w-[300px] w-full hover:text-black hover:bg-white bg-transparent duration-200 cursor-pointer flex flex-col justify-center items-center rounded-md mt-3 py-2'>
                                         Criar pedido
                                     </button>
                                 </DialogTrigger>
@@ -414,6 +414,7 @@ export default function SendRequest() {
                         }
                     </div>
                 </div>
+               
             </div>
             <Footer />
 

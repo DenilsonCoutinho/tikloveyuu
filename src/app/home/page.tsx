@@ -545,7 +545,7 @@ export default function Presentation() {
                                         </button>
                                     </DialogTrigger>
                             }
-                            <DialogContent >
+                            <DialogContent className='bg-white'>
                                 {
                                     !loadingPayment ?
                                         <>
