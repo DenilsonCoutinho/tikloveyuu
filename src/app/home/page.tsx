@@ -379,12 +379,13 @@ export default function Presentation() {
 
                                 Crie um contador dinâmico para acompanhar o tempo do seu relacionamento. Preencha o formulário e receba seu site personalizado, junto com um QR Code para compartilhar com a pessoa especial!🙂
                             </p>
-                            <div className='flex flex-row items-center gap-4'>
-                                <Button className='shadow-[#4500E5] shadow-lg bg-[#4500E5] hover:bg-[#6638C6] hover:shadow-[#6638C6] text-white max-w-[300px] w-full mt-3' onClick={() => scrollToDiv("my_form")}>
+                            <div className='flex md:flex-row flex-col justify-center items-center gap-4 mt-3 max-w-[600px]'>
+                                <Button className='shadow-[#4500E5] shadow-lg bg-[#4500E5] hover:bg-[#6638C6] hover:shadow-[#6638C6] m-auto text-white max-w-[300px] w-full ' onClick={() => scrollToDiv("my_form")}>
                                     Criar meu contador dinâmico
                                 </Button>
-                                <Link href={"/sendRequest"}>
-                                    <Button className='shadow-[#4500E5] shadow-lg bg-[#4500E5] hover:bg-[#6638C6] hover:shadow-[#6638C6] text-white max-w-[300px] w-full mt-3 px-4'>
+                                <h1 className='text- text-white'>OU</h1>
+                                <Link className=' max-w-[300px] w-full m-auto' href={"/sendRequest"}>
+                                    <Button className='shadow-[#4500E5] shadow-lg bg-[#4500E5] hover:bg-[#6638C6] hover:shadow-[#6638C6] text-white max-w-[300px] w-full m-auto  px-4'>
                                         Enviar um pedido especial
                                     </Button>
                                 </Link>

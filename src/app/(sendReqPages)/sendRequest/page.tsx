@@ -287,11 +287,11 @@ export default function SendRequest() {
                             </DialogHeader>
 
                             <DialogBody>
-                                <RadioGroup variant={'subtle'} defaultValue={"2"} value={formPayment} onValueChange={(e) => setFormPayment(e.value)}>
+                                <RadioGroup variant={'subtle'} defaultValue={"1"} value={formPayment} onValueChange={(e) => setFormPayment(e.value)}>
 
                                     <div className='flex flex-row gap-3 items-center'>
                                         <Image quality={100} alt='pixlogo' width={30} height={30} src={pix} />
-                                        <Radio value='1'>Pagar com Pix</Radio>
+                                        <Radio  value="1">Pagar com Pix</Radio>
                                     </div>
                                     {formPayment === "1" &&
                                         <div className='flex flex-col gap-7'>
@@ -377,8 +377,10 @@ export default function SendRequest() {
                                 <Input value={request} onChange={(e) => setRequest(e.target.value)} type="text" id="name_couple" placeholder={typeRequest === "1" ? `Ex:.... quer namorar comigo?` : `Ex:.... vamos sair hoje?`} className="text-white  border border-white px-3 placeholder:text-slate-400 text-sm" />
                             </div>
                         </label>
-                        <Checkbox variant={'subtle'} checked={valueNo} onCheckedChange={(e) => setValueNo(!!e.checked)} className="py-5"> <p className="text-white">A opção "Não" vai se mover quando tentar clicar</p></Checkbox>
-                        <Checkbox variant={"subtle"} checked={valueYes} onCheckedChange={(e) => setValueYes(!!e.checked)} className=""> <p className="text-white">A opção "Sim" vai se mover quando tentar clicar (ideal para fugir do pedido de casamento🤣)</p></Checkbox>
+                        <div className='bg-[#ffffff28] rounded-sm px-2 my-2'>
+                        <Checkbox defaultChecked variant={'subtle'} checked={valueNo} onCheckedChange={(e) => setValueNo(!!e.checked)} className="py-5"> <p className="text-white">A opção "Não" vai se mover quando tentar clicar</p></Checkbox>
+                        <Checkbox  variant={"subtle"} checked={valueYes} onCheckedChange={(e) => setValueYes(!!e.checked)} className=""> <p className="text-white">A opção "Sim" vai se mover quando tentar clicar (ideal para fugir do pedido de casamento🤣)</p></Checkbox>
+                        </div>
 
                         <label className="w-full text-white">
                             <p className="text-white text-xs  max-w-[400px] font-medium md:leading-7 leading-2 pt-2">
@@ -390,7 +392,7 @@ export default function SendRequest() {
                         </label>
                         <FileUploadRoot accept=".png, .jpg, .jpeg" onChange={handleFileChange}>
                             <FileUploadTrigger asChild>
-                                <Button id='buttonModal' className='border border-white rounded-sm my-4 px-3 w-full text-white text-center' variant="outline" size="sm">
+                                <Button id='buttonModal' className='border md:text-base text-wrap text-xs border-white rounded-sm my-4 px-3 w-full text-white text-center' variant="outline" size="sm">
                                     <FaCamera /> Selecione uma imagem caso o pedido seja "SIM"
                                 </Button>
                             </FileUploadTrigger>
