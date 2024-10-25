@@ -23,7 +23,14 @@ export async function createReqSend(idRequestSend: string, requestSend: string, 
     }
 }
 
+export async function getByReqCustomerId(customerId: string, ) {
 
+    const res = await prisma.requestSend.findFirst({
+        where: { idCostumerAsaas: customerId }
+    })
+    return res
+
+}
 export async function getReqById(idUser: string) {
     const res = await prisma.requestSend.findFirst({
         where: { idRequestSend: idUser }

@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
     const { name, cpfCnpj } = await req.json()
     try {
-        const customers = await fetch('	https://api.asaas.com/v3/customers', {
+        const customers = await fetch('https://api.asaas.com/v3/customers', {
             method: 'POST',
             // mode: 'no-cors',
             headers: {

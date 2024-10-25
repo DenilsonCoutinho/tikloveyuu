@@ -6,8 +6,8 @@ export async function POST(req:NextRequest) {
     // Formatar a data no padrão yyyy-mm-dd
     const dueDate = tomorrow.toISOString().split('T')[0];
 
-    const { value, customerid } = await req.json();
-
+    const { value, customerid,description } = await req.json();
+    console.log("description: ",description)
     try {
         const pixCustomers = await fetch('https://api.asaas.com/v3/payments', {
             method: 'POST',
@@ -24,7 +24,7 @@ export async function POST(req:NextRequest) {
                 billingType: 'PIX',
                 value: value, // Certifique-se que o valor está correto (3499 representa R$ 34,99)
                 dueDate: dueDate,
-               
+                description:"1"
             })
         })
         const pixCustomersData = await pixCustomers.json();

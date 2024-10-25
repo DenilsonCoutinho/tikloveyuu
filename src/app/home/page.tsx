@@ -312,6 +312,7 @@ export default function Presentation() {
             body: JSON.stringify({
                 customerid: customerId,
                 value: typeProduct === 1 ? 14.99 : 34.99, // Certifique-se que o valor está correto (3499 representa R$ 34,99)
+                description: "1"
             })
         })
         const pixCustomers = await res.json();

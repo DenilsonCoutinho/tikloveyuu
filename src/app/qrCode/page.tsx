@@ -9,7 +9,7 @@ function QrcodeComponet() {
         localStorage.removeItem('idUserMyLoverTik');
     }, [])
     const searchParams = useSearchParams();
-    const code = searchParams.get("code");
+    const code = searchParams.get("id");
     const captureScreen = async () => {
         const element = document.getElementById('capture');
         if (element) {

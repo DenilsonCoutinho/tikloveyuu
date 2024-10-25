@@ -217,7 +217,8 @@ export default function SendRequest() {
             },
             body: JSON.stringify({
                 name: name,
-                cpfCnpj: cpfCnpj.replace(/[.-]/g, '')
+                cpfCnpj: cpfCnpj.replace(/[.-]/g, ''),
+                // description:typeRequest
             })
         });
 
@@ -236,7 +237,7 @@ export default function SendRequest() {
         }
         await updatecustomerReqId(idUser, customerId, email)
 
-        const res = await fetch('/api/create-pix', {
+        const res = await fetch('/api/create-pix-req', {
             method: 'POST',
             mode: 'no-cors',
             headers: {
@@ -245,6 +246,7 @@ export default function SendRequest() {
             body: JSON.stringify({
                 customerid: customerId,
                 value: typeRequest === "1" ? 6 : 10.99, // Certifique-se que o valor está correto (3499 representa R$ 34,99)
+                description:"2" 
             })
         })
         const pixCustomers = await res.json();
@@ -252,6 +254,7 @@ export default function SendRequest() {
     }
 
     async function getQrCodPix(paymentId: string) {
+        console.log(paymentId)
         const res = await fetch('/api/get-pix-client', {
             method: 'POST',
             mode: 'no-cors',
