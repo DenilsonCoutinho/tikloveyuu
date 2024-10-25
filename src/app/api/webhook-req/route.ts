@@ -8,7 +8,7 @@ const nodemailer = require("nodemailer");
 import stripe from '@/lib/stripe';
 import { db as prisma } from "@/lib/db";
 import { deleteReqById } from "../../../../actions/requestSend";
-const secret = process.env.STRIPE_WEBHOOK_SECRET;
+const secret = process.env.STRIPE_WEBHOOK_SECRET_REQ;
 
 export async function POST(req: NextRequest) {
   const transporter = nodemailer.createTransport({
@@ -29,11 +29,11 @@ export async function POST(req: NextRequest) {
       throw new Error("Missing secret or signature");
     }
     const event = stripe.webhooks.constructEvent(body, sig, secret);
-
-
+    
     switch (event.type) {
-
+      
       case 'checkout.session.completed':
+        console.log(event.data.object.metadata)
         const checkout_session_completed = event.data.object; // Acesse os detalhes da sessão
         if (event.data.object.payment_status === "paid") {  
           if (checkout_session_completed.customer_details?.email && checkout_session_completed?.metadata) {

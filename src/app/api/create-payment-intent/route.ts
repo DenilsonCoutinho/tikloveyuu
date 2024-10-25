@@ -20,8 +20,8 @@ export async function POST(req: NextRequest) {
             ],
             mode: 'payment',
             allow_promotion_codes: true, // Permite o uso de códigos promocionais
-            metadata: { idUser },
-            success_url: `https://www.tikloveyuu.com/qrCode?code=${idUser}`, // Defina suas URLs
+            metadata: { idUser, type: "1" },
+            success_url: `https://www.tikloveyuu.com/qrCode?id=${idUser}`, // Defina suas URLs
             cancel_url: `https://www.tikloveyuu.com/cancel?status=cancelado`,
         });
 

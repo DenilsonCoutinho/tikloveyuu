@@ -135,6 +135,7 @@ export default function SendRequest() {
     // }
 
     async function validateFieldsPix(data: ClientProps) {
+        setLoading(true);
         const validCpf = await validateCpf(data.cpfcnpj);
         if (!validCpf && formPayment === "1") {
             alert("CPF inválido!")
@@ -150,7 +151,7 @@ export default function SendRequest() {
         }
     }
     const handleCheckout = async () => {
-        setLoading(true);
+        
         try {
 
             const response = await fetch(`/api/create-payment-intent-req`, {
@@ -174,13 +175,10 @@ export default function SendRequest() {
         } catch (error) {
             console.error('Erro ao redirecionar para o checkout:', error);
 
-        } finally {
-            setLoading(false);
-        }
+        } 
     };
 
     async function handleUpload(): Promise<responseUpload> {
-        console.log(image)
         const uploads = image?.map((image: any) => {
             const storageRef = ref(storage, `requestSend/${idUser}/images/${image?.name}`);
             return uploadBytes(storageRef, image) // Faz o upload de cada foto
@@ -245,7 +243,7 @@ export default function SendRequest() {
             },
             body: JSON.stringify({
                 customerid: customerId,
-                value: typeRequest === "1" ? 6 : 10.99, // Certifique-se que o valor está correto (3499 representa R$ 34,99)
+                value: typeRequest === "1" ? 12.99 : 10.99, // Certifique-se que o valor está correto (3499 representa R$ 34,99)
                 description:"2" 
             })
         })
@@ -354,7 +352,7 @@ export default function SendRequest() {
                             <Image width={300} height={300} className='m-auto' alt='qrCode' src={myeconder} />
                             <div className='flex flex-col items-center bg-gray-100'>
                                 <p className='font-bold text-xs text-yellow-600'>Atenção</p>
-                                <p className='text-center text-black text-xs font-bold px-2'>Assim que fizer o pagamento você receberá no email o QrCode do seu site!</p>
+                                <p className='text-center text-black text-xs font-bold px-2'>Assim que fizer o pagamento você receberá no E-mail o seu link!</p>
                             </div>
                             <p className='text-black text-center px-3 py-2'>{qrCode}</p>
                             <Button bg={"green"} onClick={handleCopy} className='select-none ' ><p className=' text-white  font-medium px-2'>{copied ? "copiado" : "Copiar"}</p> <span className=' border border-white rounded-md p-1'><FaCopy className=' text-white' /></span></Button>
