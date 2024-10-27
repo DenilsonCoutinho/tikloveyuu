@@ -406,7 +406,7 @@ export default function Presentation() {
                                     </a>
                                 </div>
                                 <div className='flex items-center flex-row gap-3'>
-                                    <CountUp prefix='+' start={0} end={10644} duration={4} className='text-xl text-white font-bold' /> <span className='text-white text-xl'>Pessoas já viram</span>
+                                    <CountUp prefix='+' start={0} end={201644} duration={3} className='text-xl text-white font-bold' /> <span className='text-white text-xl'>Pessoas já viram</span>
                                 </div>
                             </div>
                         </section>
