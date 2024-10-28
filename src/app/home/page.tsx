@@ -393,7 +393,7 @@ export default function Presentation() {
                             <div className='DESTAQUES flex flex-col md:flex-row justify-center gap-4 md:my-20 my-14 items-center'>
                                 <p className='text-white text-xl'>Em destaque no</p>
                                 <div className='flex items-center gap-4'>
-                                    <a href="https://www.tiktok.com/@tikloveyuu" className="">
+                                    <a href="https://www.tiktok.com/@gabriela.rodrigue9315/video/7430304676643425542" className="">
                                         <FaTiktok className='hover:scale-110 duration-150 text-white text-3xl ' />
 
                                     </a>
@@ -406,9 +406,10 @@ export default function Presentation() {
                                     </a>
                                 </div>
                                 <div className='flex items-center flex-row gap-3'>
-                                    <CountUp prefix='+' start={0} end={201644} duration={3} className='text-xl text-white font-bold' /> <span className='text-white text-xl'>Pessoas já viram</span>
+                                    <CountUp prefix='+' start={0} end={331644} duration={3} className='text-xl text-white font-bold' /> <span className='text-white text-xl'>Pessoas já viram</span>
                                 </div>
                             </div>
+                            
                         </section>
                     </div>
 
