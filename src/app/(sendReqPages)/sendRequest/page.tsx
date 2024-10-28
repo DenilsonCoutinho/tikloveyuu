@@ -314,10 +314,10 @@ export default function SendRequest() {
 
                                             <div className='relative'>
                                                 <label>
-                                                    <p className='text-black'>Digite seu e-mail para receber o QR Code
+                                                    <p className='text-black'>Digite seu e-mail para receber o seu link
                                                     </p>
                                                     <Input className='border px-2' {...register('email', {
-                                                        required: "Email é obrigatório para receber seu Qrcode",
+                                                        required: "Email é obrigatório para receber seu link",
                                                         pattern: {
                                                             value: emailPattern,
                                                             message: "Email inválido."
