@@ -5,23 +5,17 @@ import { useEffect } from "react";
 
 export default function Home() {
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const script = document.createElement('script');
-      script.src = `https://www.googletagmanager.com/gtag/js?id=G-CTLFWSXV84`;
-      script.async = true;
-      document.head.appendChild(script);
-
-      window.dataLayer = window.dataLayer || [];
-      const gtag = (...args: any[]) => window.dataLayer.push(args);
-      gtag('js', new Date());
-      gtag('config', 'G-CTLFWSXV84');
-    }
+    const script = document.createElement('script');
+    script.defer = true;
+    script.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+    script.setAttribute('data-cf-beacon', '{"token": "ada2e6bd47b8495ea5e18ae818c7a867"}');
+    document.head.appendChild(script);
   }, []);
   return (
     <div className="bg-defaultBg ">
 
-        <Presentation />
-     
+      <Presentation />
+
     </div>
   );
 }
