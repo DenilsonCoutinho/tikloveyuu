@@ -1,3 +1,4 @@
+// "use client"
 import type { Metadata } from "next";
 import "./globals.css";
 import { Montserrat } from 'next/font/google'
@@ -7,6 +8,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Provider } from "@/components/ui/provider"
 import { DialogRoot } from "@/components/ui/dialog";
 import { FileUploadRoot } from "@/components/ui/file-button";
+import { useEffect } from "react";
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -28,6 +30,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+ 
   return (
     <html suppressHydrationWarning lang="en">
       <body className={`${montserrat.className}   antialiased`}>

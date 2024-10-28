@@ -1,12 +1,12 @@
 import Image from "next/image";
 import logo from "../../assets/logoLove.png"
 import me from "../../assets/me.png"
-import { FaInstagram, FaLinkedin, FaTiktok, FaYoutube } from "react-icons/fa";
+import { FaEnvelope, FaInstagram, FaLinkedin, FaTiktok, FaYoutube } from "react-icons/fa";
 import Link from "next/link";
 export default function Footer() {
     return (
         <footer className="bg-defaultBg border-white border-t  py-10">
-            <div className=" px-3 m-auto flex md:flex-row  max-w-[1100px]  md:items-start items-start   flex-col md:gap-96 gap-10">
+            <div className=" px-3 m-auto flex md:flex-row  max-w-[1100px]  md:items-start items-start justify-between   flex-col md:gap- gap-10">
                 <div className="flex flex-col  pl-1">
                     <Image alt="logo" src={logo} quality={100} width={110} className="" />
                     <p className="text-xs text-slate-100 font-medium leading-5">Surpreenda o seu amor criando seu<br /> contador de tempo de relacionamento ou com um pedido</p>
@@ -28,13 +28,25 @@ export default function Footer() {
                         <a href="https://www.instagram.com/tikloveyuu/reels/">
                             <FaInstagram />
                         </a>
-                       
-                       
+
+
                         <a href="https://www.linkedin.com/in/denilson-c-silva/" className="">
                             <FaLinkedin />
                         </a>
                     </div>
                 </div>
+
+                <div className="flex flex-col gap-3">
+                    <h1 className="text-white text-lg">Suporte</h1>
+                    <div className="flex items-center gap-3 justify-center">
+                        <FaEnvelope className="text-white"/>
+                        <p className="text-white text-xs">
+                            denidesenvolvimentos@gmail.com
+                        </p>
+                    </div>
+
+                </div>
+
                 <div className="flex flex-col gap-3">
                     <h1 className="text-white text-lg">Legal</h1>
                     <Link href="/terms">

@@ -33,7 +33,7 @@ import { getReqById } from "../../../../actions/requestSend";
     const id = searchParams.get("id");
     const handleCopy = () => {
         try {
-            const text = navigator.clipboard.writeText(`http://localhost:3000/yesOrNo?id=${id}`);
+            const text = navigator.clipboard.writeText(`https://www.tikloveyuu.com/yesOrNo?id=${id}`);
             setCopied(true)
             toaster.success({
                 title: "Copiado com sucesso!",
