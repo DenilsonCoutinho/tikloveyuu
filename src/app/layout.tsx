@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Montserrat } from 'next/font/google'
 import { ChakraProvider } from '@chakra-ui/react'
-import { Analytics } from "@vercel/analytics/react"
+// import { Analytics } from "@vercel/analytics/react"
 import { Toaster } from "@/components/ui/toaster";
 import { Provider } from "@/components/ui/provider"
 import { DialogRoot } from "@/components/ui/dialog";
@@ -42,7 +42,7 @@ export default function RootLayout({
           </DialogRoot>
 
         </Provider>
-        <Analytics />
+        {/* <Analytics /> */}
       </body>
     </html>
   );
