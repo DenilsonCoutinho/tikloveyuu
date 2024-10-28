@@ -8,6 +8,8 @@ import ButtonRandomNo from "../../components/buttonRandomNo";
 import Image from "next/image";
 import { FaCheckCircle } from "react-icons/fa";
 import logo from '../../../assets/logoLove.png'
+import Footer from "@/app/components/footer";
+import Link from "next/link";
 
 interface ReqProps {
     requestSend: string;
@@ -52,13 +54,40 @@ function YesOrNoComponent() {
         getDataReq()
 
     }, []);
+    useEffect(() => {
+        // startConfetti()
 
+        const elementos = document.querySelectorAll(".bolha");
+
+        elementos.forEach((elemento: any) => {
+            const i = getComputedStyle(elemento).getPropertyValue("--i");
+            elemento.style.animation = `animar calc(30s / ${i}) linear infinite`;
+        });
+    }, [])
 
     return (
-        <div className="bg-defaultBg">
-                <Image src={logo} alt="logo" width={200}  className="m-auto"/>
+        <div className="bg-defaultBg ">
+            <Link href={"/"}>
+                <Image src={logo} alt="logo" width={200} className="m-auto" />
+            </Link>
 
-            <div className="bg-defaultBg h-screen flex flex-col items-center justify-center">
+            <div className="relative overflow-hidden bg-defaultBg h-[30rem] flex flex-col items-center justify-center">
+                <div className="flex absolute justify-between w-full  ">
+                    <span style={{ "--i": "4" } as React.CSSProperties} className="bolha h-[2px] w-[2px] bg-white"></span>
+                    <span style={{ "--i": "3" } as React.CSSProperties} className="bolha h-[2px] w-[2px] bg-white"></span>
+                    <span style={{ "--i": "2" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
+                    <span style={{ "--i": "4" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
+                    <span style={{ "--i": "1" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
+                    <span style={{ "--i": "1" } as React.CSSProperties} className="bolha h-[2px] w-[2px] bg-white"></span>
+                    <span style={{ "--i": "5" } as React.CSSProperties} className="bolha h-[2px] w-[2px] bg-white"></span>
+                    <span style={{ "--i": "8" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
+                    <span style={{ "--i": "4" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
+                    <span style={{ "--i": "6" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
+                    <span style={{ "--i": "2" } as React.CSSProperties} className="bolha h-[2px] w-[2px] bg-white"></span>
+                    <span style={{ "--i": "7" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
+                    <span style={{ "--i": "9" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
+                    <span style={{ "--i": "3" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
+                </div>
                 {step === "1" ? <>
                     <h1 className="md:text-4xl text-2xl text-white text-center select-none">{data?.requestSend}</h1>
                     <div className="flex justify-center items-center gap-4">
@@ -101,6 +130,7 @@ function YesOrNoComponent() {
                         </div>
                 }
             </div>
+            <Footer />
         </div>
     )
 }
