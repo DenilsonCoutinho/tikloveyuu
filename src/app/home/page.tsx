@@ -386,7 +386,10 @@ export default function Presentation() {
                                 <h1 className='text- text-white'>OU</h1>
                                 <Link className=' max-w-[300px] w-full m-auto' href={"/sendRequest"}>
                                     <div></div>
-                                    <Button className='shadow-[#4500E5] shadow-lg bg-[#4500E5] hover:bg-[#6638C6] hover:shadow-[#6638C6] text-white max-w-[300px] w-full m-auto  px-4'>
+                                    <Button className='relative shadow-[#4500E5] shadow-lg bg-[#4500E5] hover:bg-[#6638C6] hover:shadow-[#6638C6] text-white max-w-[300px] w-full m-auto  px-4'>
+                                        <span className="absolute top-[-13px] right-[-10px] bg-[#ff8000] text-xs font-bold text-white px-2 py-1 rounded-full">
+                                            Destaque
+                                        </span>
                                         Enviar um pedido especial
                                     </Button>
                                 </Link>
@@ -395,22 +398,22 @@ export default function Presentation() {
                                 <p className='text-white text-xl'>Em destaque no</p>
                                 <div className='flex items-center gap-4'>
                                     <a href="https://www.tiktok.com/@gabriela.rodrigue9315/video/7430304676643425542" className="">
-                                        <FaTiktok className='hover:scale-110 duration-150 text-white text-3xl ' />
+                                        <FaTiktok className='hover:scale-110 duration-150 text-white text-6xl ' />
 
                                     </a>
-                                    <a href="https://www.youtube.com/@tikloveyuu/shorts">
+                                    {/* <a href="https://www.youtube.com/@tikloveyuu/shorts">
                                         <FaYoutube className='hover:scale-110 duration-150 text-white text-3xl ' />
 
                                     </a>
                                     <a href="https://www.instagram.com/tikloveyuu/reels/">
                                         <FaInstagram className='hover:scale-110 duration-150 text-white text-3xl ' />
-                                    </a>
+                                    </a> */}
                                 </div>
-                                <div className='flex items-center flex-row gap-3'>
-                                    <CountUp prefix='+' start={0} end={331644} duration={3} className='text-xl text-white font-bold' /> <span className='text-white text-xl'>Pessoas já viram</span>
+                                <div className='flex items-center md:flex-row flex-col gap-3'>
+                                    <CountUp prefix='+' start={0} end={1001644} duration={3} className='text-xl text-white font-bold' /> <span className='text-white text-xl'>Milhões de Pessoas já viram</span>
                                 </div>
                             </div>
-                            
+
                         </section>
                     </div>
 

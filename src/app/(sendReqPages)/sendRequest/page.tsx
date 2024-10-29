@@ -337,16 +337,16 @@ export default function SendRequest() {
                             </DialogBody>
                             <DialogFooter>
                                 <DialogActionTrigger asChild>
-                                    <Button variant="outline" className='text-black'>Cancel</Button>
+                                    {<Button disabled={loading} variant="outline" className='text-black'>Cancelar</Button>}
                                 </DialogActionTrigger>
                                 <Button disabled={loading} px={2} bg={"blue.400"} mr={3} onClick={handleSubmit(validateFieldsPix)}>
                                     <p className=" flex gap-2 items-center justify-center font-bold  rounded-lg text-xl   text-white ">
-                                        {loading?"Aguarde":"ir para o Pagamento"}
+                                        {loading ? "Aguarde" : "ir para o Pagamento"}
                                         {loading && <div className="pt-1 lds-circle"><div></div></div>}
                                     </p>
                                 </Button>
                             </DialogFooter>
-                            <DialogCloseTrigger />
+                            {/* <DialogCloseTrigger /> */}
                         </>
                         :
                         <>
@@ -414,7 +414,7 @@ export default function SendRequest() {
                         }
                     </div>
                 </div>
-               
+
             </div>
             <Footer />
 
