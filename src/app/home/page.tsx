@@ -410,7 +410,7 @@ export default function Presentation() {
                                     </a> */}
                                 </div>
                                 <div className='flex items-center md:flex-row flex-col gap-3'>
-                                    <CountUp prefix='+' start={0} end={1001644} duration={3} className='text-xl text-white font-bold' /> <span className='text-white text-xl'>Milhões de Pessoas já viram</span>
+                                    <CountUp prefix='+' start={0} end={1151644} duration={3} className='text-xl text-white font-bold' /> <span className='text-white text-xl'>Milhões de Pessoas já viram</span>
                                 </div>
                             </div>
 
