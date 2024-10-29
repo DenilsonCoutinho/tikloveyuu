@@ -10,6 +10,8 @@ import { FaCheckCircle } from "react-icons/fa";
 import logo from '../../../assets/logoLove.png'
 import Footer from "@/app/components/footer";
 import Link from "next/link";
+import Flowers from "@/app/components/flower";
+import { resolve } from "path";
 
 interface ReqProps {
     requestSend: string;
@@ -28,6 +30,7 @@ function YesOrNoComponent() {
 
     const [data, setData] = useState<ReqProps | null>(null)
     const [step, setStep] = useState<string>("1")
+    const [animationFlower, setAnimationFlower] = useState<boolean>(false)
     const searchParams = useSearchParams();
     const route = useRouter()
 
@@ -45,6 +48,10 @@ function YesOrNoComponent() {
 
     async function nextStep() {
         setStep("2")
+        setAnimationFlower(true)
+        await new Promise(resolve => setTimeout(resolve, 7000))
+        setAnimationFlower(false)
+
     }
 
     async function nextStepNo() {
@@ -71,7 +78,7 @@ function YesOrNoComponent() {
                 <Image src={logo} alt="logo" width={200} className="m-auto" />
             </Link>
 
-            <div className="relative overflow-hidden bg-defaultBg h-[30rem] flex flex-col items-center justify-center">
+            <div className={`relative overflow-hidden bg-defaultBg ${step === "2" && animationFlower ? "md:h-[65rem]" : ""} h-screen flex flex-col items-center justify-center`}>
                 <div className="flex absolute justify-between w-full  ">
                     <span style={{ "--i": "4" } as React.CSSProperties} className="bolha h-[2px] w-[2px] bg-white"></span>
                     <span style={{ "--i": "3" } as React.CSSProperties} className="bolha h-[2px] w-[2px] bg-white"></span>
@@ -109,28 +116,33 @@ function YesOrNoComponent() {
                         }
                     </div>
                 </>
-                    : step === "2" ?
+                    : step === "2" && animationFlower ?
                         <>
-                            <div className="md:h-[400px] h-[300px] flex flex-col items-center border rounde overflow-hidden rounded-lg">
-                                {data?.images && <Image
-                                    className=" w-full h-full object-cover "
-                                    width={200}
-                                    quality={100}
-                                    height={200}
-                                    src={data?.images} alt="imagem" />}
-                            </div>
-                            <p className="text-white md:text-xl text-sm py-2 text-center">
-                                {data?.message}
-                            </p>
+                            <Flowers />
+
                         </>
-                        :
-                        <div className="border flex flex-col justify-center items-center border-white rounded-md w-full max-w-[300px] h-24 ">
-                            <FaCheckCircle className="text-green-500" />
-                            <h1 className="text-center text-white">Recebemos a sua resposta!</h1>
-                        </div>
+                        : step === "2" && !animationFlower ?
+                            <>
+                                <div className="md:h-[400px] h-[300px] flex flex-col items-center border rounde overflow-hidden rounded-lg">
+                                    {data?.images && <Image
+                                        className=" w-full h-full object-cover "
+                                        width={200}
+                                        quality={100}
+                                        height={200}
+                                        src={data?.images} alt="imagem" />}
+                                </div>
+                                <p className="text-white md:text-xl text-sm py-2 text-center">
+                                    {data?.message}
+                                </p>
+                            </>
+                            :
+                            <div className="border flex flex-col justify-center items-center border-white rounded-md w-full max-w-[300px] h-24 ">
+                                <FaCheckCircle className="text-green-500" />
+                                <h1 className="text-center text-white">Recebemos a sua resposta!</h1>
+                            </div>
                 }
             </div>
-            <Footer />
+            {!animationFlower && <Footer />}
         </div>
     )
 }
