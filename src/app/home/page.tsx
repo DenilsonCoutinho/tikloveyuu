@@ -58,6 +58,8 @@ import { FaCopy, FaInstagram, FaTiktok, FaYoutube } from 'react-icons/fa';
 import HowItWorks from '../components/howItork';
 import Link from 'next/link';
 import { Radio, RadioGroup } from '@/components/ui/radio';
+import Faq from '../components/faq';
+import QrCodeSite from '../components/qrCodeSite';
 
 export default function Presentation() {
     const { onOpen, onClose } = useDisclosure()
@@ -636,6 +638,8 @@ export default function Presentation() {
                     </aside>
                 </div >
             </main >
+            <Faq />
+            <QrCodeSite />
             <Footer />
         </>
     )

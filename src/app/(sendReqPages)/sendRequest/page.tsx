@@ -279,7 +279,7 @@ export default function SendRequest() {
     console.log(typeRequest)
     return (
         <>
-            <DialogContent className='bg-white'>
+            <DialogContent  className='bg-white'>
                 {
                     !loadingPayment ?
                         <>
@@ -346,7 +346,7 @@ export default function SendRequest() {
                                     </p>
                                 </Button>
                             </DialogFooter>
-                            {/* <DialogCloseTrigger /> */}
+                            <DialogCloseTrigger  />
                         </>
                         :
                         <>
