@@ -60,6 +60,7 @@ import Link from 'next/link';
 import { Radio, RadioGroup } from '@/components/ui/radio';
 import Faq from '../components/faq';
 import QrCodeSite from '../components/qrCodeSite';
+import Viral from '../components/viral';
 
 export default function Presentation() {
     const { onOpen, onClose } = useDisclosure()
@@ -377,9 +378,8 @@ export default function Presentation() {
                             <div className='max-w-[700px]'>
                                 <h1 className="text-redDefault md:text-6xl text-5xl font-black  md:text-left text-center">Surpreenda seu love!</h1>
                             </div>
-                            <p className="text-white md:text-left text-center md:text-lg text-xs max-w-[600px] font-medium md:leading-7 leading-5 pt-2">
-
-                                Crie um contador dinâmico para acompanhar o tempo do seu relacionamento. Preencha o formulário e receba seu site personalizado, junto com um QR Code para compartilhar com a pessoa especial!🙂
+                            <p className="text-white md:text-left text-center md:text-base text-xs max-w-[600px] font-medium md:leading-6 leading-5 pt-2">
+                            Celebre cada momento do seu relacionamento com um contador dinâmico exclusivo! Preencha o formulário e receba um site personalizado com um QR Code especial para compartilhar com quem você ama. Agora, aproveite também a opção de criar um pedido especial!
                             </p>
                             <div className='flex md:flex-row flex-col justify-center items-center gap-4 mt-3 max-w-[600px]'>
                                 <Button className='shadow-[#4500E5] shadow-lg bg-[#4500E5] hover:bg-[#6638C6] hover:shadow-[#6638C6] m-auto text-white max-w-[300px] w-full ' onClick={() => scrollToDiv("my_form")}>
@@ -457,6 +457,8 @@ export default function Presentation() {
                         </div>
                     </div>
                 </div> */}
+                <Viral />
+
                 <HowItWorks />
 
                 <div className="flex md:flex-row flex-col px-3 max-w-[1100px] pb-10 m-auto justify- items-center md:gap-10 gap-5">
