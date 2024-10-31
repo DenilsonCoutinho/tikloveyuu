@@ -78,7 +78,7 @@ function YesOrNoComponent() {
                 <Image src={logo} alt="logo" width={200} className="m-auto" />
             </Link>
 
-            <div className={`relative overflow-hidden bg-defaultBg ${step === "2" && animationFlower ? "md:h-[65rem] " : ""} py-20 flex flex-col items-center justify-center`}>
+            <div className={`relative overflow-hidden bg-defaultBg ${step === "2" && animationFlower ? "md:h-[65rem] h-screen" : step === "1" && !animationFlower && "h-[23rem]"} py-20 flex flex-col items-center justify-center`}>
                 <div className="flex absolute justify-between w-full  ">
                     <span style={{ "--i": "4" } as React.CSSProperties} className="bolha h-[2px] w-[2px] bg-white"></span>
                     <span style={{ "--i": "3" } as React.CSSProperties} className="bolha h-[2px] w-[2px] bg-white"></span>
@@ -97,7 +97,7 @@ function YesOrNoComponent() {
                 </div>
                 {step === "1" ? <>
                     <h1 className="md:text-4xl text-2xl text-white text-center select-none">{data?.requestSend}</h1>
-                    <div className="flex justify-center items-center gap-4">
+                    <div className="flex justify-center items-center gap-4 ]">
                         {
                             data?.yesMove ?
                                 <ButtonRandom yesOrNo={"SIM"} shadowButton={"#4500E5"} hoverColorButton={"#6638C6"} hoverShadowButton={"#6638C6"} colorButton={"#4500E5"} />
