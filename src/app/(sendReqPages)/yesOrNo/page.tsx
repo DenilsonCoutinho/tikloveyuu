@@ -78,7 +78,7 @@ function YesOrNoComponent() {
                 <Image src={logo} alt="logo" width={200} className="m-auto" />
             </Link>
 
-            <div className={`relative overflow-hidden bg-defaultBg ${step === "2" && animationFlower ? "md:h-[65rem]" : ""} h-screen flex flex-col items-center justify-center`}>
+            <div className={`relative overflow-hidden bg-defaultBg ${step === "2" && animationFlower ? "md:h-[65rem] " : ""} py-20 flex flex-col items-center justify-center`}>
                 <div className="flex absolute justify-between w-full  ">
                     <span style={{ "--i": "4" } as React.CSSProperties} className="bolha h-[2px] w-[2px] bg-white"></span>
                     <span style={{ "--i": "3" } as React.CSSProperties} className="bolha h-[2px] w-[2px] bg-white"></span>
@@ -123,20 +123,20 @@ function YesOrNoComponent() {
                         </>
                         : step === "2" && !animationFlower ?
                             <>
-                                <div className="md:h-[400px] h-[300px] flex flex-col items-center border rounde overflow-hidden rounded-lg">
+                                <div className=" bg-cover h-[400px]  flex flex-col items-center border rounde overflow-hidden rounded-lg">
                                     {data?.images && <Image
-                                        className=" w-full h-full object-cover "
-                                        width={200}
+                                        className=" w-full  object-cover "
+                                        width={222}
                                         quality={100}
-                                        height={200}
+                                        height={222}
                                         src={data?.images} alt="imagem" />}
                                 </div>
-                                <p className="text-white md:text-xl text-sm py-2 text-center">
+                                <p className="text-white md:text-xl text-sm py-2 text-center max-w-[300px] px-2">
                                     {data?.message}
                                 </p>
                             </>
                             :
-                            <div className="border flex flex-col justify-center items-center border-white rounded-md w-full max-w-[300px] h-24 ">
+                            <div className="border flex flex-col justify-center items-center border-white rounded-md w-full max-w-[250px] h-24 ">
                                 <FaCheckCircle className="text-green-500" />
                                 <h1 className="text-center text-white">Recebemos a sua resposta!</h1>
                             </div>
