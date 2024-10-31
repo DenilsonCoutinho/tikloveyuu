@@ -113,27 +113,6 @@ export default function SendRequest() {
         }
     }, [])
 
-    // async function validateFieldsPix(data: ClientProps) {
-
-    //     const validCpf = await validateCpf(data.cpfcnpj);
-    //     if (!validCpf && formPayment === "1") {
-    //         alert("CPF inválido!")
-    //         return { erro: "CPF inválido!" }
-    //     }
-    //     // const { success } = await createReqSend(idUser, request, valueYes, valueNo, message)
-
-    //     // if (success && formPayment === "1") {
-    //     //     await generatorPix()
-    //     // } else {
-
-    //     //     // return handleCheckout()
-    //     // }
-
-
-    //     return
-
-    // }
-
     async function validateFieldsPix(data: ClientProps) {
         setLoading(true);
         const validCpf = await validateCpf(data.cpfcnpj);
@@ -199,13 +178,7 @@ export default function SendRequest() {
             return { errorImg: "Algo deu errado!" }
         }
     }
-    async function submit() {
-        if (!request || !message) {
-
-            return
-        }
-
-    }
+    
     async function generatoClient(name: string, cpfCnpj: string): Promise<customerProps> {
 
         const response = await fetch('/api/create-client-pix', {
@@ -276,7 +249,6 @@ export default function SendRequest() {
             setImage(Array.from(event.target.files))
         }
     };
-    console.log(typeRequest)
     return (
         <>
             <DialogContent  className='bg-white'>
