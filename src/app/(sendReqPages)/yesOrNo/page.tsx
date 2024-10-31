@@ -123,9 +123,9 @@ function YesOrNoComponent() {
                         </>
                         : step === "2" && !animationFlower ?
                             <>
-                                <div className=" bg-cover h-[400px]  flex flex-col items-center border rounde overflow-hidden rounded-lg">
+                                <div className=" bg-cover  flex flex-col items-center border rounde overflow-hidden rounded-lg">
                                     {data?.images && <Image
-                                        className=" w-full  object-cover "
+                                        className=" w-full h-full object-cover "
                                         width={222}
                                         quality={100}
                                         height={222}
