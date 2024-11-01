@@ -31,9 +31,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
 
- 
+
   return (
     <html suppressHydrationWarning lang="en">
+      <head>
+        <meta name="google-site-verification" content="QUHtQpp0zPPj6YOv5xLy9PYCyP-HoWXECaoijTaNmgo" />
+      </head>
       <body className={`${montserrat.className}   antialiased`}>
         <Provider>
 
