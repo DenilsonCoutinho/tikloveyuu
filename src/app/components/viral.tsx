@@ -55,7 +55,6 @@ export default function Viral() {
                     <div className='flex flex-col items-center'>
                         <Image height={500} quality={100} alt='img' src={img_3} />
                         <div className='rounded-md bg-redDefault max-w-[200px] w-full'>
-
                             <p className='text-white text-center text-xs'>@ruth_p_coutinho</p>
                         </div>
                     </div>
