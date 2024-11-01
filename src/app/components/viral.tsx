@@ -3,9 +3,9 @@ import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
 import { EffectCoverflow, Pagination, Navigation, Autoplay } from 'swiper/modules';
-import img_1 from '../../assets/proof/1730346739292.png'
-import img_2 from '../../assets/proof/1730346803402.png'
-import img_3 from '../../assets/proof/1730346888764.png'
+import img_1 from '../../assets/proof/1730346739292.svg'
+import img_2 from '../../assets/proof/1730346803402.svg'
+import img_3 from '../../assets/proof/1730346888764.svg'
 import Image from 'next/image';
 export default function Viral() {
     return (
