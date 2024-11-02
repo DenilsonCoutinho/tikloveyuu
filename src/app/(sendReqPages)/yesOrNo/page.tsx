@@ -136,9 +136,11 @@ function YesOrNoComponent() {
                                 </p>
                             </>
                             :
-                            <div className="border flex flex-col justify-center items-center border-white rounded-md w-full max-w-[250px] h-24 ">
+                            <div className="h-svh flex flex-col justify-center items-center">
+                            <div className="border  flex flex-col justify-center px-3 items-center border-white rounded-md w-full max-w-[250px] h-24 ">
                                 <FaCheckCircle className="text-green-500" />
                                 <h1 className="text-center text-white">Recebemos a sua resposta!</h1>
+                            </div>
                             </div>
                 }
             </div>
