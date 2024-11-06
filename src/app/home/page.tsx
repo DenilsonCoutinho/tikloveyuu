@@ -507,7 +507,7 @@ export default function Presentation() {
                                     {typeProduct === 2 &&
                                         <label className="text-white  w-full mt-3">
                                             <p className="text-white">Música Youtube: (Opcional)</p>
-                                            <Input onChange={(e) => setYoutubeLink(e.target.value)} type="text" value={youtubeLink} className="placeholder:text-white text-white flex text-sm justify-center items-center" />
+                                            <Input onChange={(e) => setYoutubeLink(e.target.value)} type="text" value={youtubeLink} className="placeholder:text-white border-white border text-white flex text-sm justify-center items-center" />
                                         </label>}
                                 </div>
                             </div>
