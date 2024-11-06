@@ -8,6 +8,7 @@ import regexEmoji from "../../../utils/maskEmoji";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import ContadorEterno from "../components/counter";
 import iconImg from '../../assets/photo (1).png'
+import chapeu from '../../assets/chapeuNatal.png'
 import logo from '../../assets/logoLove.png'
 import pix from '../../assets/Logo-Pix.png'
 import card from '../../assets/credit-card.png'
@@ -61,6 +62,7 @@ import { Radio, RadioGroup } from '@/components/ui/radio';
 import Faq from '../components/faq';
 import QrCodeSite from '../components/qrCodeSite';
 import Viral from '../components/viral';
+import Snowfall from 'react-snowfall'
 
 export default function Presentation() {
     const { onOpen, onClose } = useDisclosure()
@@ -353,11 +355,13 @@ export default function Presentation() {
     const emailPattern = /^[a-zA-Z0-9._%+-]+@(gmail|hotmail|outlook|yahoo)\.com$/
     return (
         <>
+          
 
             <main className="  m-auto  ">
-                <div className='useViewBg md:h-[33rem] relative overflow-hidden  '>
+            <Snowfall />
+                <div className='useViewBg md:h-[33rem]  overflow-hidden  '>
                     <div className='max-w-[1100px] m-auto px-3'>
-                        <div className="flex absolute justify-between w-full  ">
+                        {/* <div className="flex absolute justify-between w-full  ">
                             <span style={{ "--i": "4" } as React.CSSProperties} className="bolha h-[2px] w-[2px] bg-white"></span>
                             <span style={{ "--i": "3" } as React.CSSProperties} className="bolha h-[2px] w-[2px] bg-white"></span>
                             <span style={{ "--i": "2" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
@@ -372,14 +376,14 @@ export default function Presentation() {
                             <span style={{ "--i": "7" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
                             <span style={{ "--i": "9" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
                             <span style={{ "--i": "3" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
-                        </div>
+                        </div> */}
                         <div><Image alt='logo' width={150} className='m-auto pb-10 py-2' src={logo} /></div>
                         <section className="">
                             <div className='max-w-[700px]'>
-                                <h1 className="text-redDefault md:text-6xl text-5xl font-black  md:text-left text-center">Surpreenda seu love!</h1>
+                                <h1 className="text-redDefault md:text-6xl text-5xl font-black  md:text-left text-center"><span className='relative '>S<Image className='absolute top-1 -left-2' src={chapeu}  alt='chapeu'/></span>urpreenda seu love!</h1>
                             </div>
                             <p className="text-white md:text-left text-center md:text-base text-xs max-w-[600px] font-medium md:leading-6 leading-5 pt-2">
-                            Celebre cada momento do seu relacionamento com um contador dinâmico exclusivo! Preencha o formulário e receba um site personalizado com um QR Code especial para compartilhar com quem você ama. Agora, aproveite também a opção de criar um pedido especial!
+                                Celebre cada momento do seu relacionamento com um contador dinâmico exclusivo! Preencha o formulário e receba um site personalizado com um QR Code especial para compartilhar com quem você ama. Agora, aproveite também a opção de criar um pedido especial!
                             </p>
                             <div className='flex md:flex-row flex-col justify-center items-center gap-4 mt-3 max-w-[600px]'>
                                 <Button className='shadow-[#4500E5] shadow-lg bg-[#4500E5] hover:bg-[#6638C6] hover:shadow-[#6638C6] m-auto text-white max-w-[300px] w-full ' onClick={() => scrollToDiv("my_form")}>

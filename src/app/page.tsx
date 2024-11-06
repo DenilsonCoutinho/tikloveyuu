@@ -2,7 +2,6 @@
 import { DialogRoot } from "@chakra-ui/react";
 import Presentation from "./home/page";
 import { useEffect } from "react";
-
 export default function Home() {
   useEffect(() => {
     const script = document.createElement('script');
