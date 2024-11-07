@@ -125,7 +125,7 @@ function YesOrNoComponent() {
 
                         </>
                         : step === "2" && !animationFlower ?
-                            <>
+                            <div className="select-none">
                                 <div className=" bg-cover  flex flex-col items-center border rounde overflow-hidden rounded-lg">
                                     {data?.images && <Image
                                         className=" w-full h-full object-cover "
@@ -137,7 +137,7 @@ function YesOrNoComponent() {
                                 <p className="text-white md:text-xl text-sm py-2 text-center max-w-[300px] px-2">
                                     {data?.message}
                                 </p>
-                            </>
+                            </div>
                             :
                             <div className="h-svh flex flex-col justify-center items-center">
                                 <div className="border  flex flex-col justify-center px-3 items-center border-white rounded-md w-full max-w-[250px] h-24 ">

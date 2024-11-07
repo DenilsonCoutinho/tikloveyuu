@@ -1,6 +1,6 @@
 "use client"
 import { v4 as uuidv4 } from 'uuid';
-import { Button, Input, Separator, Stack, Textarea, } from "@chakra-ui/react";
+import { Button, FileUploadClearTrigger, Input, Separator, Stack, Textarea, } from "@chakra-ui/react";
 import Confetti from "react-confetti"
 import FormPaymentInputs from "../components/formPaymentInputs";
 import { useEffect, useRef, useState } from "react";
@@ -55,7 +55,7 @@ import {
     useDisclosure,
 } from '@chakra-ui/react'
 import { validateCpf } from '../../../utils/cpfValid';
-import { FaCopy, FaInstagram, FaTiktok, FaYoutube } from 'react-icons/fa';
+import { FaCamera, FaCopy, FaInstagram, FaTiktok, FaYoutube } from 'react-icons/fa';
 import HowItWorks from '../components/howItork';
 import Link from 'next/link';
 import { Radio, RadioGroup } from '@/components/ui/radio';
@@ -63,6 +63,11 @@ import Faq from '../components/faq';
 import QrCodeSite from '../components/qrCodeSite';
 import Viral from '../components/viral';
 import Snowfall from 'react-snowfall'
+import ButtonUiUniverse from '../components/buttonUiUniverse';
+import { FileInput, FileUploadList, FileUploadRoot, FileUploadTrigger } from '@/components/ui/file-button';
+import { HiUpload } from 'react-icons/hi';
+import { InputGroup } from '@/components/ui/input-group';
+import { CloseButton } from '@/components/ui/close-button';
 
 export default function Presentation() {
     const { onOpen, onClose } = useDisclosure()
@@ -104,22 +109,26 @@ export default function Presentation() {
         setNameCouple(cleanedValue);
     };
     const handleFileChange = async (event: any) => {
-        if (event.target.files) {
-            startConfetti()
-            const files: any = Array.from(event.target.files); // Converte FileList para array de File
-            if (typeProduct == 1) {
-                let fileTruncated3 = files.slice(0, 3)
-                setImageCouple(fileTruncated3);
-                const fileURLs = fileTruncated3.map((file: any) => URL.createObjectURL(file));
-                setPreviewURLs(fileURLs);
-            }
-            if (typeProduct == 2) {
-                let fileTruncated7 = files.slice(0, 6)
-                setImageCouple(fileTruncated7);
-                const fileURLs = fileTruncated7.map((file: any) => URL.createObjectURL(file));
-                setPreviewURLs(fileURLs);
-            }
 
+        if (event.acceptedFiles) {
+            startConfetti()
+            const files: any = event.acceptedFiles.map((file: any) => URL.createObjectURL(file)); // Converte FileList para array de File
+            const filesToUpload: any = event.acceptedFiles // Converte FileList para array de File
+            console.log(files   )
+            // if (typeProduct == 1) {
+            //     let fileTruncated3 = files.slice(0, 3)
+            //     setImageCouple(fileTruncated3);
+            //     const fileURLs = fileTruncated3.map((file: any) => URL.createObjectURL(file));
+            //     setPreviewURLs(fileURLs);
+            // }
+            // if (typeProduct == 2) {
+            //     let fileTruncated7 = files.slice(0, 6)
+            //     setImageCouple(fileTruncated7);
+            //     const fileURLs = fileTruncated7.map((file: any) => URL.createObjectURL(file));
+            //     setPreviewURLs(fileURLs);
+            // }
+            setPreviewURLs(files);
+            setImageCouple(filesToUpload)
         }
     };
     const handleCpfChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -189,7 +198,7 @@ export default function Presentation() {
     };
 
     async function validateFieldsPix(data: ClientProps) {
-        console.log(data, errors)
+        
         const validCpf = await validateCpf(data.cpfcnpj);
         if (!validCpf && formPayment === "1") {
             alert("CPF inválido!")
@@ -221,23 +230,11 @@ export default function Presentation() {
 
     async function submit() {
         if (!nameCouple || !hour || !dataCouple) {
-            // toast({
-            //     title: 'Algum campo não foi preenchido',
-            //     description: 'Preencha todos campos!',
-            //     status: 'error',
-            //     duration: 5000,
-            //     isClosable: true,
-            // });
+     
             return
         }
         if (imageCouple.length == 0) {
-            // toast({
-            //     title: 'Preencha as imagens!',
-            //     description: "",
-            //     status: 'error',
-            //     duration: 9000,
-            //     isClosable: true,
-            // })
+        
             return
         }
         onOpen()
@@ -355,10 +352,10 @@ export default function Presentation() {
     const emailPattern = /^[a-zA-Z0-9._%+-]+@(gmail|hotmail|outlook|yahoo)\.com$/
     return (
         <>
-          
+
 
             <main className="  m-auto  ">
-            <Snowfall />
+                <Snowfall />
                 <div className='useViewBg md:h-[33rem]  overflow-hidden  '>
                     <div className='max-w-[1100px] m-auto px-3'>
                         {/* <div className="flex absolute justify-between w-full  ">
@@ -380,7 +377,7 @@ export default function Presentation() {
                         <div><Image alt='logo' width={150} className='m-auto pb-10 py-2' src={logo} /></div>
                         <section className="">
                             <div className='max-w-[700px]'>
-                                <h1 className="text-redDefault md:text-6xl text-5xl font-black  md:text-left text-center"><span className='relative '>S<Image className='absolute top-1 -left-2' src={chapeu}  alt='chapeu'/></span>urpreenda seu love!</h1>
+                                <h1 className="text-redDefault md:text-6xl text-5xl font-black  md:text-left text-center"><span className='relative '>S<Image className='absolute top-1 -left-2' src={chapeu} alt='chapeu' /></span>urpreenda seu love!</h1>
                             </div>
                             <p className="text-white md:text-left text-center md:text-base text-xs max-w-[600px] font-medium md:leading-6 leading-5 pt-2">
                                 Celebre cada momento do seu relacionamento com um contador dinâmico exclusivo! Preencha o formulário e receba um site personalizado com um QR Code especial para compartilhar com quem você ama. Agora, aproveite também a opção de criar um pedido especial!
@@ -407,13 +404,7 @@ export default function Presentation() {
                                         <FaTiktok className='hover:scale-110 duration-150 text-white text-6xl ' />
 
                                     </a>
-                                    {/* <a href="https://www.youtube.com/@tikloveyuu/shorts">
-                                        <FaYoutube className='hover:scale-110 duration-150 text-white text-3xl ' />
 
-                                    </a>
-                                    <a href="https://www.instagram.com/tikloveyuu/reels/">
-                                        <FaInstagram className='hover:scale-110 duration-150 text-white text-3xl ' />
-                                    </a> */}
                                 </div>
                                 <div className='flex items-center md:flex-row flex-col gap-3'>
                                     <CountUp prefix='+' start={0} end={1451644} duration={3} className='text-xl text-white font-bold' /> <span className='text-white text-xl'>Milhões de Pessoas já viram</span>
@@ -422,47 +413,8 @@ export default function Presentation() {
 
                         </section>
                     </div>
-
-                    {/* <HowToMake /> */}
                 </div>
-                {/* <div className='AnyProofs my-10 max-w-[1100px] m-auto px-3'>
-
-                    <h1 className='text-white text-2xl font-bold text-center my-5'>Algumas <span className='text-redDefault'>Surpresas!</span></h1>
-                    <div className='flex md:flex-row flex-col justify-between items-center gap-10'>
-                        <div className='rounded-md border border-white'>
-                            <Image quality={100} width={180} alt='prova-1' src={proof_1} />
-                        </div>
-                        <div className='rounded-md border border-white'>
-                            <Image  quality={100} width={180} alt='prova-2' src={proof_2} />
-                        </div>
-                        <div className='rounded-md border border-white'>
-                            <Image  quality={100} width={180} alt='prova-3' src={proof_3} />
-                        </div>
-                    </div>
-                </div> */}
-                {/* <div className='flex md:flex-row flex-col max-w-[1100px] justify-between m-auto items-center md:items-start'>
-                    <h1 className='text-white text-center md:text-5xl text-3xl font-bold'>Como  <span className='text-redDefault'>funciona</span></h1>
-                    <div className='grid md:grid-cols-2 m-auto gap-10 '>
-                        <div className='h-80 border-gray-800 border max-w-72 flex flex-col justify-center items-center bg-gradient-to-b from-[#0E0813] to-redDefault  rounded-md overflow-hidden'>
-                            <h1 className='text-white p-5  text-center  font-bold'>1 - Preencha os dados</h1>
-                            <Image className='m-auto translate-y-10' quality={100} height={250} width={250} alt='fields' src={fields} />
-                        </div>
-                        <div className='h-80 border-gray-800 border max-w-72 flex flex-col justify-center items-center bg-gradient-to-b from-[#0E0813] to-redDefault  rounded-md overflow-hidden'>
-                            <h1 className='text-white p-5  text-center  font-bold'>2 - Faça o pagamento</h1>
-                            <Image className='m-auto  p-5 translate-y-10' quality={100} height={250} width={250} alt='payment' src={payment} />
-                        </div>
-                        <div className='h-96 border-gray-800 border max-w-72 flex flex-col justify-center items-center bg-gradient-to-b from-[#0E0813] to-redDefault  rounded-md overflow-hidden'>
-                            <h1 className='text-white p-5  text-center  font-bold'>3 - Receba seu QR Code no <br/>e-mail</h1>
-                            <Image className='m-auto  p-5 translate-y-14' quality={100} height={250} width={250} alt='email' src={emailCouple} />
-                        </div>
-                        <div className='h-96 border-gray-800 border max-w-72 flex flex-col items-end bg-gradient-to-b from-[#0E0813] to-redDefault  rounded-md overflow-hidden'>
-                            <h1 className='text-white p-5  text-center  font-bold'>4 - Surpreenda seu amor</h1>
-                            <Image className='m-auto  p-5 translate-y-' quality={100} height={250} width={250} alt='couple' src={couple} />
-                        </div>
-                    </div>
-                </div> */}
                 <Viral />
-
                 <HowItWorks />
 
                 <div className="flex md:flex-row flex-col px-3 max-w-[1100px] pb-10 m-auto justify- items-center md:gap-10 gap-5">
@@ -507,7 +459,15 @@ export default function Presentation() {
                                 </Textarea>
                                 <div className="flex flex-col">
                                     <p className="text-white">Escolha até {typeProduct === 1 ? "3" : "6"} fotos</p>
-                                    <Input id='imagesFile' ref={fileInputRef} onChange={handleFileChange} type="file" accept=".png, .jpg, .jpeg, .gif" multiple={true} className="placeholder:text-white text-white flex justify-center items-center border-white border" />
+                                    {/* <Input id='imagesFile' ref={fileInputRef} onChange={handleFileChange} type="file" accept=".png, .jpg, .jpeg, .gif" multiple={true} className="placeholder:text-white text-white flex justify-center items-center border-white border" /> */}
+
+                                    <FileUploadRoot ref={fileInputRef} onFileChange={handleFileChange} maxFiles={typeProduct === 1 ? 3 : 6}>
+                                        <FileUploadTrigger asChild>
+                                            <Button variant="outline" className='text-white border-white border w-full py-4' size="sm">
+                                                <FaCamera className='text-white' />Escolha até {typeProduct === 1 ? "3" : "6"} fotos
+                                            </Button>
+                                        </FileUploadTrigger>
+                                    </FileUploadRoot>
                                     {typeProduct === 2 &&
                                         <label className="text-white  w-full mt-3">
                                             <p className="text-white">Música Youtube: (Opcional)</p>
@@ -523,13 +483,7 @@ export default function Presentation() {
                         <div className="flex flex-col">
                             <div className=" overflow-hidden relative border bg-[#180d21]   rounded-xl max-h-[540px] myscroll overflow-y-auto w-80 px-4">
                                 {showConfetti && <Confetti />}
-                                {/* <div className="mt-4 bg-white h-7 w-full flex justify-center items-center rounded-md">
-                                    <div className="w-96 h-7 overflow-hidden myscroll overflow-x-auto whitespace-nowrap">
-                                        <p className="text-center px-2 ">
-                                            tikloveyuu.com/{nameCouple.trim().replaceAll(" ", "-")}
-                                        </p>
-                                    </div>
-                                </div> */}
+
                                 <div className={`previewURLsPhoto my-10 flex relative justify-center items-center mt-4 ${previewURLs.length > 0 ? "" : "h-80"} rounded-md  w-full px-4 `}>
                                     {
                                         previewURLs.length > 0 ?
@@ -543,19 +497,23 @@ export default function Presentation() {
                                 {hour && <p className=' text-white text-center mt-3 text-xs'>{message}</p>}
                             </div>
 
+
+
+
                             {
-                                !nameCouple || !dataCouple || !hour || imageCouple < 1 ?
+                                !nameCouple || !dataCouple || !hour || imageCouple.length < 1 ?
                                     <button disabled={true} className='border  bg-transparent duration-200  flex flex-col justify-center items-center rounded-md mt-3 py-2'>
-                                        <p className=" flex gap-2 items-center justify-center font-bold  rounded-lg text-xl   text-white ">Criar meu site</p>
+                                        <p className=" flex gap-2 items-center justify-center font-bold  rounded-lg text-xl   text-white ">Criar meu Contador</p>
                                         <p className=" flex gap-2 items-center justify-center font-medium  rounded-lg text-xs   text-white ">Preencha os campos necessários</p>
                                     </button>
                                     :
-                                    <DialogTrigger asChild>
-                                        <button disabled={loading} onClick={() => submit()} className='border hover:bg-slate-600 bg-transparent duration-200 cursor-pointer flex flex-col justify-center items-center rounded-md mt-3 py-2'>
+                                    <DialogTrigger className='mt-3' asChild>
+                                        <ButtonUiUniverse disabled={loading} onClick={() => submit()} />
+                                        {/* <button disabled={loading} onClick={() => submit()} className='border hover:bg-slate-600 bg-transparent duration-200 cursor-pointer flex flex-col justify-center items-center rounded-md mt-3 py-2'>
                                             <p className=" flex gap-2 items-center justify-center font-bold  rounded-lg text-xl   text-white ">{loading ? "Criando site" : "Criar meu site"}
                                                 {loading && <div className="pt-1 lds-circle"><div></div></div>}
                                             </p>
-                                        </button>
+                                        </button> */}
                                     </DialogTrigger>
                             }
                             <DialogContent className='bg-white'>
