@@ -18,7 +18,7 @@ export default function Faq() {
             <h1 className="text-white font-bold text-3xl text-center py-4">Perguntas Frequentes
 
             </h1>
-            <AccordionRoot collapsible defaultValue={["a"]}>
+            <AccordionRoot collapsible >
 
                 {items.map((item, index) => (
                     <AccordionItem key={index} value={item.value} className="border-b">

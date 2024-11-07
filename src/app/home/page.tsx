@@ -416,7 +416,7 @@ export default function Presentation() {
                                     </a> */}
                                 </div>
                                 <div className='flex items-center md:flex-row flex-col gap-3'>
-                                    <CountUp prefix='+' start={0} end={1151644} duration={3} className='text-xl text-white font-bold' /> <span className='text-white text-xl'>Milhões de Pessoas já viram</span>
+                                    <CountUp prefix='+' start={0} end={1451644} duration={3} className='text-xl text-white font-bold' /> <span className='text-white text-xl'>Milhões de Pessoas já viram</span>
                                 </div>
                             </div>
 
@@ -507,7 +507,7 @@ export default function Presentation() {
                                 </Textarea>
                                 <div className="flex flex-col">
                                     <p className="text-white">Escolha até {typeProduct === 1 ? "3" : "6"} fotos</p>
-                                    <Input id='imagesFile' ref={fileInputRef} onChange={handleFileChange} type="file" accept=".png, .jpg, .jpeg" multiple={true} className="placeholder:text-white text-white flex justify-center items-center border-white border" />
+                                    <Input id='imagesFile' ref={fileInputRef} onChange={handleFileChange} type="file" accept=".png, .jpg, .jpeg, .gif" multiple={true} className="placeholder:text-white text-white flex justify-center items-center border-white border" />
                                     {typeProduct === 2 &&
                                         <label className="text-white  w-full mt-3">
                                             <p className="text-white">Música Youtube: (Opcional)</p>
@@ -523,13 +523,13 @@ export default function Presentation() {
                         <div className="flex flex-col">
                             <div className=" overflow-hidden relative border bg-[#180d21]   rounded-xl max-h-[540px] myscroll overflow-y-auto w-80 px-4">
                                 {showConfetti && <Confetti />}
-                                <div className="mt-4 bg-white h-7 w-full flex justify-center items-center rounded-md">
+                                {/* <div className="mt-4 bg-white h-7 w-full flex justify-center items-center rounded-md">
                                     <div className="w-96 h-7 overflow-hidden myscroll overflow-x-auto whitespace-nowrap">
                                         <p className="text-center px-2 ">
                                             tikloveyuu.com/{nameCouple.trim().replaceAll(" ", "-")}
                                         </p>
                                     </div>
-                                </div>
+                                </div> */}
                                 <div className={`previewURLsPhoto my-10 flex relative justify-center items-center mt-4 ${previewURLs.length > 0 ? "" : "h-80"} rounded-md  w-full px-4 `}>
                                     {
                                         previewURLs.length > 0 ?

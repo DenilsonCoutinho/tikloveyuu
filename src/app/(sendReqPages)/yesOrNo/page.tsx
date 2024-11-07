@@ -11,7 +11,8 @@ import logo from '../../../assets/logoLove.png'
 import Footer from "@/app/components/footer";
 import Link from "next/link";
 import Flowers from "@/app/components/flower";
-import { resolve } from "path";
+import Snowfall from "react-snowfall";
+
 
 interface ReqProps {
     requestSend: string;
@@ -73,13 +74,15 @@ function YesOrNoComponent() {
     }, [])
 
     return (
-        <div className="bg-defaultBg ">
+        <div className="bg-defaultBg relative">
+                <Snowfall />
+         
             <Link href={"/"}>
                 <Image src={logo} alt="logo" width={200} className="m-auto" />
             </Link>
 
-            <div className={`relative overflow-hidden bg-defaultBg ${step === "2" && animationFlower ? "md:h-[65rem] h-svh" : step === "1" && !animationFlower && "h-svh"} py-20 flex flex-col items-center justify-center`}>
-                <div className="flex absolute justify-between w-full  ">
+            <div className={` overflow-hidden bg-defaultBg ${step === "2" && animationFlower ? "md:h-[65rem] h-svh" : step === "1" && !animationFlower && "h-svh"} py-20 flex flex-col items-center justify-center`}>
+                {/* <div className="flex absolute justify-between w-full  ">
                     <span style={{ "--i": "4" } as React.CSSProperties} className="bolha h-[2px] w-[2px] bg-white"></span>
                     <span style={{ "--i": "3" } as React.CSSProperties} className="bolha h-[2px] w-[2px] bg-white"></span>
                     <span style={{ "--i": "2" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
@@ -94,7 +97,7 @@ function YesOrNoComponent() {
                     <span style={{ "--i": "7" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
                     <span style={{ "--i": "9" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
                     <span style={{ "--i": "3" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
-                </div>
+                </div> */}
                 {step === "1" ? <>
                     <h1 className="md:text-4xl text-2xl text-white text-center select-none">{data?.requestSend}</h1>
                     <div className="flex justify-center items-center gap-4 ]">
@@ -137,10 +140,10 @@ function YesOrNoComponent() {
                             </>
                             :
                             <div className="h-svh flex flex-col justify-center items-center">
-                            <div className="border  flex flex-col justify-center px-3 items-center border-white rounded-md w-full max-w-[250px] h-24 ">
-                                <FaCheckCircle className="text-green-500" />
-                                <h1 className="text-center text-white">Recebemos a sua resposta!</h1>
-                            </div>
+                                <div className="border  flex flex-col justify-center px-3 items-center border-white rounded-md w-full max-w-[250px] h-24 ">
+                                    <FaCheckCircle className="text-green-500" />
+                                    <h1 className="text-center text-white">Recebemos a sua resposta!</h1>
+                                </div>
                             </div>
                 }
             </div>

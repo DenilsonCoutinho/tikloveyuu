@@ -3,10 +3,13 @@ import { Suspense, useEffect, useRef, useState } from "react"
 import { getCoupleById } from "../../../actions/couple"
 import ContadorEterno from "../components/counter"
 import MySwiper from "../components/mySwiper";
+import coração from "../../assets/cora.png";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@chakra-ui/react";
 import Confetti from "react-confetti"
 import bgGalaxy from "../../assets/bgView.png"
+import Snowfall from "react-snowfall";
+import Image from "next/image";
 
 interface UserViewProps {
     id: string;
@@ -61,6 +64,8 @@ function UserViewComponent() {
         }, 9000);
 
     }
+    const heartImageUrl = 'https://images.unsplash.com/photo-1500336629070-b0e356d4ac60';  // Exemplo de URL pública
+
     useEffect(() => {
         startConfetti()
 
@@ -98,6 +103,7 @@ function UserViewComponent() {
                 <div className="flex flex-col-reverse">
                     <div>
                         <div className="relative border bg-transparent my-3 overflow-hidden  border-slate-600 rounded-xl m-auto w-80 px-5">
+
                             {showConfetti && <Confetti />}
                             <p className="text-white text-center font- text-xl">{data?.nameCouple}</p>
 

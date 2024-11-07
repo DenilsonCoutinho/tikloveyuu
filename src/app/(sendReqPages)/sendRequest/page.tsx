@@ -366,7 +366,7 @@ export default function SendRequest() {
 
                             </Textarea>
                         </label>
-                        <FileUploadRoot accept=".png, .jpg, .jpeg" onChange={handleFileChange}>
+                        <FileUploadRoot accept=".png, .jpg, .jpeg, .gif" onChange={handleFileChange}>
                             <FileUploadTrigger asChild>
                                 <Button id='buttonModal' className='border md:text-base text-wrap text-xs border-white rounded-sm my-4 px-3 w-full text-white text-center' variant="outline" size="sm">
                                     <FaCamera /> Selecione uma imagem caso o pedido seja "SIM"
