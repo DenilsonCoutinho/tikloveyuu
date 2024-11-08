@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Button, FileUploadClearTrigger, Input, Separator, Stack, Textarea, } from "@chakra-ui/react";
 import Confetti from "react-confetti"
 import FormPaymentInputs from "../components/formPaymentInputs";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import regexEmoji from "../../../utils/maskEmoji";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import ContadorEterno from "../components/counter";
@@ -55,7 +55,7 @@ import {
     useDisclosure,
 } from '@chakra-ui/react'
 import { validateCpf } from '../../../utils/cpfValid';
-import { FaCamera, FaCopy, FaInstagram, FaTiktok, FaYoutube } from 'react-icons/fa';
+import { FaCamera, FaCopy, FaTiktok, } from 'react-icons/fa';
 import HowItWorks from '../components/howItork';
 import Link from 'next/link';
 import { Radio, RadioGroup } from '@/components/ui/radio';
@@ -64,12 +64,13 @@ import QrCodeSite from '../components/qrCodeSite';
 import Viral from '../components/viral';
 import Snowfall from 'react-snowfall'
 import ButtonUiUniverse from '../components/buttonUiUniverse';
-import { FileInput, FileUploadList, FileUploadRoot, FileUploadTrigger } from '@/components/ui/file-button';
-import { HiUpload } from 'react-icons/hi';
-import { InputGroup } from '@/components/ui/input-group';
-import { CloseButton } from '@/components/ui/close-button';
+import { FileUploadRoot, FileUploadTrigger } from '@/components/ui/file-button';
+import { emojiBlast, emojiBlasts } from "emoji-blast";
+import ButtonPayment from '../components/button-payment';
+
 
 export default function Presentation() {
+
     const { onOpen, onClose } = useDisclosure()
     const storage = getStorage(app)
     const { register, handleSubmit, watch, getValues, formState: { errors } } = useForm({
@@ -87,7 +88,6 @@ export default function Presentation() {
     const [showConfetti, setShowConfetti] = useState(false);
     const [loading, setLoading] = useState(false);
     const [loadingPayment, setLoadingPayment] = useState(false);
-    const [confirmPayment, setConfirmPayment] = useState(false);
     const [formPayment, setFormPayment] = useState<string>('');
     const [imageQrCode, setImageQrCode] = useState<string>("");
     const [qrCode, setQrCode] = useState<string>("");
@@ -104,6 +104,7 @@ export default function Presentation() {
     const [previewURLs, setPreviewURLs] = useState<[]>([])
     const [idUser, setIdUser] = useState<string>("")
     const fileInputRef = useRef<HTMLInputElement | null>(null);
+    const [init, setInit] = useState(false);
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const cleanedValue = regexEmoji(e);
         setNameCouple(cleanedValue);
@@ -114,19 +115,7 @@ export default function Presentation() {
             startConfetti()
             const files: any = event.acceptedFiles.map((file: any) => URL.createObjectURL(file)); // Converte FileList para array de File
             const filesToUpload: any = event.acceptedFiles // Converte FileList para array de File
-            console.log(files   )
-            // if (typeProduct == 1) {
-            //     let fileTruncated3 = files.slice(0, 3)
-            //     setImageCouple(fileTruncated3);
-            //     const fileURLs = fileTruncated3.map((file: any) => URL.createObjectURL(file));
-            //     setPreviewURLs(fileURLs);
-            // }
-            // if (typeProduct == 2) {
-            //     let fileTruncated7 = files.slice(0, 6)
-            //     setImageCouple(fileTruncated7);
-            //     const fileURLs = fileTruncated7.map((file: any) => URL.createObjectURL(file));
-            //     setPreviewURLs(fileURLs);
-            // }
+
             setPreviewURLs(files);
             setImageCouple(filesToUpload)
         }
@@ -198,7 +187,7 @@ export default function Presentation() {
     };
 
     async function validateFieldsPix(data: ClientProps) {
-        
+
         const validCpf = await validateCpf(data.cpfcnpj);
         if (!validCpf && formPayment === "1") {
             alert("CPF inválido!")
@@ -230,11 +219,11 @@ export default function Presentation() {
 
     async function submit() {
         if (!nameCouple || !hour || !dataCouple) {
-     
+
             return
         }
         if (imageCouple.length == 0) {
-        
+
             return
         }
         onOpen()
@@ -348,13 +337,14 @@ export default function Presentation() {
         }, 5000);
 
     }
+
     const cpfPattern = /^(?!000\.000\.000-00)(\d{3}\.\d{3}\.\d{3}-\d{2})$/;
     const emailPattern = /^[a-zA-Z0-9._%+-]+@(gmail|hotmail|outlook|yahoo)\.com$/
+
+
     return (
         <>
-
-
-            <main className="  m-auto  ">
+            <main className="m-auto">
                 <Snowfall />
                 <div className='useViewBg md:h-[33rem]  overflow-hidden  '>
                     <div className='max-w-[1100px] m-auto px-3'>
@@ -375,6 +365,7 @@ export default function Presentation() {
                             <span style={{ "--i": "3" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
                         </div> */}
                         <div><Image alt='logo' width={150} className='m-auto pb-10 py-2' src={logo} /></div>
+
                         <section className="">
                             <div className='max-w-[700px]'>
                                 <h1 className="text-redDefault md:text-6xl text-5xl font-black  md:text-left text-center"><span className='relative '>S<Image className='absolute top-1 -left-2' src={chapeu} alt='chapeu' /></span>urpreenda seu love!</h1>
@@ -482,7 +473,7 @@ export default function Presentation() {
                         <Image width={180} quality={100} alt='comovaificar ' src={comovaificar} />
                         <div className="flex flex-col">
                             <div className=" overflow-hidden relative border bg-[#180d21]   rounded-xl max-h-[540px] myscroll overflow-y-auto w-80 px-4">
-                                {showConfetti && <Confetti />}
+                                {/* {<Confetti />} */}
 
                                 <div className={`previewURLsPhoto my-10 flex relative justify-center items-center mt-4 ${previewURLs.length > 0 ? "" : "h-80"} rounded-md  w-full px-4 `}>
                                     {
@@ -507,25 +498,32 @@ export default function Presentation() {
                                         <p className=" flex gap-2 items-center justify-center font-medium  rounded-lg text-xs   text-white ">Preencha os campos necessários</p>
                                     </button>
                                     :
-                                    <DialogTrigger className='mt-3' asChild>
-                                        <ButtonUiUniverse disabled={loading} onClick={() => submit()} />
-                                        {/* <button disabled={loading} onClick={() => submit()} className='border hover:bg-slate-600 bg-transparent duration-200 cursor-pointer flex flex-col justify-center items-center rounded-md mt-3 py-2'>
-                                            <p className=" flex gap-2 items-center justify-center font-bold  rounded-lg text-xl   text-white ">{loading ? "Criando site" : "Criar meu site"}
-                                                {loading && <div className="pt-1 lds-circle"><div></div></div>}
-                                            </p>
-                                        </button> */}
-                                    </DialogTrigger>
+                                <DialogTrigger className='mt-3' asChild>
+                                    <ButtonUiUniverse disabled={loading} onClick={() => {
+                                        submit(); emojiBlast({
+                                            emojis: ["💝", "💞", "", "💖", "💜", "💘"],
+
+                                            position: {
+                                                x: innerWidth / 2,
+                                                y: innerHeight / 2
+                                            }
+                                            ,
+                                            emojiCount: () => 64
+                                        })
+                                    }} />
+
+                                </DialogTrigger>
                             }
                             <DialogContent className='bg-white'>
                                 {
                                     !loadingPayment ?
                                         <>
                                             <DialogHeader>
-                                                <DialogTitle className='text-black'>Escolha a forma de pagamento</DialogTitle>
+                                                <DialogTitle className='text-black font-bold'>Escolha a forma de pagamento</DialogTitle>
                                             </DialogHeader>
 
                                             <DialogBody>
-                                                <RadioGroup variant={'subtle'} defaultValue={"2"} value={formPayment} onValueChange={(e) => setFormPayment(e.value)}>
+                                                <RadioGroup variant={'subtle'} defaultValue={"1"} value={formPayment} onValueChange={(e) => setFormPayment(e.value)}>
 
                                                     <div className='flex flex-row gap-3 items-center'>
                                                         <Image quality={100} alt='pixlogo' width={30} height={30} src={pix} />
@@ -572,17 +570,21 @@ export default function Presentation() {
                                                     </div>
                                                 </RadioGroup>
                                             </DialogBody>
-                                            <DialogFooter>
+                                            {formPayment && <DialogFooter>
+
                                                 <DialogActionTrigger asChild>
-                                                    <Button className='text-black' variant="outline">Cancel</Button>
+                                                    <Button className='text-black' variant="outline">Cancelar</Button>
                                                 </DialogActionTrigger>
-                                                <Button disabled={loading} px={2} bg={"blue.400"} mr={3} onClick={handleSubmit(validateFieldsPix)}>
-                                                    <p className=" flex gap-2 items-center justify-center font-bold  rounded-lg text-xl   text-white  ">
+
+                                                <ButtonPayment text={loading ? "Aguarde..." : "ir para o Pagamento"} disabled={loading} onClick={handleSubmit(validateFieldsPix)} />
+
+                                                {/* <Button disabled={loading} px={2} bg={"green.400"} shadow={"md"} mr={3} onClick={handleSubmit(validateFieldsPix)}>
+                                                    <p className=" flex gap-2 items-center justify-center  font-bold  rounded-lg text-xl   text-white  ">
                                                         {loading ? "Aguarde" : "ir para o Pagamento"}
                                                         {loading && <div className="pt-1 lds-circle"><div></div></div>}
                                                     </p>
-                                                </Button>
-                                            </DialogFooter>
+                                                </Button> */}
+                                            </DialogFooter>}
                                             <DialogCloseTrigger />
                                         </>
                                         :

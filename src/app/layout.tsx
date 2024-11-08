@@ -5,6 +5,7 @@ import { Montserrat } from 'next/font/google'
 
 import { Provider } from "@/components/ui/provider"
 import { DialogRoot } from "@/components/ui/dialog";
+import Script from "next/script";
 
 
 const montserrat = Montserrat({
@@ -33,6 +34,10 @@ export default function RootLayout({
     <html suppressHydrationWarning lang="en">
       <head>
         <meta name="google-site-verification" content="QUHtQpp0zPPj6YOv5xLy9PYCyP-HoWXECaoijTaNmgo" />
+        <Script
+          src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"
+          strategy="beforeInteractive"
+        ></Script>
       </head>
       <body className={`${montserrat.className}   antialiased`}>
         <Provider>
