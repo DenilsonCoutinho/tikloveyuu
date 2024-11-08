@@ -11,6 +11,7 @@ import Confetti from "react-confetti"
 import Image from "next/image";
 import { emojiBlast, emojiBlasts } from "emoji-blast";
 import ButtonPayment from "../components/button-payment";
+import ButtonLike from "../components/button-like";
 
 interface UserViewProps {
     id: string;
@@ -76,7 +77,7 @@ function UserViewComponent() {
                 y: innerHeight / 2
             }
             ,
-            emojiCount: () => 44
+            emojiCount: () => 34
         })
 
         const elementos = document.querySelectorAll(".bolha");
@@ -123,6 +124,16 @@ function UserViewComponent() {
                                     <MySwiper previewURLs={data?.images} />
                                 }
                             </div>
+                            <ButtonLike onClick={() => emojiBlast({
+                                emojis: ["💝", "💞", "", "💖", "💜", "💘"],
+
+                                position: {
+                                    x: innerWidth / 2,
+                                    y: innerHeight / 2
+                                }
+                                ,
+                                emojiCount: () => 6
+                            })} />
                             <ContadorEterno initialDate={data?.initialDate} initialHour={data?.initialHours} />
                         </div>
                         <p className="text-center m-auto max-w-96 px-3 text-sm text-white  overflow-y-auto">{data?.messages}</p>

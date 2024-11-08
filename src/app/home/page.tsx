@@ -452,7 +452,7 @@ export default function Presentation() {
                                     <p className="text-white">Escolha até {typeProduct === 1 ? "3" : "6"} fotos</p>
                                     {/* <Input id='imagesFile' ref={fileInputRef} onChange={handleFileChange} type="file" accept=".png, .jpg, .jpeg, .gif" multiple={true} className="placeholder:text-white text-white flex justify-center items-center border-white border" /> */}
 
-                                    <FileUploadRoot ref={fileInputRef} onFileChange={handleFileChange} maxFiles={typeProduct === 1 ? 3 : 6}>
+                                    <FileUploadRoot ref={fileInputRef} accept={["image/png","image/gif","image/jpeg"]} onFileChange={handleFileChange} maxFiles={typeProduct === 1 ? 3 : 6}>
                                         <FileUploadTrigger asChild>
                                             <Button variant="outline" className='text-white border-white border w-full py-4' size="sm">
                                                 <FaCamera className='text-white' />Escolha até {typeProduct === 1 ? "3" : "6"} fotos
@@ -508,7 +508,7 @@ export default function Presentation() {
                                                 y: innerHeight / 2
                                             }
                                             ,
-                                            emojiCount: () => 64
+                                            emojiCount: () => 34
                                         })
                                     }} />
 
