@@ -500,16 +500,7 @@ export default function Presentation() {
                                     :
                                 <DialogTrigger className='mt-3' asChild>
                                     <ButtonUiUniverse disabled={loading} onClick={() => {
-                                        submit(); emojiBlast({
-                                            emojis: ["💝", "💞", "", "💖", "💜", "💘"],
-
-                                            position: {
-                                                x: innerWidth / 2,
-                                                y: innerHeight / 2
-                                            }
-                                            ,
-                                            emojiCount: () => 34
-                                        })
+                                        submit()
                                     }} />
 
                                 </DialogTrigger>
