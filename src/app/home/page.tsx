@@ -1,6 +1,6 @@
 "use client"
 import { v4 as uuidv4 } from 'uuid';
-import { Button, FileUploadClearTrigger, Input, Separator, Stack, Textarea, } from "@chakra-ui/react";
+import { Button, Input, Textarea, } from "@chakra-ui/react";
 import Confetti from "react-confetti"
 import FormPaymentInputs from "../components/formPaymentInputs";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -322,7 +322,6 @@ export default function Presentation() {
             })
         })
         const getPixCustomers = await res.json();
-        console.log(getPixCustomers)
         setImageQrCode(getPixCustomers.pixCustomersData.encodedImage)
         setQrCode(getPixCustomers.pixCustomersData.payload)
         setLoadingPayment(true)
@@ -348,22 +347,7 @@ export default function Presentation() {
                 <Snowfall />
                 <div className='useViewBg md:h-[33rem]  overflow-hidden  '>
                     <div className='max-w-[1100px] m-auto px-3'>
-                        {/* <div className="flex absolute justify-between w-full  ">
-                            <span style={{ "--i": "4" } as React.CSSProperties} className="bolha h-[2px] w-[2px] bg-white"></span>
-                            <span style={{ "--i": "3" } as React.CSSProperties} className="bolha h-[2px] w-[2px] bg-white"></span>
-                            <span style={{ "--i": "2" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
-                            <span style={{ "--i": "4" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
-                            <span style={{ "--i": "1" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
-                            <span style={{ "--i": "1" } as React.CSSProperties} className="bolha h-[2px] w-[2px] bg-white"></span>
-                            <span style={{ "--i": "5" } as React.CSSProperties} className="bolha h-[2px] w-[2px] bg-white"></span>
-                            <span style={{ "--i": "8" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
-                            <span style={{ "--i": "4" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
-                            <span style={{ "--i": "6" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
-                            <span style={{ "--i": "2" } as React.CSSProperties} className="bolha h-[2px] w-[2px] bg-white"></span>
-                            <span style={{ "--i": "7" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
-                            <span style={{ "--i": "9" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
-                            <span style={{ "--i": "3" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
-                        </div> */}
+                        
                         <div><Image alt='logo' width={150} className='m-auto pb-10 py-2' src={logo} /></div>
 
                         <section className="">
@@ -487,10 +471,6 @@ export default function Presentation() {
                                 <div className='border-b border-white py-1'></div>
                                 {hour && <p className=' text-white text-center mt-3 text-xs'>{message}</p>}
                             </div>
-
-
-
-
                             {
                                 !nameCouple || !dataCouple || !hour || imageCouple.length < 1 ?
                                     <button disabled={true} className='border  bg-transparent duration-200  flex flex-col justify-center items-center rounded-md mt-3 py-2'>
