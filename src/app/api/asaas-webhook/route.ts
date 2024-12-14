@@ -21,7 +21,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
     // res.headers.set('ngrok-skip-browser-warning', 'true');
     // res.headers.set('User-Agent', 'CustomUserAgent/1.0');
     const body = await req.json();
-    if (body.payment.description !== "1") return 
+    if (body.payment.description !== "1") return NextResponse.json({ received: true }, { status: 200 });
+
 
     switch (body.event) {
 
@@ -127,28 +128,28 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
       case 'PAYMENT_OVERDUE':
         const paymentOverdue = body.payment;
-        console.log("TESTE: ",paymentOverdue)
+        console.log("TESTE: ", paymentOverdue)
         if (paymentOverdue.description === "1") {
 
-        const resOverdue = await prisma.user.findFirst({
+          const resOverdue = await prisma.user.findFirst({
+            where: { idCostumerAsaas: paymentOverdue.customer },
+          })
+          if (resOverdue) {
+            await deleteFolder(resOverdue?.idCouple)
+            await deleteCoupleById(resOverdue?.idCouple)
+          }
+          break;
+        }
+
+        // const paymentOverdueReq = body.payment;
+        const resOverdueReq = await prisma.requestSend.findFirst({
           where: { idCostumerAsaas: paymentOverdue.customer },
         })
-        if (resOverdue) {
-          await deleteFolder(resOverdue?.idCouple)
-          await deleteCoupleById(resOverdue?.idCouple)
+        if (resOverdueReq) {
+          await deleteFolderReq(resOverdueReq?.idRequestSend)
+          await deleteReqById(resOverdueReq?.idRequestSend)
         }
         break;
-      }
-
-      // const paymentOverdueReq = body.payment;
-      const resOverdueReq = await prisma.requestSend.findFirst({
-        where: { idCostumerAsaas: paymentOverdue.customer },
-      })
-      if (resOverdueReq) {
-        await deleteFolderReq(resOverdueReq?.idRequestSend)
-        await deleteReqById(resOverdueReq?.idRequestSend)
-      }
-      break;
       // ... trate outros eventos
       default:
         console.log(`Este evento não é aceito: ${body.event}`);
