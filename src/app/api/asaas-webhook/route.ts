@@ -21,7 +21,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     // res.headers.set('ngrok-skip-browser-warning', 'true');
     // res.headers.set('User-Agent', 'CustomUserAgent/1.0');
     const body = await req.json();
-    if (body.payment.description !== "1") return NextResponse.json({ received: true }, { status: 200 });
+    // if (body.payment.description !== "1") return NextResponse.json({ received: true }, { status: 200 });
 
 
     switch (body.event) {
