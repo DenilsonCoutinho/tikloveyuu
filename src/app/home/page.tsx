@@ -108,6 +108,8 @@ export default function Presentation() {
         const cleanedValue = regexEmoji(e);
         setNameCouple(cleanedValue);
     };
+
+    
     const handleFileChange = async (event: any) => {
 
         if (event.acceptedFiles) {
@@ -206,13 +208,6 @@ export default function Presentation() {
             return
         }
 
-        // toast({
-        //     title: 'Algum dado não foi preenchido',
-        //     description: "",
-        //     status: 'error',
-        //     duration: 9000,
-        //     isClosable: true,
-        // })
         setLoading(false)
     }
 
@@ -257,7 +252,6 @@ export default function Presentation() {
         try {
             const text = navigator.clipboard.writeText(qrCode);
             setCopied(true)
-            //   setInputValue(text);
         } catch (err) {
             console.error("Falha ao colar conteúdo: ", err);
         }
