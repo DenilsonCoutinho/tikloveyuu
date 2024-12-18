@@ -352,7 +352,7 @@ export default function Presentation() {
 
                         <section className="">
                             <div className='max-w-[700px]'>
-                                <h1 className="text-redDefault md:text-6xl text-5xl font-black  md:text-left text-center"><span className='relative '>S<Image className='absolute top-1 -left-2' src={chapeu} alt='chapeu' /></span>urpreenda seu love!</h1>
+                                <h1 className="text-redDefault md:text-6xl text-5xl font-black  md:text-left text-center"><span className='relative '>S</span>urpreenda seu love!</h1>
                             </div>
                             <p className="text-white md:text-left text-center md:text-base text-xs max-w-[600px] font-medium md:leading-6 leading-5 pt-2">
                                 Celebre cada momento do seu relacionamento com um contador dinâmico exclusivo! Preencha o formulário e receba um site personalizado com um QR Code especial para compartilhar com quem você ama. Agora, aproveite também a opção de criar um pedido especial!

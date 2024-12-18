@@ -341,7 +341,7 @@ export default function SendRequest() {
                 </Link>
 
                 <div className="max-w-[1100px] m-auto px-3 pb-20">
-                    <h1 className="text-white text-5xl font-bold pt-5"><span className='relative '>Q<Image className='absolute -top-1 -left-2' src={chapeu}  alt='chapeu'/></span>uase lá!</h1>
+                    <h1 className="text-white text-5xl font-bold pt-5"><span className='relative '>Q</span>uase lá!</h1>
                     <p className="text-white  max-w-[590px]">Preencha os dados do pedido e receba o link para compartilhar diretamente com a pessoa desejada, <span className=' shadow-redDefault border-b'>enviado ao seu e-mail.</span></p>
                     <FormPaymentInputsReq setSelectedInput={(e) => setTypeRequest(e)} />
                     <div className="max-w-[700px]">
