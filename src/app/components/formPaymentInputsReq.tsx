@@ -48,7 +48,6 @@ export default function FormPaymentInputsReq({ setSelectedInput }: inputProps) {
                     Pedido especial - R$12,99
                 </button> */}
                 <button type="button" value={"1"} onClick={() => { setSelectInput(true); setSelectedInput("1") }} className={`payment-1 ${!selectInput ? "bg-white  text-black" : "bg-transparent text-white"} w-full   text-md duration-150  font-medium text-center px-3 md:py-0 py-2 md:h-14 rounded-lg`}>
-                    {/* Pedido aleatório - {userLocale === "pt-BR" ? "R$10,99" :userLocale === "en-US"? "R$14,99" :""} */}
                     <PedidoAleatorio />
                 </button>
             </div>

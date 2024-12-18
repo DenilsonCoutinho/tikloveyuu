@@ -104,7 +104,6 @@ export default function Presentation() {
     const [previewURLs, setPreviewURLs] = useState<[]>([])
     const [idUser, setIdUser] = useState<string>("")
     const fileInputRef = useRef<HTMLInputElement | null>(null);
-    const [init, setInit] = useState(false);
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const cleanedValue = regexEmoji(e);
         setNameCouple(cleanedValue);
