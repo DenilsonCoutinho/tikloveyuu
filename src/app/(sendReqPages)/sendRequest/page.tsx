@@ -218,7 +218,7 @@ export default function SendRequest() {
             },
             body: JSON.stringify({
                 customerid: customerId,
-                value: typeRequest === "1" ? 12.99 : 10.99, // Certifique-se que o valor está correto (3499 representa R$ 34,99)
+                value: 10.99, // Certifique-se que o valor está correto (3499 representa R$ 34,99)
                 description: "2"
             })
         })
