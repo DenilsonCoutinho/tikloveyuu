@@ -251,6 +251,8 @@ export default function SendRequest() {
             setImage(Array.from(event.target.files))
         }
     };
+   
+    
     return (
         <>
             <Snowfall />
