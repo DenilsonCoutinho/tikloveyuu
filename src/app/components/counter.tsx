@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
+interface Tempo {
+    anos: number;
+    meses: number;
+    dias: number;
+    horas: number;
+    minutos: number;
+    segundos: number;
+  }
 interface CountProps {
     initialDate: string | undefined; // Data inicial obrigatória
     initialHour: string | undefined; // Hora inicial obrigatória
@@ -7,70 +15,84 @@ interface CountProps {
 
 function ContadorEterno({ initialDate, initialHour }: CountProps) {
     const [mostrarContador, setMostrarContador] = useState<boolean>(false);
-    const [tempo, setTempo] = useState<{ anos: number; meses: number; dias: number; horas: number; minutos: number; segundos: number }>({
-        anos: 0,
-        meses: 0,
-        dias: 0,
-        horas: 0,
-        minutos: 0,
-        segundos: 0,
-    });
+  const [tempo, setTempo] = useState<Tempo>({
+    anos: 0,
+    meses: 0,
+    dias: 0,
+    horas: 0,
+    minutos: 0,
+    segundos: 0,
+  });
 
-    // Combine initialDate e initialHour para criar a data inicial
-    const dataInicial = new Date(`${initialDate}T${initialHour}`);
+  // Combine initialDate e initialHour para criar a data inicial em UTC
+  const dataInicial = new Date(`${initialDate}T${initialHour}Z`);
 
-    useEffect(() => {
-        if (initialDate && initialHour) {
-            setMostrarContador(true); // Exibe o contador se as props estiverem disponíveis
-            
-            const interval = setInterval(() => {
-                const agora = new Date();
-                
-                // Calcula a diferença total em milissegundos
-                const diff = Math.abs(agora.getTime() - dataInicial.getTime());
-                
-                // Converte a diferença para anos, meses, dias, horas, minutos e segundos
-                let totalAnos = agora.getFullYear() - dataInicial.getFullYear();
-                let totalMeses = agora.getMonth() - dataInicial.getMonth();
-                let totalDias = agora.getDate() - dataInicial.getDate();
-                let totalHoras = agora.getHours() - dataInicial.getHours();
-                let totalMinutos = agora.getMinutes() - dataInicial.getMinutes();
-                let totalSegundos = agora.getSeconds() - dataInicial.getSeconds();
+  useEffect(() => {
+    if (initialDate && initialHour) {
+      setMostrarContador(true); // Exibe o contador se as props estiverem disponíveis
 
-                // Ajusta a contagem de horas, minutos e segundos
-                if (totalSegundos < 0) {
-                    totalMinutos -= 1;
-                    totalSegundos += 60;
-                }
+      const interval = setInterval(() => {
+        const agora = new Date();
 
-                if (totalMinutos < 0) {
-                    totalHoras -= 1;
-                    totalMinutos += 60;
-                }
+        // Calcula a diferença total em milissegundos
+        const diff = agora.getTime() - dataInicial.getTime();
 
-                if (totalHoras < 0) {
-                    totalDias -= 1;
-                    totalHoras += 24;
-                }
+        // Inicializa valores com a diferença absoluta
+        let totalAnos = agora.getUTCFullYear() - dataInicial.getUTCFullYear();
+        let totalMeses = agora.getUTCMonth() - dataInicial.getUTCMonth();
+        let totalDias = agora.getUTCDate() - dataInicial.getUTCDate();
+        let totalHoras = agora.getUTCHours() - dataInicial.getUTCHours();
+        let totalMinutos = agora.getUTCMinutes() - dataInicial.getUTCMinutes();
+        let totalSegundos = agora.getUTCSeconds() - dataInicial.getUTCSeconds();
 
-                // Ajuste para dias e meses
-                if (totalDias < 0) {
-                    totalMeses -= 1;
-                    const ultimoDiaDoMesAnterior = new Date(agora.getFullYear(), agora.getMonth(), 0).getDate();
-                    totalDias += ultimoDiaDoMesAnterior;
-                }
-
-                if (totalMeses < 0) {
-                    totalAnos -= 1;
-                    totalMeses += 12;
-                }
-
-                setTempo({ anos: totalAnos, meses: totalMeses, dias: totalDias, horas: totalHoras, minutos: totalMinutos, segundos: totalSegundos });
-            }, 1000);
-
-            return () => clearInterval(interval); // Limpa o intervalo ao desmontar o componente
+        // Ajusta a contagem de segundos e minutos
+        if (totalSegundos < 0) {
+          totalMinutos -= 1;
+          totalSegundos += 60;
         }
-    }, [initialDate, initialHour]); // Dependências para garantir que o efeito execute apenas quando as props mudarem
+
+        if (totalMinutos < 0) {
+          totalHoras -= 1;
+          totalMinutos += 60;
+        }
+
+        // Ajusta a contagem de horas e dias
+        if (totalHoras < 0) {
+          totalDias -= 1;
+          totalHoras += 24;
+        }
+
+        // Ajusta a contagem de dias e meses
+        if (totalDias < 0) {
+          totalMeses -= 1;
+          const ultimoDiaDoMesAnterior = new Date(
+            agora.getFullYear(),
+            agora.getMonth(),
+            0
+          ).getUTCDate();
+          totalDias += ultimoDiaDoMesAnterior;
+        }
+
+        // Ajusta a contagem de meses e anos
+        if (totalMeses < 0) {
+          totalAnos -= 1;
+          totalMeses += 12;
+        }
+
+        // Atualiza o estado com os valores calculados
+        setTempo({
+          anos: totalAnos,
+          meses: totalMeses,
+          dias: totalDias,
+          horas: totalHoras,
+          minutos: totalMinutos,
+          segundos: totalSegundos,
+        });
+      }, 1000);
+
+      return () => clearInterval(interval); // Limpa o intervalo ao desmontar o componente
+    }
+  }, [initialDate, initialHour]); // Dependências para garantir que o efeito execute apenas quando as props mudarem
 
     return (
         <div>
