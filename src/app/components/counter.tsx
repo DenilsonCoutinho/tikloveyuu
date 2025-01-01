@@ -17,9 +17,9 @@ function ContadorEterno({ initialDate, initialHour }: CountProps) {
     });
 
     // Combine initialDate e initialHour para criar a data inicial
-    const dataInicial = new Date(`${initialDate}T${initialHour}`);
-
+    
     useEffect(() => {
+        const dataInicial = new Date(`${initialDate}T${initialHour}`);
         if (initialDate && initialHour) {
             setMostrarContador(true); // Exibe o contador se as props estiverem disponíveis
             
@@ -27,7 +27,7 @@ function ContadorEterno({ initialDate, initialHour }: CountProps) {
                 const agora = new Date();
                 
                 // Calcula a diferença total em milissegundos
-                const diff = Math.abs(agora.getTime() - dataInicial.getTime());
+                // const diff = Math.abs(agora.getTime() - dataInicial.getTime());
                 
                 // Converte a diferença para anos, meses, dias, horas, minutos e segundos
                 let totalAnos = agora.getFullYear() - dataInicial.getFullYear();
