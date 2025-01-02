@@ -30,7 +30,7 @@ import MySwiper from "../components/mySwiper";
 import app from "../../lib/firebase";
 import CountUp from 'react-countup';
 
-import { createCouple, updatecustomerId } from '../../../actions/couple';
+import { createCouple, deleteCoupleById, updatecustomerId } from '../../../actions/couple';
 import { loadStripe } from '@stripe/stripe-js';
 import Footer from '../components/footer';
 interface responseUpload {
@@ -67,6 +67,8 @@ import ButtonUiUniverse from '../components/buttonUiUniverse';
 import { FileUploadRoot, FileUploadTrigger } from '@/components/ui/file-button';
 import { emojiBlast, emojiBlasts } from "emoji-blast";
 import ButtonPayment from '../components/button-payment';
+import { useRouter } from 'next/navigation';
+import { deleteFolder } from '@/lib/deleteimagesfirebase';
 
 
 export default function Presentation() {
@@ -109,7 +111,7 @@ export default function Presentation() {
         setNameCouple(cleanedValue);
     };
 
-    
+
     const handleFileChange = async (event: any) => {
 
         if (event.acceptedFiles) {
@@ -272,6 +274,7 @@ export default function Presentation() {
         });
 
         const customer = await response.json();
+        console.log(customer);
         return { customerId: customer.customersData.id }
     }
     async function generatorPix() {
@@ -294,8 +297,8 @@ export default function Presentation() {
                 'content-type': 'application/json',
             },
             body: JSON.stringify({
-                customerid: customerId,
                 value: typeProduct === 1 ? 14.99 : 34.99, // Certifique-se que o valor está correto (3499 representa R$ 34,99)
+                customerid: customerId,
                 description: "1"
             })
         })
@@ -330,17 +333,43 @@ export default function Presentation() {
 
     }
 
+    const [timeLeft, setTimeLeft] = useState<number>(240); // Tempo total: 240 segundos (4 minutos)
+    const [progress, setProgress] = useState<number>(100)
+
+  
+    useEffect(() => {
+        if (!loadingPayment) return
+        const interval = setInterval(() => {
+            setTimeLeft((prev) => {
+                const newTime = prev - 1;
+
+                // Atualiza a barra de progresso
+                setProgress((newTime / 240) * 100);
+
+                if (newTime <= 0) {
+                    clearInterval(interval);
+
+                    location.href = '/'
+                }
+
+                return newTime;
+            });
+        }, 1000); // Atualiza a cada segundo
+
+        return () => clearInterval(interval); // Limpa o intervalo
+    }, [loadingPayment]);
+    console.log(timeLeft)
+
     const cpfPattern = /^(?!000\.000\.000-00)(\d{3}\.\d{3}\.\d{3}-\d{2})$/;
     const emailPattern = /^[a-zA-Z0-9._%+-]+@(gmail|hotmail|outlook|yahoo)\.com$/
-
 
     return (
         <>
             <main className="m-auto">
-                <Snowfall />
+                {/* <Snowfall /> */}
                 <div className='useViewBg md:h-[33rem]  overflow-hidden  '>
                     <div className='max-w-[1100px] m-auto px-3'>
-                        
+
                         <div><Image alt='logo' width={150} className='m-auto pb-10 py-2' src={logo} /></div>
 
                         <section className="">
@@ -429,7 +458,7 @@ export default function Presentation() {
                                     <p className="text-white">Escolha até {typeProduct === 1 ? "3" : "6"} fotos</p>
                                     {/* <Input id='imagesFile' ref={fileInputRef} onChange={handleFileChange} type="file" accept=".png, .jpg, .jpeg, .gif" multiple={true} className="placeholder:text-white text-white flex justify-center items-center border-white border" /> */}
 
-                                    <FileUploadRoot ref={fileInputRef} accept={["image/png","image/gif","image/jpeg"]} onFileChange={handleFileChange} maxFiles={typeProduct === 1 ? 3 : 6}>
+                                    <FileUploadRoot ref={fileInputRef} accept={["image/png", "image/gif", "image/jpeg"]} onFileChange={handleFileChange} maxFiles={typeProduct === 1 ? 3 : 6}>
                                         <FileUploadTrigger asChild>
                                             <Button variant="outline" className='text-white border-white border w-full py-4' size="sm">
                                                 <FaCamera className='text-white' />Escolha até {typeProduct === 1 ? "3" : "6"} fotos
@@ -471,12 +500,12 @@ export default function Presentation() {
                                         <p className=" flex gap-2 items-center justify-center font-medium  rounded-lg text-xs   text-white ">Preencha os campos necessários</p>
                                     </button>
                                     :
-                                <DialogTrigger className='mt-3' asChild>
-                                    <ButtonUiUniverse disabled={loading} onClick={() => {
-                                        submit()
-                                    }} />
+                                    <DialogTrigger className='mt-3' asChild>
+                                        <ButtonUiUniverse disabled={loading} onClick={() => {
+                                            submit()
+                                        }} />
 
-                                </DialogTrigger>
+                                    </DialogTrigger>
                             }
                             <DialogContent className='bg-white'>
                                 {
@@ -553,6 +582,17 @@ export default function Presentation() {
                                         </>
                                         :
                                         <>
+                                            <div className='px-2 mt-2'>
+                                                <p className="text-gray-700 text-sm text-center">
+                                                    Tempo restante para o pagamento: <strong>{Math.floor(timeLeft / 60)}:{String(timeLeft % 60).padStart(2, '0')}</strong> minutos
+                                                </p>
+                                                <div className="w-full bg-gray-300 rounded-full h-4 mb-6">
+                                                    <div
+                                                        className="bg-blue-500 h-4 rounded-full transition-all duration-500"
+                                                        style={{ width: `${progress}%` }}
+                                                    ></div>
+                                                </div>
+                                            </div>
                                             <Image width={300} height={300} className='m-auto' alt='qrCode' src={myeconder} />
                                             <div className='flex flex-col items-center bg-gray-100'>
                                                 <p className='font-bold text-xs text-yellow-600'>Atenção</p>
