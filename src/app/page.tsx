@@ -2,6 +2,7 @@
 import { DialogRoot } from "@chakra-ui/react";
 import Presentation from "./home/page";
 import { useEffect } from "react";
+import { PlanProvider } from "../../context/changePlanContext";
 export default function Home() {
   useEffect(() => {
     const script = document.createElement('script');
@@ -12,8 +13,9 @@ export default function Home() {
   }, []);
   return (
     <div className="bg-defaultBg ">
-
-      <Presentation />
+      <PlanProvider>
+        <Presentation />
+      </PlanProvider>
 
     </div>
   );

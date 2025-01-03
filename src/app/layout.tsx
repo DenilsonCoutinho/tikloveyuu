@@ -6,6 +6,7 @@ import { Montserrat } from 'next/font/google'
 import { Provider } from "@/components/ui/provider"
 import { DialogRoot } from "@/components/ui/dialog";
 import Script from "next/script";
+import { PlanProvider } from "../../context/changePlanContext";
 
 
 const montserrat = Montserrat({
@@ -41,13 +42,10 @@ export default function RootLayout({
       </head>
       <body className={`${montserrat.className}   antialiased`}>
         <Provider>
-
           <DialogRoot closeOnInteractOutside={false}>
             {children}
           </DialogRoot>
-
         </Provider>
-        {/* <Analytics /> */}
       </body>
     </html>
   );

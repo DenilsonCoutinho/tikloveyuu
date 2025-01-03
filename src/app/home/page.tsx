@@ -69,6 +69,8 @@ import { emojiBlast, emojiBlasts } from "emoji-blast";
 import ButtonPayment from '../components/button-payment';
 import { useRouter } from 'next/navigation';
 import { deleteFolder } from '@/lib/deleteimagesfirebase';
+import Prices from '../components/prices';
+import { PlanProvider, usePlan } from '../../../context/changePlanContext';
 
 
 export default function Presentation() {
@@ -333,10 +335,10 @@ export default function Presentation() {
 
     }
 
-    const [timeLeft, setTimeLeft] = useState<number>(240); // Tempo total: 240 segundos (4 minutos)
+    const [timeLeft, setTimeLeft] = useState<number>(340); // Tempo total: 240 segundos (4 minutos)
     const [progress, setProgress] = useState<number>(100)
+    const { setPlan,plan,setSelectPlan} = usePlan()
 
-  
     useEffect(() => {
         if (!loadingPayment) return
         const interval = setInterval(() => {
@@ -344,7 +346,7 @@ export default function Presentation() {
                 const newTime = prev - 1;
 
                 // Atualiza a barra de progresso
-                setProgress((newTime / 240) * 100);
+                setProgress((newTime / 340) * 100);
 
                 if (newTime <= 0) {
                     clearInterval(interval);
@@ -413,200 +415,200 @@ export default function Presentation() {
                 </div>
                 <Viral />
                 <HowItWorks />
+                    <Prices setSelectedInput={(e) => { setTypeProduct(e) }} />
+                    <div className="flex md:flex-row flex-col px-3 max-w-[1100px] pb-10 m-auto justify- items-center md:gap-10 gap-5">
+                        <section className="max-w-[800px] w-full">
+                            <div id='my_form'>
+                                <FormPaymentInputs setSelectedInput={(e) => setTypeProduct(e)} />
+                                <form className="flex md:flex-row flex-col items-end md:gap-4 gap-4 mt-5">
+                                    <label className="w-full text-white">
+                                        <p className="text-white text-xs  max-w-[900px] font-medium md:leading-7 leading-2 pt-2">
+                                            Nome do casal:
+                                        </p>
+                                        <div className='relative'>
+                                            <Input onChange={handleChange} fontSize={13} value={nameCouple} type="text" id="name_couple" placeholder="Nome do casal (Não use emoji)" className="text-white placeholder:text-white text-sm px-1 border-redDefault border" />
+                                            {/* {!nameCouple && <p className='text-red-500 text-xs absolute'>Campo vazío</p>} */}
+                                        </div>
+                                    </label>
+                                    <div className='flex flex-row items-end w-full gap-3 justify-center'>
+                                        <label className="md:max-w-40 w-full text-white flex flex-col  ">
+                                            <p className="text-white text-xs  max-w-[900px] font-medium md:leading-7 leading-2 pt-2">
+                                                Inicio do relacionamento:
+                                            </p>
+                                            <div className='relative'>
+                                                <Input onChange={(e) => setDataCouple(e.target.value)} fontSize={13} value={dataCouple} type="date" id="date_couple" className=" text-white text-sm border-redDefault border px-1" />
+                                                {/* {!dataCouple && <p className='text-red-500 text-xs absolute'>Campo vazío</p>} */}
 
-                <div className="flex md:flex-row flex-col px-3 max-w-[1100px] pb-10 m-auto justify- items-center md:gap-10 gap-5">
-                    <section className="max-w-[800px] w-full">
-                        <div id='my_form'>
-                            <FormPaymentInputs setSelectedInput={(e) => setTypeProduct(e)} />
-                            <form className="flex md:flex-row flex-col items-end md:gap-4 gap-4 mt-5">
-                                <label className="w-full text-white">
-                                    <p className="text-white text-xs  max-w-[900px] font-medium md:leading-7 leading-2 pt-2">
-                                        Nome do casal:
-                                    </p>
-                                    <div className='relative'>
-                                        <Input onChange={handleChange} fontSize={13} value={nameCouple} type="text" id="name_couple" placeholder="Nome do casal (Não use emoji)" className="text-white placeholder:text-white text-sm px-1 border-white border" />
-                                        {/* {!nameCouple && <p className='text-red-500 text-xs absolute'>Campo vazío</p>} */}
+                                            </div>
+                                        </label>
+                                        <label className="text-white md:max-w-40 w-full">
+                                            <p className="text-white text-xs  max-w-[900px] font-medium md:leading-7 leading-2 pt-2">
+                                                Hora:
+                                            </p>
+                                            <div className='relative'>
+                                                <Input onChange={(e) => setHour(e.target.value)} fontSize={13} value={hour} type="time" id="time_couple" className="text-white text-sm border-redDefault border px-1" />
+                                                {/* {!hour && <p className='text-red-500 text-xs absolute'>Campo vazío</p>} */}
+                                            </div>
+                                        </label>
                                     </div>
-                                </label>
-                                <div className='flex flex-row items-end w-full gap-3 justify-center'>
-                                    <label className="md:max-w-40 w-full text-white flex flex-col  ">
-                                        <p className="text-white text-xs  max-w-[900px] font-medium md:leading-7 leading-2 pt-2">
-                                            Inicio do relacionamento:
-                                        </p>
-                                        <div className='relative'>
-                                            <Input onChange={(e) => setDataCouple(e.target.value)} fontSize={13} value={dataCouple} type="date" id="date_couple" className=" text-white text-sm border-white border px-1" />
-                                            {/* {!dataCouple && <p className='text-red-500 text-xs absolute'>Campo vazío</p>} */}
+                                </form>
+                                <div className="flex flex-col gap-3 ">
+                                    <Textarea fontSize={13} onChange={(e) => setMessage(e.target.value)} value={message} height={250} placeholder="Escreva sua mensagem para sua pessoa especial ❤" className="mt-10 h-80 max-h-[250px] text-white placeholder:text-white border-redDefault border px-2">
 
-                                        </div>
-                                    </label>
-                                    <label className="text-white md:max-w-40 w-full">
-                                        <p className="text-white text-xs  max-w-[900px] font-medium md:leading-7 leading-2 pt-2">
-                                            Hora:
-                                        </p>
-                                        <div className='relative'>
-                                            <Input onChange={(e) => setHour(e.target.value)} fontSize={13} value={hour} type="time" id="time_couple" className="text-white text-sm border-white border px-1" />
-                                            {/* {!hour && <p className='text-red-500 text-xs absolute'>Campo vazío</p>} */}
-                                        </div>
-                                    </label>
-                                </div>
-                            </form>
-                            <div className="flex flex-col gap-3 ">
-                                <Textarea fontSize={13} onChange={(e) => setMessage(e.target.value)} value={message} height={250} placeholder="Escreva sua mensagem para sua pessoa especial ❤" className="mt-10 h-80 max-h-[250px] text-white placeholder:text-white border-white border px-2">
+                                    </Textarea>
+                                    <div className="flex flex-col">
+                                        <p className="text-white">Escolha até {typeProduct === 1 ? "3" : "6"} fotos</p>
+                                        {/* <Input id='imagesFile' ref={fileInputRef} onChange={handleFileChange} type="file" accept=".png, .jpg, .jpeg, .gif" multiple={true} className="placeholder:text-white text-white flex justify-center items-center border-white border" /> */}
 
-                                </Textarea>
-                                <div className="flex flex-col">
-                                    <p className="text-white">Escolha até {typeProduct === 1 ? "3" : "6"} fotos</p>
-                                    {/* <Input id='imagesFile' ref={fileInputRef} onChange={handleFileChange} type="file" accept=".png, .jpg, .jpeg, .gif" multiple={true} className="placeholder:text-white text-white flex justify-center items-center border-white border" /> */}
-
-                                    <FileUploadRoot ref={fileInputRef} accept={["image/png", "image/gif", "image/jpeg"]} onFileChange={handleFileChange} maxFiles={typeProduct === 1 ? 3 : 6}>
-                                        <FileUploadTrigger asChild>
-                                            <Button variant="outline" className='text-white border-white border w-full py-4' size="sm">
-                                                <FaCamera className='text-white' />Escolha até {typeProduct === 1 ? "3" : "6"} fotos
-                                            </Button>
-                                        </FileUploadTrigger>
-                                    </FileUploadRoot>
-                                    {typeProduct === 2 &&
-                                        <label className="text-white  w-full mt-3">
-                                            <p className="text-white">Música Youtube: (Opcional)</p>
-                                            <Input onChange={(e) => setYoutubeLink(e.target.value)} type="text" value={youtubeLink} className="placeholder:text-white border-white border text-white flex text-sm justify-center items-center" />
-                                        </label>}
+                                        <FileUploadRoot ref={fileInputRef} accept={["image/png", "image/gif", "image/jpeg"]} onFileChange={handleFileChange} maxFiles={typeProduct === 1 ? 3 : 6}>
+                                            <FileUploadTrigger asChild>
+                                                <Button variant="outline" className='text-white border-redDefault border w-full py-4' size="sm">
+                                                    <FaCamera className='text-white' />Escolha até {typeProduct === 1 ? "3" : "6"} fotos
+                                                </Button>
+                                            </FileUploadTrigger>
+                                        </FileUploadRoot>
+                                        {typeProduct === 2 &&
+                                            <label className="text-white  w-full mt-3">
+                                                <p className="text-white">Música Youtube: (Opcional)</p>
+                                                <Input onChange={(e) => setYoutubeLink(e.target.value)} type="text" value={youtubeLink} className="placeholder:text-white border-white border text-white flex text-sm justify-center items-center" />
+                                            </label>}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                    </section>
-                    <aside className='flex gap-4 flex-col items-center'>
-                        <Image width={180} quality={100} alt='comovaificar ' src={comovaificar} />
-                        <div className="flex flex-col">
-                            <div className=" overflow-hidden relative border bg-[#180d21]   rounded-xl max-h-[540px] myscroll overflow-y-auto w-80 px-4">
-                                {/* {<Confetti />} */}
+                        </section>
+                        <aside className='flex gap-4 flex-col items-center'>
+                            <Image width={180} quality={100} alt='comovaificar ' src={comovaificar} />
+                            <div className="flex flex-col">
+                                <div className=" overflow-hidden relative border border-redDefault shadow-md shadow-redDefault bg-[#180d21]   rounded-xl max-h-[540px] myscroll overflow-y-auto w-80 px-4">
+                                    {/* {<Confetti />} */}
 
-                                <div className={`previewURLsPhoto my-10 flex relative justify-center items-center mt-4 ${previewURLs.length > 0 ? "" : "h-80"} rounded-md  w-full px-4 `}>
-                                    {
-                                        previewURLs.length > 0 ?
-                                            <MySwiper previewURLs={previewURLs} />
-                                            :
-                                            <Image alt="icon-imagem" src={iconImg} width={40} height={40} />
-                                    }
+                                    <div className={`previewURLsPhoto my-10 flex relative justify-center items-center mt-4 ${previewURLs.length > 0 ? "" : "h-80"} rounded-md  w-full px-4 `}>
+                                        {
+                                            previewURLs.length > 0 ?
+                                                <MySwiper previewURLs={previewURLs} />
+                                                :
+                                                <Image alt="icon-imagem" src={iconImg} width={40} height={40} />
+                                        }
+                                    </div>
+                                    {hour && <ContadorEterno initialDate={dataCouple} initialHour={hour} />}
+                                    <div className='border-b border-white py-1'></div>
+                                    {hour && <p className=' text-white text-center mt-3 text-xs'>{message}</p>}
                                 </div>
-                                {hour && <ContadorEterno initialDate={dataCouple} initialHour={hour} />}
-                                <div className='border-b border-white py-1'></div>
-                                {hour && <p className=' text-white text-center mt-3 text-xs'>{message}</p>}
-                            </div>
-                            {
-                                !nameCouple || !dataCouple || !hour || imageCouple.length < 1 ?
-                                    <button disabled={true} className='border  bg-transparent duration-200  flex flex-col justify-center items-center rounded-md mt-3 py-2'>
-                                        <p className=" flex gap-2 items-center justify-center font-bold  rounded-lg text-xl   text-white ">Criar meu Contador</p>
-                                        <p className=" flex gap-2 items-center justify-center font-medium  rounded-lg text-xs   text-white ">Preencha os campos necessários</p>
-                                    </button>
-                                    :
-                                    <DialogTrigger className='mt-3' asChild>
-                                        <ButtonUiUniverse disabled={loading} onClick={() => {
-                                            submit()
-                                        }} />
-
-                                    </DialogTrigger>
-                            }
-                            <DialogContent className='bg-white'>
                                 {
-                                    !loadingPayment ?
-                                        <>
-                                            <DialogHeader>
-                                                <DialogTitle className='text-black font-bold'>Escolha a forma de pagamento</DialogTitle>
-                                            </DialogHeader>
+                                    !nameCouple || !dataCouple || !hour || imageCouple.length < 1 ?
+                                        <button disabled={true} className='border  bg-transparent duration-200  flex flex-col justify-center items-center rounded-md mt-3 py-2'>
+                                            <p className=" flex gap-2 items-center justify-center font-bold  rounded-lg text-xl   text-white ">Criar meu Contador</p>
+                                            <p className=" flex gap-2 items-center justify-center font-medium  rounded-lg text-xs   text-white ">Preencha os campos necessários</p>
+                                        </button>
+                                        :
+                                        <DialogTrigger className='mt-3' asChild>
+                                            <ButtonUiUniverse disabled={loading} onClick={() => {
+                                                submit()
+                                            }} />
 
-                                            <DialogBody>
-                                                <RadioGroup variant={'subtle'} defaultValue={"1"} value={formPayment} onValueChange={(e) => setFormPayment(e.value)}>
+                                        </DialogTrigger>
+                                }
+                                <DialogContent className='bg-white'>
+                                    {
+                                        !loadingPayment ?
+                                            <>
+                                                <DialogHeader>
+                                                    <DialogTitle className='text-black font-bold'>Escolha a forma de pagamento</DialogTitle>
+                                                </DialogHeader>
 
-                                                    <div className='flex flex-row gap-3 items-center'>
-                                                        <Image quality={100} alt='pixlogo' width={30} height={30} src={pix} />
-                                                        <Radio className='text-black' value='1'>Pagar com Pix</Radio>
-                                                    </div>
-                                                    {formPayment === "1" &&
-                                                        <div className='flex flex-col gap-7'>
-                                                            <div className='relative'>
-                                                                <Input className='border px-2'  {...register('name_client', { required: "Nome é obrigatório", pattern: { value: /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/, message: "Nome inválido" } })} onChange={(e) => setName(e.target.value)} value={name} placeholder='Nome' />
-                                                                {errors.name_client && <p className='text-red-500 text-xs absolute'>{errors.name_client.message}</p>}
-                                                            </div>
+                                                <DialogBody>
+                                                    <RadioGroup variant={'subtle'} defaultValue={"1"} value={formPayment} onValueChange={(e) => setFormPayment(e.value)}>
 
-                                                            <div className='relative'>
-                                                                <Input className='border px-2' {...register('cpfcnpj', {
-                                                                    required: "CPF é obrigatório",
-                                                                    pattern: {
-                                                                        value: cpfPattern,
-                                                                        message: "CPF inválido. Ex: 123.456.789-00"
-                                                                    }
-                                                                })} onChange={handleCpfChange} value={cpfCnpj} placeholder='CPF' />
-                                                                {errors.cpfcnpj && <p className='text-red-500 text-xs absolute'>{errors.cpfcnpj?.message}</p>}
-                                                            </div>
-
-                                                            <div className='relative'>
-                                                                <label>
-                                                                    <p className='text-black'>Digite seu e-mail para receber o QR Code
-                                                                    </p>
-                                                                    <Input className='border px-2' {...register('email', {
-                                                                        required: "Email é obrigatório para receber seu Qrcode",
-                                                                        pattern: {
-                                                                            value: emailPattern,
-                                                                            message: "Email inválido."
-                                                                        }
-                                                                    })} placeholder='E-mail' onChange={(e) => setEmail(e.target.value)} value={email} />
-                                                                </label>
-
-                                                                {errors.email && <p className='text-red-500 text-xs absolute'>{errors.email?.message}</p>}
-                                                            </div>
+                                                        <div className='flex flex-row gap-3 items-center'>
+                                                            <Image quality={100} alt='pixlogo' width={30} height={30} src={pix} />
+                                                            <Radio className='text-black' value='1'>Pagar com Pix</Radio>
                                                         </div>
-                                                    }
-                                                    <div className='flex gap-3 flex-row items-center pt-3'>
-                                                        <Image quality={100} alt='cardlogo' width={30} height={30} src={card} />
-                                                        <Radio className='text-black' value='2'>Pagar com cartão</Radio>
-                                                    </div>
-                                                </RadioGroup>
-                                            </DialogBody>
-                                            {formPayment && <DialogFooter>
+                                                        {formPayment === "1" &&
+                                                            <div className='flex flex-col gap-7'>
+                                                                <div className='relative'>
+                                                                    <Input className='border  px-2'  {...register('name_client', { required: "Nome é obrigatório", pattern: { value: /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/, message: "Nome inválido" } })} onChange={(e) => setName(e.target.value)} value={name} placeholder='Nome' />
+                                                                    {errors.name_client && <p className='text-red-500 text-xs absolute'>{errors.name_client.message}</p>}
+                                                                </div>
 
-                                                <DialogActionTrigger asChild>
-                                                    <Button className='text-black' variant="outline">Cancelar</Button>
-                                                </DialogActionTrigger>
+                                                                <div className='relative'>
+                                                                    <Input className='border px-2' {...register('cpfcnpj', {
+                                                                        required: "CPF é obrigatório",
+                                                                        pattern: {
+                                                                            value: cpfPattern,
+                                                                            message: "CPF inválido. Ex: 123.456.789-00"
+                                                                        }
+                                                                    })} onChange={handleCpfChange} value={cpfCnpj} placeholder='CPF' />
+                                                                    {errors.cpfcnpj && <p className='text-red-500 text-xs absolute'>{errors.cpfcnpj?.message}</p>}
+                                                                </div>
 
-                                                <ButtonPayment text={loading ? "Aguarde..." : "ir para o Pagamento"} disabled={loading} onClick={handleSubmit(validateFieldsPix)} />
+                                                                <div className='relative'>
+                                                                    <label>
+                                                                        <p className='text-black'>Digite seu e-mail para receber o QR Code
+                                                                        </p>
+                                                                        <Input className='border px-2' {...register('email', {
+                                                                            required: "Email é obrigatório para receber seu Qrcode",
+                                                                            pattern: {
+                                                                                value: emailPattern,
+                                                                                message: "Email inválido."
+                                                                            }
+                                                                        })} placeholder='E-mail' onChange={(e) => setEmail(e.target.value)} value={email} />
+                                                                    </label>
 
-                                                {/* <Button disabled={loading} px={2} bg={"green.400"} shadow={"md"} mr={3} onClick={handleSubmit(validateFieldsPix)}>
+                                                                    {errors.email && <p className='text-red-500 text-xs absolute'>{errors.email?.message}</p>}
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                        <div className='flex gap-3 flex-row items-center pt-3'>
+                                                            <Image quality={100} alt='cardlogo' width={30} height={30} src={card} />
+                                                            <Radio className='text-black' value='2'>Pagar com cartão</Radio>
+                                                        </div>
+                                                    </RadioGroup>
+                                                </DialogBody>
+                                                {formPayment && <DialogFooter>
+
+                                                    <DialogActionTrigger asChild>
+                                                        <Button className='text-black' variant="outline">Cancelar</Button>
+                                                    </DialogActionTrigger>
+
+                                                    <ButtonPayment text={loading ? "Aguarde..." : "ir para o Pagamento"} disabled={loading} onClick={handleSubmit(validateFieldsPix)} />
+
+                                                    {/* <Button disabled={loading} px={2} bg={"green.400"} shadow={"md"} mr={3} onClick={handleSubmit(validateFieldsPix)}>
                                                     <p className=" flex gap-2 items-center justify-center  font-bold  rounded-lg text-xl   text-white  ">
                                                         {loading ? "Aguarde" : "ir para o Pagamento"}
                                                         {loading && <div className="pt-1 lds-circle"><div></div></div>}
                                                     </p>
                                                 </Button> */}
-                                            </DialogFooter>}
-                                            <DialogCloseTrigger />
-                                        </>
-                                        :
-                                        <>
-                                            <div className='px-2 mt-2'>
-                                                <p className="text-gray-700 text-sm text-center">
-                                                    Tempo restante para o pagamento: <strong>{Math.floor(timeLeft / 60)}:{String(timeLeft % 60).padStart(2, '0')}</strong> minutos
-                                                </p>
-                                                <div className="w-full bg-gray-300 rounded-full h-4 mb-6">
-                                                    <div
-                                                        className="bg-blue-500 h-4 rounded-full transition-all duration-500"
-                                                        style={{ width: `${progress}%` }}
-                                                    ></div>
+                                                </DialogFooter>}
+                                                <DialogCloseTrigger />
+                                            </>
+                                            :
+                                            <>
+                                                <div className='px-2 mt-2'>
+                                                    <p className="text-gray-700 text-sm text-center">
+                                                        Tempo restante para o pagamento: <strong>{Math.floor(timeLeft / 60)}:{String(timeLeft % 60).padStart(2, '0')}</strong> minutos
+                                                    </p>
+                                                    <div className="w-full bg-gray-300 rounded-full h-4 mb-6">
+                                                        <div
+                                                            className="bg-blue-500 h-4 rounded-full transition-all duration-500"
+                                                            style={{ width: `${progress}%` }}
+                                                        ></div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <Image width={300} height={300} className='m-auto' alt='qrCode' src={myeconder} />
-                                            <div className='flex flex-col items-center bg-gray-100'>
-                                                <p className='font-bold text-xs text-yellow-600'>Atenção</p>
-                                                <p className='text-center text-black text-xs font-bold px-2'>Assim que fizer o pagamento você receberá no email o QrCode do seu site!</p>
-                                            </div>
-                                            <p className='text-black text-center px-3 py-2'>{qrCode}</p>
-                                            <Button bg={"green"} onClick={handleCopy} className='select-none ' ><p className=' text-white  font-medium px-2'>{copied ? "copiado" : "Copiar"}</p> <span className=' border border-white rounded-md p-1'><FaCopy className=' text-white' /></span></Button>
-                                        </>
-                                }
-                            </DialogContent>
-                            {/* </DialogRoot> */}
-                        </div>
-                    </aside>
-                </div >
+                                                <Image width={200} height={300} className='m-auto' alt='qrCode' src={myeconder} />
+                                                <div className='flex flex-col items-center bg-gray-100'>
+                                                    <p className='font-bold text-xs text-yellow-600'>Atenção</p>
+                                                    <p className='text-center text-black text-xs font-bold px-2'>Assim que fizer o pagamento você receberá no email o QrCode do seu site!</p>
+                                                </div>
+                                                <p className='text-black text-center text-xs px-3 py-2'>{qrCode}</p>
+                                                <Button bg={"green"} onClick={handleCopy} className='select-none ' ><p className=' text-white  font-medium px-2'>{copied ? "copiado" : "Copiar"}</p> <span className=' border border-white rounded-md p-1'><FaCopy className=' text-white' /></span></Button>
+                                            </>
+                                    }
+                                </DialogContent>
+                                {/* </DialogRoot> */}
+                            </div>
+                        </aside>
+                    </div >
             </main >
             <Faq />
             <QrCodeSite />

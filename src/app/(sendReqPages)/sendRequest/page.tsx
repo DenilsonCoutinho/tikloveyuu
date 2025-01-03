@@ -255,7 +255,7 @@ export default function SendRequest() {
     
     return (
         <>
-            <Snowfall />
+            {/* <Snowfall /> */}
             <DialogContent className='bg-white'>
                 {
                     !loadingPayment ?
@@ -318,7 +318,7 @@ export default function SendRequest() {
                                 </DialogActionTrigger>
                                 <Button disabled={loading} px={2} bg={"blue.400"} mr={3} onClick={handleSubmit(validateFieldsPix)}>
                                     <p className=" flex gap-2 items-center justify-center font-bold  rounded-lg text-xl   text-white ">
-                                        {loading ? "Aguarde" : "ir para o Pagamento"}
+                                        {loading ? "Aguarde" : "Fazer Pagamento"}
                                         {loading && <div className="pt-1 lds-circle"><div></div></div>}
                                     </p>
                                 </Button>
