@@ -41,11 +41,13 @@ export default function RootLayout({
         ></Script>
       </head>
       <body className={`${montserrat.className}   antialiased`}>
-        <Provider>
-          <DialogRoot closeOnInteractOutside={false}>
-            {children}
-          </DialogRoot>
-        </Provider>
+        <PlanProvider>
+          <Provider>
+            <DialogRoot closeOnInteractOutside={false}>
+              {children}
+            </DialogRoot>
+          </Provider>
+        </PlanProvider>
       </body>
     </html>
   );
