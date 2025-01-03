@@ -1,14 +1,12 @@
 "use client"
 import { v4 as uuidv4 } from 'uuid';
 import { Button, Input, Textarea, } from "@chakra-ui/react";
-import Confetti from "react-confetti"
 import FormPaymentInputs from "../components/formPaymentInputs";
 import { useEffect, useMemo, useRef, useState } from "react";
 import regexEmoji from "../../../utils/maskEmoji";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import ContadorEterno from "../components/counter";
 import iconImg from '../../assets/photo (1).png'
-import chapeu from '../../assets/chapeuNatal.png'
 import logo from '../../assets/logoLove.png'
 import pix from '../../assets/Logo-Pix.png'
 import card from '../../assets/credit-card.png'
@@ -65,12 +63,10 @@ import Viral from '../components/viral';
 import Snowfall from 'react-snowfall'
 import ButtonUiUniverse from '../components/buttonUiUniverse';
 import { FileUploadRoot, FileUploadTrigger } from '@/components/ui/file-button';
-import { emojiBlast, emojiBlasts } from "emoji-blast";
 import ButtonPayment from '../components/button-payment';
-import { useRouter } from 'next/navigation';
-import { deleteFolder } from '@/lib/deleteimagesfirebase';
+
 import Prices from '../components/prices';
-import { PlanProvider, usePlan } from '../../../context/changePlanContext';
+import {  usePlan } from '../../../context/changePlanContext';
 
 
 export default function Presentation() {
@@ -337,7 +333,6 @@ export default function Presentation() {
 
     const [timeLeft, setTimeLeft] = useState<number>(340); // Tempo total: 240 segundos (4 minutos)
     const [progress, setProgress] = useState<number>(100)
-    const { setPlan,plan,setSelectPlan} = usePlan()
 
     useEffect(() => {
         if (!loadingPayment) return
@@ -368,7 +363,6 @@ export default function Presentation() {
     return (
         <>
             <main className="m-auto">
-                {/* <Snowfall /> */}
                 <div className='useViewBg md:h-[33rem]  overflow-hidden  '>
                     <div className='max-w-[1100px] m-auto px-3'>
 
@@ -427,7 +421,6 @@ export default function Presentation() {
                                         </p>
                                         <div className='relative'>
                                             <Input onChange={handleChange} fontSize={13} value={nameCouple} type="text" id="name_couple" placeholder="Nome do casal (Não use emoji)" className="text-white placeholder:text-white text-sm px-1 border-redDefault border" />
-                                            {/* {!nameCouple && <p className='text-red-500 text-xs absolute'>Campo vazío</p>} */}
                                         </div>
                                     </label>
                                     <div className='flex flex-row items-end w-full gap-3 justify-center'>
@@ -437,7 +430,6 @@ export default function Presentation() {
                                             </p>
                                             <div className='relative'>
                                                 <Input onChange={(e) => setDataCouple(e.target.value)} fontSize={13} value={dataCouple} type="date" id="date_couple" className=" text-white text-sm border-redDefault border px-1" />
-                                                {/* {!dataCouple && <p className='text-red-500 text-xs absolute'>Campo vazío</p>} */}
 
                                             </div>
                                         </label>
@@ -447,7 +439,6 @@ export default function Presentation() {
                                             </p>
                                             <div className='relative'>
                                                 <Input onChange={(e) => setHour(e.target.value)} fontSize={13} value={hour} type="time" id="time_couple" className="text-white text-sm border-redDefault border px-1" />
-                                                {/* {!hour && <p className='text-red-500 text-xs absolute'>Campo vazío</p>} */}
                                             </div>
                                         </label>
                                     </div>
@@ -458,8 +449,6 @@ export default function Presentation() {
                                     </Textarea>
                                     <div className="flex flex-col">
                                         <p className="text-white">Escolha até {typeProduct === 1 ? "3" : "6"} fotos</p>
-                                        {/* <Input id='imagesFile' ref={fileInputRef} onChange={handleFileChange} type="file" accept=".png, .jpg, .jpeg, .gif" multiple={true} className="placeholder:text-white text-white flex justify-center items-center border-white border" /> */}
-
                                         <FileUploadRoot ref={fileInputRef} accept={["image/png", "image/gif", "image/jpeg"]} onFileChange={handleFileChange} maxFiles={typeProduct === 1 ? 3 : 6}>
                                             <FileUploadTrigger asChild>
                                                 <Button variant="outline" className='text-white border-redDefault border w-full py-4' size="sm">
@@ -570,15 +559,7 @@ export default function Presentation() {
                                                     <DialogActionTrigger asChild>
                                                         <Button className='text-black' variant="outline">Cancelar</Button>
                                                     </DialogActionTrigger>
-
                                                     <ButtonPayment text={loading ? "Aguarde..." : "ir para o Pagamento"} disabled={loading} onClick={handleSubmit(validateFieldsPix)} />
-
-                                                    {/* <Button disabled={loading} px={2} bg={"green.400"} shadow={"md"} mr={3} onClick={handleSubmit(validateFieldsPix)}>
-                                                    <p className=" flex gap-2 items-center justify-center  font-bold  rounded-lg text-xl   text-white  ">
-                                                        {loading ? "Aguarde" : "ir para o Pagamento"}
-                                                        {loading && <div className="pt-1 lds-circle"><div></div></div>}
-                                                    </p>
-                                                </Button> */}
                                                 </DialogFooter>}
                                                 <DialogCloseTrigger />
                                             </>

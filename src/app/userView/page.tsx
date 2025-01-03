@@ -3,7 +3,7 @@ import { Suspense, useEffect, useRef, useState } from "react"
 import { getCoupleById } from "../../../actions/couple"
 import ContadorEterno from "../components/counter"
 import MySwiper from "../components/mySwiper";
-
+import moment from 'moment';
 import { useRouter, useSearchParams } from "next/navigation";
 
 import Confetti from "react-confetti"
