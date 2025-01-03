@@ -527,12 +527,12 @@ export default function Presentation() {
                                                         {formPayment === "1" &&
                                                             <div className='flex flex-col gap-7'>
                                                                 <div className='relative'>
-                                                                    <Input className='border  px-2'  {...register('name_client', { required: "Nome é obrigatório", pattern: { value: /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/, message: "Nome inválido" } })} onChange={(e) => setName(e.target.value)} value={name} placeholder='Nome' />
+                                                                    <Input className='border text-black px-2'  {...register('name_client', { required: "Nome é obrigatório", pattern: { value: /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/, message: "Nome inválido" } })} onChange={(e) => setName(e.target.value)} value={name} placeholder='Nome' />
                                                                     {errors.name_client && <p className='text-red-500 text-xs absolute'>{errors.name_client.message}</p>}
                                                                 </div>
 
                                                                 <div className='relative'>
-                                                                    <Input className='border px-2' {...register('cpfcnpj', {
+                                                                    <Input className='border px-2 text-black' {...register('cpfcnpj', {
                                                                         required: "CPF é obrigatório",
                                                                         pattern: {
                                                                             value: cpfPattern,
@@ -546,7 +546,7 @@ export default function Presentation() {
                                                                     <label>
                                                                         <p className='text-black'>Digite seu e-mail para receber o QR Code
                                                                         </p>
-                                                                        <Input className='border px-2' {...register('email', {
+                                                                        <Input className='border px-2 text-black' {...register('email', {
                                                                             required: "Email é obrigatório para receber seu Qrcode",
                                                                             pattern: {
                                                                                 value: emailPattern,
