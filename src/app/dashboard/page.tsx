@@ -7,7 +7,7 @@ export default function Dashboard() {
     const [percentage, setPercentage] = useState<number>(35);
     useEffect(() => {
         async function getData() {
-            const dataAffiliate = await getAffiliateWithUsers("E3A02944")
+            const dataAffiliate = await getAffiliateWithUsers("7BAB6A01")
             setDataDashboard(dataAffiliate)
             console.log(dataAffiliate)
         }
