@@ -5,6 +5,14 @@ import { getAffiliateWithUsers } from "../../../actions/affiliate"
 export default function Dashboard() {
     const [dataDashboard, setDataDashboard] = useState<any>([])
     const [percentage, setPercentage] = useState<number>(35);
+    const [copied, setCopied] = useState(false);
+    const affiliateLink = `https://www.tikloveyuu.com/?ref=7BAB6A01`;
+    const handleCopy = () => {
+        navigator.clipboard.writeText(affiliateLink);
+        setCopied(true);
+    
+        setTimeout(() => setCopied(false), 2000);
+      };
     useEffect(() => {
         async function getData() {
             const dataAffiliate = await getAffiliateWithUsers("7BAB6A01")
@@ -55,19 +63,33 @@ export default function Dashboard() {
         </div>
       </aside> */}
 
-            <div className="flex-1 flex flex-col">
+            <div className="w-full flex flex-col">
+                
                 <header className="h-16 bg-white shadow-md flex items-center justify-between px-6">
                     <h1 className="text-xl font-semibold text-gray-800">Dashboard</h1>
                     <div className="space-x-4">
-                        {/* <button className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
-                            Add Item
-                        </button>
-                        <button className="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300">
+                        <div className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+                           {dataDashboard?.name}
+                        </div>
+                        {/* <button className="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300">
                             Settings
                         </button> */}
                     </div>
                 </header>
-
+                <input
+        type="text"
+        value={affiliateLink}
+        readOnly
+        className="w-full px-4 py-2 text-sm border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+      <button
+        onClick={handleCopy}
+        className={`px-4 py-2 text-white font-medium rounded-md transition ${
+          copied ? "bg-green-500" : "bg-blue-500 hover:bg-blue-600"
+        }`}
+      >
+        {copied ? "Copiado!" : "Copiar"}
+      </button>
                 <main className="flex-1 p-6 space-y-6">
                     <div className="grid grid-cols-3 gap-6">
                         <div className="bg-white shadow-md rounded-lg p-4">
@@ -89,7 +111,9 @@ export default function Dashboard() {
                         <p>Here you can place a chart or a table of data.</p>
                     </div> */}
                 </main>
+                
             </div>
+            
         </div>
 
     )
