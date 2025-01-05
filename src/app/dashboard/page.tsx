@@ -1,28 +1,24 @@
 "use client"
 import { useEffect, useState } from "react"
 import { getAffiliateWithUsers } from "../../../actions/affiliate"
+import { Input } from "@chakra-ui/react"
+import { Button } from "@/components/ui/button"
 
 export default function Dashboard() {
     const [dataDashboard, setDataDashboard] = useState<any>([])
+    const [enter, setEnter] = useState<boolean>(false)
+    const [password, setpassword] = useState<string>("")
     const [percentage, setPercentage] = useState<number>(35);
     const [copied, setCopied] = useState(false);
     const affiliateLink = `https://www.tikloveyuu.com/?ref=7BAB6A01`;
     const handleCopy = () => {
         navigator.clipboard.writeText(affiliateLink);
         setCopied(true);
-    
-        setTimeout(() => setCopied(false), 2000);
-      };
-    useEffect(() => {
-        async function getData() {
-            const dataAffiliate = await getAffiliateWithUsers("7BAB6A01")
-            setDataDashboard(dataAffiliate)
-            console.log(dataAffiliate)
-        }
 
-        getData()
-    }, [])
-    if (!dataDashboard?.users) return
+        setTimeout(() => setCopied(false), 2000);
+    };
+
+    // if (!dataDashboard?.users) return
     const getPaid = dataDashboard?.users?.filter((user: any) => user.paid === "PAID")
     const getPending = dataDashboard?.users?.filter((user: any) => user.paid === "PENDING").length
 
@@ -36,6 +32,25 @@ export default function Dashboard() {
         console.log(calculatedResult)
         return calculatedResult.toFixed(2).toString().replace(".", ",")
     };
+    async function enterMyDashboard() {
+        const { data, error } = await getAffiliateWithUsers(password)
+        if (error) {
+            alert(error)
+            return
+        }
+        setDataDashboard(data)
+        console.log(data)
+        setEnter(true)
+    }
+    if (!enter) {
+        return <div className="flex justify-center items-center h-screen bg-white">
+            <div className="flex flex-col items-center gap-2 max-w-[1200px] m-auto">
+                <h1 className="text-2xl text-black text-center font-extrabold">ENTRA NO MEU DASHBOARD</h1>
+                <Input type="text" onChange={(e) => setpassword(e.target.value)} value={password} className="border text-black border-black" />
+                <Button onClick={() => enterMyDashboard()} className="bg-blue-500 w-full">Entrar</Button>
+            </div>
+        </div>
+    }
     return (
         <div className="flex h-screen bg-gray-100">
             {/* <aside className="w-64 bg-gray-900 text-white flex flex-col">
@@ -64,12 +79,12 @@ export default function Dashboard() {
       </aside> */}
 
             <div className="w-full flex flex-col">
-                
+
                 <header className="h-16 bg-white shadow-md flex items-center justify-between px-6">
                     <h1 className="text-xl font-semibold text-gray-800">Dashboard</h1>
                     <div className="space-x-4">
                         <div className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
-                           {dataDashboard?.name}
+                            {dataDashboard?.name}
                         </div>
                         {/* <button className="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300">
                             Settings
@@ -77,21 +92,20 @@ export default function Dashboard() {
                     </div>
                 </header>
                 <input
-        type="text"
-        value={affiliateLink}
-        readOnly
-        className="w-full px-4 py-2 text-sm border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
-      <button
-        onClick={handleCopy}
-        className={`px-4 py-2 text-white font-medium rounded-md transition ${
-          copied ? "bg-green-500" : "bg-blue-500 hover:bg-blue-600"
-        }`}
-      >
-        {copied ? "Copiado!" : "Copiar"}
-      </button>
-                <main className="flex-1 p-6 space-y-6">
-                    <div className="grid grid-cols-3 gap-6">
+                    type="text"
+                    value={affiliateLink}
+                    readOnly
+                    className="w-full px-4 py-2 text-sm border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <button
+                    onClick={handleCopy}
+                    className={`px-4 py-2 text-white font-medium rounded-md transition ${copied ? "bg-green-500" : "bg-blue-500 hover:bg-blue-600"
+                        }`}
+                >
+                    {copied ? "Copiado!" : "Copiar"}
+                </button>
+                <main className="flex flex-wrap items-start flex-1 p-6 w-full space-y-6">
+                    <div className="grid md:grid-cols-3 gap-6 w-full">
                         <div className="bg-white shadow-md rounded-lg p-4">
                             <h2 className="text-lg font-bold text-gray-800">Meu Saldo</h2>
                             <p className="text-2xl font-semibold text-blue-500">R$ {calculatePercentage()}</p>
@@ -111,9 +125,9 @@ export default function Dashboard() {
                         <p>Here you can place a chart or a table of data.</p>
                     </div> */}
                 </main>
-                
+
             </div>
-            
+
         </div>
 
     )
