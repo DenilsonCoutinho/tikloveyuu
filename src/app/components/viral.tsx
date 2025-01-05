@@ -16,8 +16,8 @@ export default function Viral() {
                 effect={'coverflow'}
                 grabCursor={true}
                 centeredSlides={true}
-                slidesPerView={2}
-                loop={true}
+                slidesPerView={3}
+                // loop={true}
                 autoplay={{
                     delay: 2300,
                     disableOnInteraction: false,

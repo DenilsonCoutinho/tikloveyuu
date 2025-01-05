@@ -3,8 +3,29 @@
 import { db as prisma } from "../../src/lib/db";
 
 
-export async function createCouple(idCouple: string, nameCouple: string, initalDate: string, initalHours: string, images: string[], message: string, youtubeLink: string | null) {
+export async function createCouple(idCouple: string, nameCouple: string, initalDate: string, initalHours: string, images: string[], message: string, youtubeLink: string | null, price: number, affiliateId: string ) {
+    
     try {
+        if (affiliateId) {
+         
+            await prisma.user.create({
+                data: {
+                    ytbMusic: youtubeLink,
+                    messages: message,
+                    idCouple: idCouple,
+                    nameCouple: nameCouple,
+                    images: images,
+                    initialHours: initalHours,
+                    initialDate: initalDate,
+                    email: null,
+                    paid: "PENDING",
+                    price: price,
+                    affiliateId: affiliateId,
+                    idCostumerAsaas: null,
+                },
+            })
+            return { success: "Criado com sucesso! ",idCouple: idCouple}
+        }
         await prisma.user.create({
             data: {
                 ytbMusic: youtubeLink,
@@ -15,10 +36,10 @@ export async function createCouple(idCouple: string, nameCouple: string, initalD
                 initialHours: initalHours,
                 initialDate: initalDate,
                 email: null,
+                paid: "PENDING",
+                price: price,
                 idCostumerAsaas: null,
             },
-
-
         })
         return { success: "Criado com sucesso! " }
     } catch (err) {
@@ -62,7 +83,7 @@ export async function updatecustomerId(idUser: string, customerId: string, email
 
 
 
-export async function getBycustomerId(customerId: string, ) {
+export async function getBycustomerId(customerId: string,) {
 
     const res = await prisma.user.findFirst({
         where: { idCostumerAsaas: customerId }

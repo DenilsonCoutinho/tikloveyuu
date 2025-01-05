@@ -14,10 +14,10 @@ datasource db {
 }
 
 model User {
-  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  id              String     @id @default(auto()) @map("_id") @db.ObjectId
   nameCouple      String?
   email           String?
-  idCouple        String   @unique
+  idCouple        String     @unique
   images          String[]
   initialDate     String
   initialHours    String
@@ -25,9 +25,11 @@ model User {
   paid            String?
   messages        String?
   ytbMusic        String?
-  createdAt       DateTime @default(now())
+  createdAt       DateTime   @default(now())
   idSession       String?
-  price           Int?
+  price           Float?
+  affiliateId     String?    
+  affiliate       Affiliate? @relation("AffiliateUsers", fields: [affiliateId], references: [code])
 }
 
 model RequestSend {
@@ -46,4 +48,15 @@ model RequestSend {
   idSession       String?
   ytbMusic        String?
   createdAt       DateTime @default(now())
+}
+
+model Affiliate {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId// Mapeia o campo 'id' para '_id' do MongoDB
+  code       String   @unique // 'code' será único, mas o MongoDB gerenciará o '_id'
+  name       String
+  email      String   @unique
+  percentage Int
+  keyPix     String
+  createdAt  DateTime @default(now())
+  users      User[]   @relation("AffiliateUsers") // Adicionando a relação oposta
 }
