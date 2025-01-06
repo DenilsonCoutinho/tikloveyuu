@@ -203,13 +203,15 @@ export default function Presentation() {
         setLoading(true)
         const { imgUpload, errorImg } = await handleUpload()
         const refAffiliate = localStorage.getItem('ref')?.toString();
-        if (!refAffiliate) return
+       
         if (imgUpload && !errorImg) {
             const price = typeProduct === 1 ? 14.99 : 34.99
             // console.log("idUser"+idUser,"nameCouple:"+ nameCouple, "dataCouple:"+dataCouple, "hour:"+hour, "imgUpload:"+imgUpload, "message:"+message, youtubeLink, "price:"+price,"refAffiliate:"+refAffiliate )
             const { success, error, idCouple } = await createCouple(idUser, nameCouple, dataCouple, hour, imgUpload, message, youtubeLink, price, refAffiliate as string)
             // if (!idCouple) return
-            await connectAffiliate(refAffiliate as string, idUser)
+            if (refAffiliate){
+                await connectAffiliate(refAffiliate as string, idUser)
+            }
             if (success && formPayment === "1") {
                 if (error) return setLoading(false)
                 await generatorPix()
@@ -570,7 +572,7 @@ export default function Presentation() {
                                             {formPayment && <DialogFooter>
 
                                                 <DialogActionTrigger asChild>
-                                                    <Button className='text-black' variant="outline">Cancelar</Button>
+                                                    <Button display={`${loading?"none":""}`} className='text-black' variant="outline">Cancelar</Button>
                                                 </DialogActionTrigger>
                                                 <ButtonPayment text={loading ? "Aguarde..." : "ir para o Pagamento"} disabled={loading} onClick={handleSubmit(validateFieldsPix)} />
                                             </DialogFooter>}
