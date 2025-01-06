@@ -208,7 +208,7 @@ export default function Presentation() {
             const price = typeProduct === 1 ? 14.99 : 34.99
             // console.log("idUser"+idUser,"nameCouple:"+ nameCouple, "dataCouple:"+dataCouple, "hour:"+hour, "imgUpload:"+imgUpload, "message:"+message, youtubeLink, "price:"+price,"refAffiliate:"+refAffiliate )
             const { success, error, idCouple } = await createCouple(idUser, nameCouple, dataCouple, hour, imgUpload, message, youtubeLink, price, refAffiliate as string)
-            if (!idCouple) return
+            // if (!idCouple) return
             await connectAffiliate(refAffiliate as string, idUser)
             if (success && formPayment === "1") {
                 if (error) return setLoading(false)
