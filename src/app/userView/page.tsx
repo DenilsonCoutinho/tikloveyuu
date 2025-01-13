@@ -52,6 +52,7 @@ function UserViewComponent() {
             setLoading(true)
             if (!id) return
             const response = await getCoupleById(id)
+            console.log(response)
             setData(response)
         }
         getDataCouple()

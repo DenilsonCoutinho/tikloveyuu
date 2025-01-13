@@ -17,13 +17,14 @@ function ContadorEterno({ initialDate, initialHour }: CountProps) {
     });
     
     useEffect(() => {
-        if (!initialDate || !initialHour) {
-            console.error("Data ou hora inicial não fornecida.");
-            setMostrarContador(false);
-            return;
-        }
+        // if (!initialDate || !initialHour) {
+        //     console.error("Data ou hora inicial não fornecida.");
+        //     setMostrarContador(false);
+        //     return;
+        // }
     
-        const dataInicial = moment.utc(`${initialDate}T${initialHour}`);
+        const dataInicial = moment.utc(`${initialDate}T${initialHour}:00Z`);
+        console.log(dataInicial)
         if (!dataInicial.isValid()) {
             console.error("Data inicial inválida.");
             setMostrarContador(false);
