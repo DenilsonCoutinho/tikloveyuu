@@ -67,7 +67,6 @@ function UserViewComponent() {
         }, 9000);
 
     }
-    const heartImageUrl = 'https://images.unsplash.com/photo-1500336629070-b0e356d4ac60';  // Exemplo de URL pública
 
     useEffect(() => {
         emojiBlast({

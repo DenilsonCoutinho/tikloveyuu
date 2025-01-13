@@ -15,49 +15,47 @@ function ContadorEterno({ initialDate, initialHour }: CountProps) {
         minutos: 0,
         segundos: 0,
     });
-    
+
     useEffect(() => {
-        // if (!initialDate || !initialHour) {
-        //     console.error("Data ou hora inicial não fornecida.");
-        //     setMostrarContador(false);
-        //     return;
-        // }
-    
-        const dataInicial = moment.utc(`${initialDate}T${initialHour}:00Z`);
-        console.log(dataInicial)
-        if (!dataInicial.isValid()) {
-            console.error("Data inicial inválida.");
+        if (!initialDate || !initialHour) {
+            console.error("Data ou hora inicial não fornecida.");
             setMostrarContador(false);
             return;
         }
-    
-        setMostrarContador(true);
-    
-        const interval = setInterval(() => {
-            const agora = moment();
-            const diff = moment.duration(agora.diff(dataInicial));
-    
-            setTempo({
-                anos: diff.years(),
-                meses: diff.months(),
-                dias: diff.days(),
-                horas: diff.hours(),
-                minutos: diff.minutes(),
-                segundos: diff.seconds(),
-            });
-        }, 1000);
-    
-        return () => clearInterval(interval);
-    }, [initialDate, initialHour]);
+
+        const dataInicial = moment.utc(`${initialDate}T${initialHour}`, moment.ISO_8601);
+        console.log(dataInicial)
+        // if (!dataInicial.isValid()) {
+        //     console.error("Data inicial inválida.");
+        //     setMostrarContador(false);
+        //     return;
+        // }
+
+        // setMostrarContador(true);
+
+        // const interval = setInterval(() => {
+        const agora = moment();
+        const diff = moment.duration(agora.diff(dataInicial));
+
+        setTempo({
+            anos: diff.years(),
+            meses: diff.months(),
+            dias: diff.days(),
+            horas: diff.hours(),
+            minutos: diff.minutes(),
+            segundos: diff.seconds(),
+        });
+        // }, 1000);
+
+        // return () => clearInterval(interval);
+    }, [initialDate,initialHour]);
 
     return (
         <div>
             <h1 className='text-white text-center font-semibold'>Juntos há:</h1>
-            {mostrarContador && (
-                <p className='boujee-text font-semibold text-center text-[16px]'>
-                    {tempo.anos} anos, {tempo.meses} meses, {tempo.dias} dias, {tempo.horas} horas, {tempo.minutos} minutos e {tempo.segundos} segundos
-                </p>
-            )}
+            <p className='boujee-text font-semibold text-center text-[16px]'>
+                {tempo.anos} anos, {tempo.meses} meses, {tempo.dias} dias, {tempo.horas} horas, {tempo.minutos} minutos e {tempo.segundos} segundos
+            </p>
         </div>
     );
 }
