@@ -48,14 +48,14 @@ function ContadorEterno({ initialDate, initialHour }: CountProps) {
         // }, 1000);
 
         // return () => clearInterval(interval);
-    }, [initialDate,initialHour]);
+    }, [initialDate, initialHour]);
 
     return (
         <div>
             <h1 className='text-white text-center font-semibold'>Juntos há:</h1>
-            <p className='boujee-text font-semibold text-center text-[16px]'>
+            {initialDate && initialHour && <p className='boujee-text font-semibold text-center text-[16px]'>
                 {tempo.anos} anos, {tempo.meses} meses, {tempo.dias} dias, {tempo.horas} horas, {tempo.minutos} minutos e {tempo.segundos} segundos
-            </p>
+            </p>}
         </div>
     );
 }
