@@ -1,6 +1,6 @@
 import fields from '../../assets/howWork/fields.svg'
 import emailCouple from '../../assets/howWork/email-phone 1.svg'
-import couple from '../../assets/howWork/couple.svg'
+import couple from '../../assets/eu i kai.svg'
 import payment from '../../assets/howWork/payment.svg'
 import heart from '../../assets/heart.webp'
 import Image from 'next/image'

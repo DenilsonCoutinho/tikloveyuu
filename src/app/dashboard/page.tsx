@@ -1,8 +1,9 @@
 "use client"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useTransition } from "react"
 import { getAffiliateWithUsers } from "../../../actions/affiliate"
 import { Input } from "@chakra-ui/react"
 import { Button } from "@/components/ui/button"
+import ButtonUiUniverse from "../components/buttonUiUniverse"
 
 export default function Dashboard() {
     const [dataDashboard, setDataDashboard] = useState<any>([])
@@ -17,6 +18,7 @@ export default function Dashboard() {
 
         setTimeout(() => setCopied(false), 2000);
     };
+    const [isPending, startTransition] = useTransition();
 
     // if (!dataDashboard?.users) return
     const getPaid = dataDashboard?.users?.filter((user: any) => user.paid === "PAID")
@@ -29,10 +31,10 @@ export default function Dashboard() {
 
     const calculatePercentage = () => {
         const calculatedResult = (reducePrice * percentage) / 100;
-        console.log(calculatedResult)
         return calculatedResult.toFixed(2).toString().replace(".", ",")
     };
     async function enterMyDashboard() {
+    startTransition(async () => {
         const { data, error } = await getAffiliateWithUsers(password)
         if (error) {
             alert(error)
@@ -41,13 +43,16 @@ export default function Dashboard() {
         setDataDashboard(data)
         console.log(data)
         setEnter(true)
+    })
+
     }
     if (!enter) {
-        return <div className="flex justify-center items-center h-screen bg-white">
+        return <div className="flex justify-center items-center h-screen bg-defaultBg">
             <div className="flex flex-col items-center gap-2 max-w-[1200px] m-auto">
-                <h1 className="text-2xl text-black text-center font-extrabold">ENTRA NO MEU DASHBOARD</h1>
-                <Input type="text" onChange={(e) => setpassword(e.target.value)} value={password} className="border text-black border-black" />
-                <Button onClick={() => enterMyDashboard()} className="bg-blue-500 w-full">Entrar</Button>
+                <h1 className="text-2xl text-white text-center font-extrabold">ENTRA NO MEU DASHBOARD</h1>
+                <Input type="text" onChange={(e) => setpassword(e.target.value)} value={password} className="border text-white border-wtext-white" />
+                {/* <Button  className="bg-blue-500 w-full">Entrar</Button> */}
+                <ButtonUiUniverse disabled={isPending} onClick={() => enterMyDashboard()} text={isPending?"Aguarde...":"Entrar"}/>
             </div>
         </div>
     }

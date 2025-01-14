@@ -89,13 +89,15 @@ function UserViewComponent() {
     }, [])
     return (
         loading ?
-            <div className="h-screen flex bg-defaultBg justify-center items-center">
-                <div className="lds-heart" ><div></div></div>;
-            </div>
+            // <div className="h-screen flex bg-defaultBg justify-center items-center">
+                <>
+                <div className="lds-heart" ><div></div></div>
+                </>
+            // </div>
             :
 
             <div className={` ${data?.ytbMusic ? "" : ""} useViewBg overflow-y-hidden relative min-h-screen overflow-auto bg-defaultBg bg-contain py-10 flex justify-center items-center`}>
-                {/* <div className="flex absolute justify-between w-full  ">
+                <div className="flex absolute justify-between w-full  ">
                     <span style={{ "--i": "4" } as React.CSSProperties} className="bolha h-[2px] w-[2px] bg-white"></span>
                     <span style={{ "--i": "3" } as React.CSSProperties} className="bolha h-[2px] w-[2px] bg-white"></span>
                     <span style={{ "--i": "2" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
@@ -110,7 +112,7 @@ function UserViewComponent() {
                     <span style={{ "--i": "7" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
                     <span style={{ "--i": "9" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
                     <span style={{ "--i": "3" } as React.CSSProperties} className="bolha md:h-[2px] md:w-[2px] h-[2px] w-[2px] bg-white"></span>
-                </div> */}
+                </div>
                 <div className="flex flex-col-reverse">
                     <div>
                         <div className="relative border bg-transparent my-3 overflow-hidden  border-slate-600 rounded-xl m-auto w-80 px-5">

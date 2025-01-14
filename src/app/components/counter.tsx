@@ -22,39 +22,29 @@ function ContadorEterno({ initialDate, initialHour }: CountProps) {
             setMostrarContador(false);
             return;
         }
+        const interval = setInterval(() => {
+            const dataInicial = moment.utc(`${initialDate}T${initialHour}`, moment.ISO_8601);
 
-        const dataInicial = moment.utc(`${initialDate}T${initialHour}`, moment.ISO_8601);
-        console.log(dataInicial)
-        // if (!dataInicial.isValid()) {
-        //     console.error("Data inicial inválida.");
-        //     setMostrarContador(false);
-        //     return;
-        // }
+            const agora = moment();
+            const diff = moment.duration(agora.diff(dataInicial));
 
-        // setMostrarContador(true);
-
-        // const interval = setInterval(() => {
-        const agora = moment();
-        const diff = moment.duration(agora.diff(dataInicial));
-
-        setTempo({
-            anos: diff.years(),
-            meses: diff.months(),
-            dias: diff.days(),
-            horas: diff.hours(),
-            minutos: diff.minutes(),
-            segundos: diff.seconds(),
-        });
-        // }, 1000);
-
-        // return () => clearInterval(interval);
+            setTempo({
+                anos: diff.years(),
+                meses: diff.months(),
+                dias: diff.days(),
+                horas: diff.hours(),
+                minutos: diff.minutes(),
+                segundos: diff.seconds(),
+            });
+        }, 1000);
+        return () => clearInterval(interval);
     }, [initialDate, initialHour]);
 
     return (
         <div>
             <h1 className='text-white text-center font-semibold'>Juntos há:</h1>
             {initialDate && initialHour && <p className='boujee-text font-semibold text-center text-[16px]'>
-                {tempo.anos} anos, {tempo.meses} meses, {tempo.dias} dias, {tempo.horas} horas, {tempo.minutos} minutos e {tempo.segundos} segundos
+                {tempo.anos} {tempo.anos > 1 ? "anos" : "ano"}, {tempo.meses} {tempo.meses > 1 ? "meses" : "mês"} , {tempo.dias} dias, {tempo.horas} horas, {tempo.minutos} minutos e {tempo.segundos} segundos
             </p>}
         </div>
     );

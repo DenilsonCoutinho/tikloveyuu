@@ -507,7 +507,7 @@ export default function Presentation() {
                                     </button>
                                     :
                                     <DialogTrigger className='mt-3' asChild>
-                                        <ButtonUiUniverse disabled={loading} onClick={() => {
+                                        <ButtonUiUniverse text=' Criar meu Contador' disabled={loading} onClick={() => {
                                             submit()
                                         }} />
 

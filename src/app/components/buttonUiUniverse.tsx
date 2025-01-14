@@ -2,13 +2,14 @@
 interface buttonProps {
     onClick?: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
     disabled?: boolean;
+    text:string;
 }
-export default function ButtonUiUniverse({ disabled, onClick }: buttonProps) {
+export default function ButtonUiUniverse({ disabled, onClick,text }: buttonProps) {
     return (
         <button onClick={onClick} disabled={disabled} className="uiverse mt-3">
             <div className="wrapper">
-                <span className=" flex gap-2 items-center justify-center font-bold  rounded-lg text-xl   text-white ">
-                    Criar meu Contador
+                <span className=" px-2 flex gap-2 items-center justify-center font-bold  rounded-lg text-xl   text-white ">
+                   {text}
                 </span>
                 <div className="circle circle-12"></div>
                 <div className="circle circle-11"></div>
