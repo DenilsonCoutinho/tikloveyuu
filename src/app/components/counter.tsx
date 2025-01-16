@@ -6,39 +6,53 @@ interface CountProps {
 }
 
 function ContadorEterno({ initialDate, initialHour }: CountProps) {
-    const [mostrarContador, setMostrarContador] = useState<boolean>(false);
-    const [tempo, setTempo] = useState<{ anos: number; meses: number; dias: number; horas: number; minutos: number; segundos: number }>({
+    const [tempo, setTempo] = useState({
         anos: 0,
         meses: 0,
         dias: 0,
         horas: 0,
         minutos: 0,
         segundos: 0,
-    });
-
-    useEffect(() => {
+      });
+    
+      useEffect(() => {
         if (!initialDate || !initialHour) {
-            console.error("Data ou hora inicial não fornecida.");
-            setMostrarContador(false);
-            return;
+          console.error("Data ou hora inicial não fornecida.");
+          return;
         }
-        const interval = setInterval(() => {
-            const dataInicial = moment.utc(`${initialDate}T${initialHour}`, moment.ISO_8601);
-
-            const agora = moment();
-            const diff = moment.duration(agora.diff(dataInicial));
-
-            setTempo({
-                anos: diff.years(),
-                meses: diff.months(),
-                dias: diff.days(),
-                horas: diff.hours(),
-                minutos: diff.minutes(),
-                segundos: diff.seconds(),
-            });
-        }, 1000);
-        return () => clearInterval(interval);
-    }, [initialDate, initialHour]);
+    
+        const dataInicial = moment(`${initialDate}T${initialHour}`, "YYYY-MM-DDTHH:mm");
+        if (!dataInicial.isValid()) {
+          console.error("Data inicial inválida.");
+          return;
+        }
+    
+        const atualizarContador = () => {
+          const agora = moment();
+    
+          // Calcula as diferenças
+          const diffAnos = agora.diff(dataInicial, "years");
+          const diffMeses = agora.diff(dataInicial, "months") % 12; // Resto da divisão para meses
+          const diffDias = agora.diff(dataInicial.clone().add(diffAnos, "years").add(diffMeses, "months"), "days");
+    
+          const diffHoras = agora.hours() - dataInicial.hours();
+          const diffMinutos = agora.minutes() - dataInicial.minutes();
+          const diffSegundos = agora.seconds() - dataInicial.seconds();
+    
+          setTempo({
+            anos: diffAnos,
+            meses: diffMeses,
+            dias: diffDias,
+            horas: diffHoras < 0 ? diffHoras + 24 : diffHoras,
+            minutos: diffMinutos < 0 ? diffMinutos + 60 : diffMinutos,
+            segundos: diffSegundos < 0 ? diffSegundos + 60 : diffSegundos,
+          });
+        };
+    
+        // Atualiza o contador a cada segundo
+        const interval = setInterval(atualizarContador, 1000);
+        return () => clearInterval(interval); // Limpa o intervalo ao desmontar o componente
+      }, [initialDate, initialHour]);
 
     return (
         <div>
