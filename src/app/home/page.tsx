@@ -67,6 +67,7 @@ import ButtonPayment from '../components/button-payment';
 
 import Prices from '../components/prices';
 import { connectAffiliate } from '../../../actions/affiliate';
+import FallingText from '../../../components/FallingText/FallingText';
 
 export default function Presentation() {
 
@@ -84,7 +85,9 @@ export default function Presentation() {
     });
     // const toast = useToast()
     const [hour, setHour] = useState<string>("")
-    const [showConfetti, setShowConfetti] = useState(false);
+    const [maintenance, setMaintenance] = useState<boolean>(true)
+    // const [showConfetti, setShowConfetti] = useState(false);
+
     const [loading, setLoading] = useState(false);
     const [loadingPayment, setLoadingPayment] = useState(false);
     const [formPayment, setFormPayment] = useState<string>('');
@@ -112,7 +115,7 @@ export default function Presentation() {
     const handleFileChange = async (event: any) => {
 
         if (event.acceptedFiles) {
-            startConfetti()
+            // startConfetti()
             const files: any = event.acceptedFiles.map((file: any) => URL.createObjectURL(file)); // Converte FileList para array de File
             const filesToUpload: any = event.acceptedFiles // Converte FileList para array de File
 
@@ -203,13 +206,11 @@ export default function Presentation() {
         setLoading(true)
         const { imgUpload, errorImg } = await handleUpload()
         const refAffiliate = localStorage.getItem('ref')?.toString();
-       
+
         if (imgUpload && !errorImg) {
             const price = typeProduct === 1 ? 14.99 : 34.99
-            // console.log("idUser"+idUser,"nameCouple:"+ nameCouple, "dataCouple:"+dataCouple, "hour:"+hour, "imgUpload:"+imgUpload, "message:"+message, youtubeLink, "price:"+price,"refAffiliate:"+refAffiliate )
             const { success, error, idCouple } = await createCouple(idUser, nameCouple, dataCouple, hour, imgUpload, message, youtubeLink, price, refAffiliate as string)
-            // if (!idCouple) return
-            if (refAffiliate){
+            if (refAffiliate) {
                 await connectAffiliate(refAffiliate as string, idUser)
             }
             if (success && formPayment === "1") {
@@ -337,14 +338,14 @@ export default function Presentation() {
 
     }
     let myeconder = `data:image/png;base64,${imageQrCode}`
-    async function startConfetti() {
-        setShowConfetti(true);
+    // async function startConfetti() {
+    //     setShowConfetti(true);
 
-        setTimeout(() => {
-            setShowConfetti(false);
-        }, 5000);
+    //     setTimeout(() => {
+    //         setShowConfetti(false);
+    //     }, 5000);
 
-    }
+    // }
 
     const [timeLeft, setTimeLeft] = useState<number>(340); // Tempo total: 240 segundos (4 minutos)
     const [progress, setProgress] = useState<number>(100)
@@ -370,20 +371,41 @@ export default function Presentation() {
 
         return () => clearInterval(interval); // Limpa o intervalo
     }, [loadingPayment]);
-    console.log(timeLeft)
 
     const cpfPattern = /^(?!000\.000\.000-00)(\d{3}\.\d{3}\.\d{3}-\d{2})$/;
     const emailPattern = /^[a-zA-Z0-9._%+-]+@(gmail|hotmail|outlook|yahoo)\.com$/
-
+    if (maintenance) {
+        return <div className='useViewBg h-screen flex flex-col justify-center items-center '>
+            <div className='max-w-[900px] mx-auto px-3'>
+                <div>
+                    <Image alt='logo' width={150} className='m-auto py-2' src={logo} />
+                </div>
+            </div>
+            <h1 className="text-white md:text-6xl text-2xl font-black text-center">Estamos realizando melhorias </h1>
+            {/* <p className="text-white text-base font-medium text-center">Nosso site está passando por uma manutenção para trazer uma experiência ainda melhor para você. Voltamos em breve</p> */}
+            <FallingText text={`Nosso site está passando por uma manutenção para trazer uma experiência ainda melhor para você. Voltamos em breve`}
+                highlightWords={["Nosso", "site", "passando", "manutenção", "experiência", "melhor"]}
+                // highlightClass="highlighted"
+                className='mx-auto md:text-xl text-xs md:max-w-[1100px] sm:max-w-[400px] '
+                trigger="hover"
+                backgroundColor="transparent"
+                wireframes={false}
+                gravity={0.56}
+                // fontSize="1.5rem"
+                mouseConstraintStiffness={0.9} />
+        </div>
+    }
     return (
         <>
             <main className="m-auto">
                 <div className='useViewBg md:h-[33rem]  overflow-hidden  '>
                     <div className='max-w-[1100px] m-auto px-3'>
 
-                        <div><Image alt='logo' width={150} className='m-auto pb-10 py-2' src={logo} /></div>
+                        <div>
+                            <Image alt='logo' width={150} className='m-auto pb-10 py-2' src={logo} />
+                        </div>
 
-                        <section className="">
+                        <section className="Presentation">
                             <div className='max-w-[700px]'>
                                 <h1 className="text-redDefault md:text-6xl text-5xl font-black  md:text-left text-center"><span className='relative '>S</span>urpreenda seu love!</h1>
                             </div>
@@ -420,6 +442,7 @@ export default function Presentation() {
                             </div>
 
                         </section>
+
                     </div>
                 </div>
                 <Viral />
@@ -445,7 +468,6 @@ export default function Presentation() {
                                         </p>
                                         <div className='relative'>
                                             <Input onChange={(e) => setDataCouple(e.target.value)} fontSize={13} value={dataCouple} type="date" id="date_couple" className=" text-white text-sm border-redDefault border px-1" />
-
                                         </div>
                                     </label>
                                     <label className="text-white md:max-w-40 w-full">
@@ -572,7 +594,7 @@ export default function Presentation() {
                                             {formPayment && <DialogFooter>
 
                                                 <DialogActionTrigger asChild>
-                                                    <Button display={`${loading?"none":""}`} className='text-black' variant="outline">Cancelar</Button>
+                                                    <Button display={`${loading ? "none" : ""}`} className='text-black' variant="outline">Cancelar</Button>
                                                 </DialogActionTrigger>
                                                 <ButtonPayment text={loading ? "Aguarde..." : "ir para o Pagamento"} disabled={loading} onClick={handleSubmit(validateFieldsPix)} />
                                             </DialogFooter>}
