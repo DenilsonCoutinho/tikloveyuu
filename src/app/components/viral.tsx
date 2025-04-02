@@ -9,8 +9,8 @@ import img_3 from '../../assets/proof/1730346888764.svg'
 import Image from 'next/image';
 export default function Viral() {
     return (
-        <div className='max-w-[800px] m-auto pb-20'>
-            <h1 className='text-white text-5xl font-bold text-center py-10'>Surpresas que<br />
+        <div className='max-w-[800px] m-auto md:pb-20 pb-20'>
+            <h1 className='text-white md:text-5xl text-4xl font-bold text-center py-10'>Surpresas que<br />
                 <span className='text-[#4500E5]  sha'>viralizaram</span></h1>
             <Swiper
                 effect={'coverflow'}

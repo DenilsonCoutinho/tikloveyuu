@@ -16,7 +16,7 @@ export default function Prices({setSelectedInput}:inputProps) {
 
     return (
         <>
-            <div className=" text-white max-w-[1100px] w-full m-auto flex flex-col items-center my-20 px-3">
+            <div id="Prices" className=" text-white max-w-[1100px] w-full m-auto flex flex-col items-center my-20 px-3">
                 <h1 className="text-4xl font-bold mb-10">Preços</h1>
                 <div className="flex md:flex-row flex-col justify-between gap-8  w-full">
                     {/* Card Básico */}

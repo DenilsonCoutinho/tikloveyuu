@@ -36,6 +36,7 @@ import { FileUploadRoot, FileUploadTrigger } from '@/components/ui/file-button';
 import Prices from '../components/prices';
 import FallingText from '../../../components/FallingText/FallingText';
 import ModalPayment from '../components/modalPayment';
+import RotatingText from '../../../components/RotatingText/RotatingText';
 
 export default function Presentation() {
 
@@ -67,7 +68,6 @@ export default function Presentation() {
         const cleanedValue = regexEmoji(e);
         setNameCouple(cleanedValue);
     };
-    console.log("aqui"+process.env.ASAS_API_KEY )
 
     const handleFileChange = async (event: any) => {
 
@@ -137,20 +137,40 @@ export default function Presentation() {
             <main className="m-auto">
                 <div className='useViewBg md:h-[33rem]  overflow-hidden  '>
                     <div className='max-w-[1100px] m-auto px-3'>
-
                         <div>
                             <Image alt='logo' width={150} className='m-auto pb-10 py-2' src={logo} />
                         </div>
-
                         <section className="Presentation">
-                            <div className='max-w-[700px]'>
-                                <h1 className="text-redDefault md:text-6xl text-5xl font-black  md:text-left text-center"><span className='relative '>S</span>urpreenda seu love!</h1>
+                            <div className='max-w-[800px] flex md:flex-row flex-col items-center justify-center mx-auto gap-4'>
+                                <h1 className="text-redDefault md:text-6xl text-5xl font-black  md:text-left text-center">Surpreenda seu </h1>
+                                <RotatingText
+                                    texts={['Amor!', 'Love!']}
+                                    mainClassName="px-2 sm:px-2 bg-[#9500ff] text-white md:max-w-auto font-semibold md:text-5xl text-5xl md:px-3 bg-cyan-300 text-black overflow-hidden py-0.5 sm:py-1 md:py-2 justify-center rounded-lg"
+                                    staggerFrom={"first"}
+                                    initial={{ y: "100%" }}
+                                    animate={{ y: 0 }}
+                                    exit={{ y: "-120%" }}
+                                    staggerDuration={0.025}
+                                    splitLevelClassName="overflow-hidden pb-0.5 sm:pb-1 md:pb-1"
+                                    transition={{ type: "", damping: 30, stiffness: 400 }}
+                                    rotationInterval={2000}
+                                />
                             </div>
-                            <p className="text-white md:text-left text-center md:text-base text-xs max-w-[600px] font-medium md:leading-6 leading-5 pt-2">
+                            {/* <p className="text-white  text-center md:text-base text-xs max-w-[690px]  mx-auto font-medium md:leading-6 leading-5 pt-2">
                                 Celebre cada momento do seu relacionamento com um contador dinâmico exclusivo! Preencha o formulário e receba um site personalizado com um QR Code especial para compartilhar com quem você ama. Agora, aproveite também a opção de criar um pedido especial!
-                            </p>
-                            <div className='flex md:flex-row flex-col justify-center items-center gap-4 mt-3 max-w-[600px]'>
-                                <Button className='shadow-[#4500E5] shadow-lg bg-[#4500E5] hover:bg-[#6638C6] hover:shadow-[#6638C6] m-auto text-white max-w-[300px] w-full ' onClick={() => scrollToDiv("my_form")}>
+                            </p> */}
+                            <FallingText text={` Celebre cada momento do seu relacionamento com um contador dinâmico exclusivo! Preencha o formulário e receba um site personalizado com um QRCode especial para compartilhar com quem você ama. Agora, aproveite também a opção de criar um pedido especial!`}
+                highlightWords={["Celebre", "momento", "relacionamento", "exclusivo!", "experiência", "QRCode"]}
+                // highlightClass="highlighted"
+                className='mx-auto py-10 md:text-xl text-xs md:max-w-[1100px] sm:max-w-[400px] '
+                trigger="hover"
+                backgroundColor="transparent"
+                wireframes={false}
+                gravity={0.56}
+                // fontSize="1.5rem"
+                mouseConstraintStiffness={0.9} />
+                            <div className='flex md:flex-row flex-col justify-center items-center gap-4 mt-3 max-w-[600px] mx-auto'>
+                                <Button className='shadow-[#4500E5] shadow-lg bg-[#4500E5] hover:bg-[#6638C6] hover:shadow-[#6638C6] m-auto text-white max-w-[300px] w-full ' onClick={() => scrollToDiv("Prices")}>
                                     Criar meu contador dinâmico
                                 </Button>
                                 <h1 className='text- text-white'>OU</h1>
@@ -169,7 +189,6 @@ export default function Presentation() {
                                 <div className='flex items-center gap-4'>
                                     <a href="https://www.tiktok.com/@gabriela.rodrigue9315/video/7430304676643425542" className="">
                                         <FaTiktok className='hover:scale-110 duration-150 text-white text-6xl ' />
-
                                     </a>
 
                                 </div>

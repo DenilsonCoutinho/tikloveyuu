@@ -7,7 +7,7 @@ import Image from 'next/image'
 export default function HowItWorks() {
     return (
         <>
-            <div className='my-32 flex lg:flex-row flex-col max-w-[1100px] justify-between m-auto items-center lg:items-start'>
+            <div className='md:my-32 my-10 flex lg:flex-row flex-col max-w-[1100px] justify-between m-auto items-center lg:items-start'>
                 {/* <div className='flex px-2 lg:flex-col flex-row justify-between w-full md:items-start items-center'> */}
                     <div className="flex relative md:flex-row flex-col justify-center lg:items-start items-center lg:justify-between  lg:flex-col  gap-7 ">
                         <h1 className='text-white  md:text-5xl text-3xl mb-12 z-50  font-bold'>Como  <span className='text-redDefault'>funciona</span></h1>

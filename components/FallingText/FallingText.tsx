@@ -219,7 +219,7 @@ const FallingText: React.FC<FallingTextProps> = ({
 
   const handleTrigger = async() => {
     if (!effectStarted && (trigger === "click" || trigger === "hover")) {
-      await new Promise(resolve=>setTimeout(resolve,5000))
+      // await new Promise(resolve=>setTimeout(resolve,4000))
       setEffectStarted(true);
     }
    
@@ -232,7 +232,7 @@ const FallingText: React.FC<FallingTextProps> = ({
       ref={containerRef}
       className="relative z-[1] w-full h-[10rem] cursor-pointer text-center pt-8 overflow-hidden rounded-2xl"
     onClick={trigger === "click" ? handleTrigger : undefined}
-    // onMouseOver={trigger === "hover" ? handleTrigger : undefined}
+    onMouseOver={trigger === "hover" ? handleTrigger : undefined}
     >
       <div
         ref={textRef}
