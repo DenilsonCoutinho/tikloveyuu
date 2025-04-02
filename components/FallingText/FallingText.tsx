@@ -224,9 +224,6 @@ const FallingText: React.FC<FallingTextProps> = ({
     }
    
   };
-  useEffect(() => {
-    handleTrigger()
-  }, [])
   return (
     <div
       ref={containerRef}

@@ -145,13 +145,13 @@ export default function Presentation() {
                                 <h1 className="text-redDefault md:text-6xl text-5xl font-black  md:text-left text-center">Surpreenda seu </h1>
                                 <RotatingText
                                     texts={['Amor!', 'Love!']}
-                                    mainClassName="px-2 sm:px-2 bg-[#9500ff] text-white md:max-w-auto font-semibold md:text-5xl text-5xl md:px-3 bg-cyan-300 text-black overflow-hidden py-0.5 sm:py-1 md:py-2 justify-center rounded-lg"
+                                    mainClassName="px-2 sm:px-2 bg-[#9500ff] text-white md:max-w-auto font-semibold md:text-5xl text-5xl md:px-3  text-black overflow-hidden py-0.5 sm:py-1 md:py-2 justify-center rounded-lg"
                                     staggerFrom={"first"}
                                     initial={{ y: "100%" }}
                                     animate={{ y: 0 }}
                                     exit={{ y: "-120%" }}
                                     staggerDuration={0.025}
-                                    splitLevelClassName="overflow-hidden pb-0.5 sm:pb-1 md:pb-1"
+                                    splitLevelClassName="overflow-hidden pb-0.5 bg-[#9500ff] sm:pb-1 md:pb-1"
                                     transition={{ type: "", damping: 30, stiffness: 400 }}
                                     rotationInterval={2000}
                                 />
@@ -160,15 +160,15 @@ export default function Presentation() {
                                 Celebre cada momento do seu relacionamento com um contador dinâmico exclusivo! Preencha o formulário e receba um site personalizado com um QR Code especial para compartilhar com quem você ama. Agora, aproveite também a opção de criar um pedido especial!
                             </p> */}
                             <FallingText text={` Celebre cada momento do seu relacionamento com um contador dinâmico exclusivo! Preencha o formulário e receba um site personalizado com um QRCode especial para compartilhar com quem você ama. Agora, aproveite também a opção de criar um pedido especial!`}
-                highlightWords={["Celebre", "momento", "relacionamento", "exclusivo!", "experiência", "QRCode"]}
-                // highlightClass="highlighted"
-                className='mx-auto py-10 md:text-xl text-xs md:max-w-[1100px] sm:max-w-[400px] '
-                trigger="hover"
-                backgroundColor="transparent"
-                wireframes={false}
-                gravity={0.56}
-                // fontSize="1.5rem"
-                mouseConstraintStiffness={0.9} />
+                                highlightWords={["Celebre", "momento", "relacionamento", "exclusivo!", "experiência", "QRCode"]}
+                                // highlightClass="highlighted"
+                                className='mx-auto py-10 md:text-xl text-xs md:max-w-[1100px] sm:max-w-[400px] '
+                                trigger="hover"
+                                backgroundColor="transparent"
+                                wireframes={false}
+                                gravity={0.56}
+                                // fontSize="1.5rem"
+                                mouseConstraintStiffness={0.9} />
                             <div className='flex md:flex-row flex-col justify-center items-center gap-4 mt-3 max-w-[600px] mx-auto'>
                                 <Button className='shadow-[#4500E5] shadow-lg bg-[#4500E5] hover:bg-[#6638C6] hover:shadow-[#6638C6] m-auto text-white max-w-[300px] w-full ' onClick={() => scrollToDiv("Prices")}>
                                     Criar meu contador dinâmico
