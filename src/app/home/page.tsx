@@ -68,6 +68,7 @@ import ButtonPayment from '../components/button-payment';
 import Prices from '../components/prices';
 import { connectAffiliate } from '../../../actions/affiliate';
 import FallingText from '../../../components/FallingText/FallingText';
+import ModalPayment from '../components/modalPayment';
 
 export default function Presentation() {
 
@@ -85,7 +86,7 @@ export default function Presentation() {
     });
     // const toast = useToast()
     const [hour, setHour] = useState<string>("")
-    const [maintenance, setMaintenance] = useState<boolean>(true)
+    const [maintenance, setMaintenance] = useState<boolean>(false)
     // const [showConfetti, setShowConfetti] = useState(false);
 
     const [loading, setLoading] = useState(false);
@@ -110,12 +111,11 @@ export default function Presentation() {
         const cleanedValue = regexEmoji(e);
         setNameCouple(cleanedValue);
     };
-
+    console.log(imageCouple)
 
     const handleFileChange = async (event: any) => {
 
         if (event.acceptedFiles) {
-            // startConfetti()
             const files: any = event.acceptedFiles.map((file: any) => URL.createObjectURL(file)); // Converte FileList para array de File
             const filesToUpload: any = event.acceptedFiles // Converte FileList para array de File
 
@@ -123,6 +123,7 @@ export default function Presentation() {
             setImageCouple(filesToUpload)
         }
     };
+
     const handleCpfChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         let value = e.target.value.replace(/\D/g, ''); // Remove tudo que não é dígito
         if (value.length > 11) value = value.substring(0, 11); // Limita o CPF a 11 dígitos
@@ -196,45 +197,42 @@ export default function Presentation() {
         }
     };
 
-    async function validateFieldsPix(data: ClientProps) {
+    // async function validateFieldsPix(data: ClientProps) {
+    //     const validCpf = await validateCpf(data.cpfcnpj);
+    //     if (!validCpf && formPayment === "1") {
+    //         alert("CPF inválido!")
+    //         return { erro: "CPF inválido!" }
+    //     }
+    //     setLoading(true)
+    //     const { imgUpload, errorImg } = await handleUpload()
+    //     const refAffiliate = localStorage.getItem('ref')?.toString();
 
-        const validCpf = await validateCpf(data.cpfcnpj);
-        if (!validCpf && formPayment === "1") {
-            alert("CPF inválido!")
-            return { erro: "CPF inválido!" }
-        }
-        setLoading(true)
-        const { imgUpload, errorImg } = await handleUpload()
-        const refAffiliate = localStorage.getItem('ref')?.toString();
+    //     if (imgUpload && !errorImg) {
+    //         const price = typeProduct === 1 ? 14.99 : 34.99
+    //         const { success, error, idCouple } = await createCouple(idUser, nameCouple, dataCouple, hour, imgUpload, message, youtubeLink, price, refAffiliate as string)
+    //         if (refAffiliate) {
+    //             await connectAffiliate(refAffiliate as string, idUser)
+    //         }
+    //         if (success && formPayment === "1") {
+    //             if (error) return setLoading(false)
+    //             await generatorPix()
 
-        if (imgUpload && !errorImg) {
-            const price = typeProduct === 1 ? 14.99 : 34.99
-            const { success, error, idCouple } = await createCouple(idUser, nameCouple, dataCouple, hour, imgUpload, message, youtubeLink, price, refAffiliate as string)
-            if (refAffiliate) {
-                await connectAffiliate(refAffiliate as string, idUser)
-            }
-            if (success && formPayment === "1") {
-                if (error) return setLoading(false)
-                await generatorPix()
+    //         } else {
 
-            } else {
+    //             return handleCheckout()
+    //         }
+    //         setLoading(false)
+    //         return
+    //     }
 
-                return handleCheckout()
-            }
-            setLoading(false)
-            return
-        }
-
-        setLoading(false)
-    }
+    //     setLoading(false)
+    // }
 
     async function submit() {
         if (!nameCouple || !hour || !dataCouple) {
-
             return
         }
         if (imageCouple.length == 0) {
-
             return
         }
         onOpen()
@@ -288,7 +286,6 @@ export default function Presentation() {
         });
 
         const customer = await response.json();
-        console.log(customer);
         return { customerId: customer.customersData.id }
     }
     async function generatorPix() {
@@ -536,6 +533,9 @@ export default function Presentation() {
                                     </DialogTrigger>
                             }
                             <DialogContent className='bg-white'>
+                                <ModalPayment imageCouple={imageCouple} dataCouple={dataCouple} hour={hour} message={message} nameCouple={nameCouple} typeProduct={typeProduct} youtubeLink={youtubeLink} />
+                            </DialogContent>
+                            {/* <DialogContent className='bg-white'>
                                 {
                                     !loadingPayment ?
                                         <>
@@ -598,7 +598,7 @@ export default function Presentation() {
                                                 </DialogActionTrigger>
                                                 <ButtonPayment text={loading ? "Aguarde..." : "ir para o Pagamento"} disabled={loading} onClick={handleSubmit(validateFieldsPix)} />
                                             </DialogFooter>}
-                                            <DialogCloseTrigger />
+                                            <DialogCloseTrigger className='text-black' />
                                         </>
                                         :
                                         <>
@@ -622,8 +622,8 @@ export default function Presentation() {
                                             <Button bg={"green"} onClick={handleCopy} className='select-none ' ><p className=' text-white  font-medium px-2'>{copied ? "copiado" : "Copiar"}</p> <span className=' border border-white rounded-md p-1'><FaCopy className=' text-white' /></span></Button>
                                         </>
                                 }
-                            </DialogContent>
-                            {/* </DialogRoot> */}
+                            </DialogContent> */}
+
                         </div>
                     </aside>
                 </div >

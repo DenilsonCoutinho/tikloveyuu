@@ -1,31 +1,33 @@
 "use server"
 
+import { error } from "console";
 import { db as prisma } from "../../src/lib/db";
+import { Z_UNKNOWN } from "zlib";
 
 
-export async function createCouple(idCouple: string, nameCouple: string, initalDate: string, initalHours: string, images: string[], message: string, youtubeLink: string | null, price: number, affiliateId: string ) {
+export async function createCouple(idCouple: string, nameCouple: string, initalDate: string, initalHours: string, images: string[], message: string, youtubeLink: string | null, price: number, ) {
     
     try {
-        if (affiliateId) {
+        // if (affiliateId) {
          
-            await prisma.user.create({
-                data: {
-                    ytbMusic: youtubeLink,
-                    messages: message,
-                    idCouple: idCouple,
-                    nameCouple: nameCouple,
-                    images: images,
-                    initialHours: initalHours,
-                    initialDate: initalDate,
-                    email: null,
-                    paid: "PENDING",
-                    price: price,
-                    affiliateId: affiliateId,
-                    idCostumerAsaas: null,
-                },
-            })
-            return { success: "Criado com sucesso! ",idCouple: idCouple}
-        }
+        //     await prisma.user.create({
+        //         data: {
+        //             ytbMusic: youtubeLink,
+        //             messages: message,
+        //             idCouple: idCouple,
+        //             nameCouple: nameCouple,
+        //             images: images,
+        //             initialHours: initalHours,
+        //             initialDate: initalDate,
+        //             email: null,
+        //             paid: "PENDING",
+        //             price: price,
+        //             // affiliateId: affiliateId,
+        //             idCostumerAsaas: null,
+        //         },
+        //     })
+        //     return { success: "Criado com sucesso! ",idCouple: idCouple}
+        // }
         await prisma.user.create({
             data: {
                 ytbMusic: youtubeLink,
@@ -42,8 +44,10 @@ export async function createCouple(idCouple: string, nameCouple: string, initalD
             },
         })
         return { success: "Criado com sucesso! " }
-    } catch (err) {
-        return { error: err }
+    } catch (err:unknown) {
+        if(err instanceof Error){
+            return { error: err }
+        }
 
     }
 }
