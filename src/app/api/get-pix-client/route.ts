@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
                 accept: 'application/json',
                 'content-type': 'application/json',
                 'user-agent': 'tikloveyuu',
-                access_token: "$aact_YTU5YTE0M2M2N2I4MTliNzk0YTI5N2U5MzdjNWZmNDQ6OjAwMDAwMDAwMDAwMDA0OTczODc6OiRhYWNoXzQyOTNmNDMxLTJhYmMtNDU5Yi1iNmE2LWE0ODdiODFkNTk5ZA==" // Substitua 'MyKey' pela sua chave de API real
+                access_token: "$" + process.env.ASAAS_API_KEY as string // Substitua 'MyKey' pela sua chave de API real
             },
 
         })

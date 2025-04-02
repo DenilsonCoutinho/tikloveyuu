@@ -30,9 +30,9 @@ export default function Footer() {
                         </a>
 
 
-                        <a href="https://www.linkedin.com/in/denilson-c-silva/" className="">
+                        {/* <a href="https://www.linkedin.com/in/denilson-c-silva/" className="">
                             <FaLinkedin />
-                        </a>
+                        </a> */}
                     </div>
                 </div>
 

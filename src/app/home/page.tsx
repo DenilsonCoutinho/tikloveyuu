@@ -4,76 +4,42 @@ import { Button, Input, Textarea, } from "@chakra-ui/react";
 import FormPaymentInputs from "../components/formPaymentInputs";
 import { useEffect, useMemo, useRef, useState } from "react";
 import regexEmoji from "../../../utils/maskEmoji";
-import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import ContadorEterno from "../components/counter";
 import iconImg from '../../assets/photo (1).png'
 import logo from '../../assets/logoLove.png'
-import pix from '../../assets/Logo-Pix.png'
-import card from '../../assets/credit-card.png'
 import {
-    DialogActionTrigger,
-    DialogBody,
-    DialogCloseTrigger,
     DialogContent,
-    DialogFooter,
-    DialogHeader,
-    DialogRoot,
-    DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
 
 import comovaificar from '../../assets/como vai ficar 👇.png'
 import Image from "next/image";
 import MySwiper from "../components/mySwiper";
-import app from "../../lib/firebase";
 import CountUp from 'react-countup';
 
-import { createCouple, deleteCoupleById, updatecustomerId } from '../../../actions/couple';
-import { loadStripe } from '@stripe/stripe-js';
 import Footer from '../components/footer';
-interface responseUpload {
-    imgUpload?: string[] | undefined // Propriedade opcional para URLs de imagem
-    errorImg?: string; // Propriedade opcional para mensagens de erro
-}
-interface customerProps {
-    customerId?: string;
-    erro?: string;
-}
 
-interface ClientProps {
-    name_couple: string;
-    date: string;
-    time_couple: string;
-    cpfcnpj: string;
-    name_client: string;
-}
 import { useForm } from 'react-hook-form';
 import { scrollToDiv } from '../../../utils/scrollToDiv'
 import {
     useDisclosure,
 } from '@chakra-ui/react'
-import { validateCpf } from '../../../utils/cpfValid';
 import { FaCamera, FaCopy, FaTiktok, } from 'react-icons/fa';
 import HowItWorks from '../components/howItork';
 import Link from 'next/link';
-import { Radio, RadioGroup } from '@/components/ui/radio';
 import Faq from '../components/faq';
 import QrCodeSite from '../components/qrCodeSite';
 import Viral from '../components/viral';
-import Snowfall from 'react-snowfall'
 import ButtonUiUniverse from '../components/buttonUiUniverse';
 import { FileUploadRoot, FileUploadTrigger } from '@/components/ui/file-button';
-import ButtonPayment from '../components/button-payment';
 
 import Prices from '../components/prices';
-import { connectAffiliate } from '../../../actions/affiliate';
 import FallingText from '../../../components/FallingText/FallingText';
 import ModalPayment from '../components/modalPayment';
 
 export default function Presentation() {
 
     const { onOpen, onClose } = useDisclosure()
-    const storage = getStorage(app)
     const { register, handleSubmit, watch, getValues, formState: { errors } } = useForm({
         defaultValues: {
             name_couple: "",
@@ -84,34 +50,24 @@ export default function Presentation() {
             email: ""
         }
     });
-    // const toast = useToast()
+
     const [hour, setHour] = useState<string>("")
     const [maintenance, setMaintenance] = useState<boolean>(false)
-    // const [showConfetti, setShowConfetti] = useState(false);
 
     const [loading, setLoading] = useState(false);
-    const [loadingPayment, setLoadingPayment] = useState(false);
-    const [formPayment, setFormPayment] = useState<string>('');
-    const [imageQrCode, setImageQrCode] = useState<string>("");
-    const [qrCode, setQrCode] = useState<string>("");
-    const [email, setEmail] = useState<string>("");
     const [nameCouple, setNameCouple] = useState<string>("")
-    const [cpfCnpj, setCpfCnpj] = useState<string>("")
-    const [name, setName] = useState<string>("")
     const [youtubeLink, setYoutubeLink] = useState<string>("")
     const [typeProduct, setTypeProduct] = useState<number>(1)
     const [dataCouple, setDataCouple] = useState<string>("")
     const [imageCouple, setImageCouple] = useState<any>([])
     const [message, setMessage] = useState<string>("")
-    const [copied, setCopied] = useState<boolean>(false)
     const [previewURLs, setPreviewURLs] = useState<[]>([])
-    const [idUser, setIdUser] = useState<string>("")
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const cleanedValue = regexEmoji(e);
         setNameCouple(cleanedValue);
     };
-    console.log(imageCouple)
+    console.log("aqui"+process.env.ASAS_API_KEY )
 
     const handleFileChange = async (event: any) => {
 
@@ -124,109 +80,25 @@ export default function Presentation() {
         }
     };
 
-    const handleCpfChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        let value = e.target.value.replace(/\D/g, ''); // Remove tudo que não é dígito
-        if (value.length > 11) value = value.substring(0, 11); // Limita o CPF a 11 dígitos
 
-        // Aplica a máscara do CPF
-        value = value.replace(/(\d{3})(\d)/, '$1.$2');
-        value = value.replace(/(\d{3})(\d)/, '$1.$2');
-        value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
-
-        setCpfCnpj(value);
-    };
 
     useEffect(() => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const refUser = urlParams.get('ref');
-        if (refUser) {
-            // Armazenar o código do afiliado no localStorage ou cookie
-            localStorage.setItem('ref', refUser);
-        }
-        // const elementos = document.querySelectorAll(".bolha");
-
-        // elementos.forEach((elemento: any) => {
-        //     const i = getComputedStyle(elemento).getPropertyValue("--i");
-        //     elemento.style.animation = `animar2 calc(30s / ${i}) ease-in-out infinite`;
-        // });
+        // const urlParams = new URLSearchParams(window.location.search);
+        // const refUser = urlParams.get('ref');
+        // if (refUser) {
+        //     localStorage.setItem('ref', refUser);
+        // }
         setPreviewURLs([])
 
         const newId = uuidv4();
         try {
             localStorage.setItem("idUserMyLoverTik", newId);
-            setIdUser(newId);
         } catch (error) {
             console.error("Erro ao armazenar o ID do usuário:", error);
         }
 
     }, [])
 
-    const handleCheckout = async () => {
-        setLoading(true);
-        try {
-
-            const response = await fetch(`/api/create-payment-intent`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    typeProduct,
-                    idUser
-                }),
-            });
-
-            const stripeClient = await loadStripe(
-                process.env.NEXT_PUBLIC_STRIPE_PUB_KEY as string
-            );
-            if (!stripeClient) throw new Error("Stripe failed to initialize.");
-            const { sessionId } = await response.json();
-
-            await stripeClient.redirectToCheckout({ sessionId });
-        } catch (error) {
-            console.error('Erro ao redirecionar para o checkout:', error);
-            // toast({
-            //     title: 'Erro',
-            //     description: 'Não foi possível iniciar o checkout.',
-            //     status: 'error',
-            //     duration: 9000,
-            //     isClosable: true,
-            // });
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    // async function validateFieldsPix(data: ClientProps) {
-    //     const validCpf = await validateCpf(data.cpfcnpj);
-    //     if (!validCpf && formPayment === "1") {
-    //         alert("CPF inválido!")
-    //         return { erro: "CPF inválido!" }
-    //     }
-    //     setLoading(true)
-    //     const { imgUpload, errorImg } = await handleUpload()
-    //     const refAffiliate = localStorage.getItem('ref')?.toString();
-
-    //     if (imgUpload && !errorImg) {
-    //         const price = typeProduct === 1 ? 14.99 : 34.99
-    //         const { success, error, idCouple } = await createCouple(idUser, nameCouple, dataCouple, hour, imgUpload, message, youtubeLink, price, refAffiliate as string)
-    //         if (refAffiliate) {
-    //             await connectAffiliate(refAffiliate as string, idUser)
-    //         }
-    //         if (success && formPayment === "1") {
-    //             if (error) return setLoading(false)
-    //             await generatorPix()
-
-    //         } else {
-
-    //             return handleCheckout()
-    //         }
-    //         setLoading(false)
-    //         return
-    //     }
-
-    //     setLoading(false)
-    // }
 
     async function submit() {
         if (!nameCouple || !hour || !dataCouple) {
@@ -239,138 +111,6 @@ export default function Presentation() {
 
     }
 
-    async function handleUpload(): Promise<responseUpload> {
-        const uploads = imageCouple.map((image: any) => {
-            const storageRef = ref(storage, `user/${idUser}/images/${image?.name}`);
-            return uploadBytes(storageRef, image) // Faz o upload de cada foto
-                .then((snapshot) => {
-
-                    return getDownloadURL(snapshot.ref); // Obtém a URL de download
-                })
-                .catch((error) => {
-                    console.error(`Erro ao enviar foto ${image}:`, error);
-                });
-        })
-
-        try {
-            const urls = await Promise.all(uploads);
-            return { imgUpload: urls }
-        } catch (error) {
-            console.error("Erro ao enviar as fotos:", error);
-            return { errorImg: "Algo deu errado!" }
-        }
-    }
-
-
-    const handleCopy = () => {
-        try {
-            const text = navigator.clipboard.writeText(qrCode);
-            setCopied(true)
-        } catch (err) {
-            console.error("Falha ao colar conteúdo: ", err);
-        }
-    };
-
-
-    async function generatoClient(name: string, cpfCnpj: string): Promise<customerProps> {
-
-        const response = await fetch('/api/create-client-pix', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                name: name,
-                cpfCnpj: cpfCnpj.replace(/[.-]/g, '')
-            })
-        });
-
-        const customer = await response.json();
-        return { customerId: customer.customersData.id }
-    }
-    async function generatorPix() {
-
-        const { customerId, erro } = await generatoClient(name, cpfCnpj)
-
-        if (erro) {
-            return alert("CPF inválido!")
-        }
-        if (!customerId) {
-            console.log(customerId)
-            return alert("Cliente inválido!")
-        }
-        await updatecustomerId(idUser, customerId, email)
-
-        const res = await fetch('/api/create-pix', {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: {
-                'content-type': 'application/json',
-            },
-            body: JSON.stringify({
-                value: typeProduct === 1 ? 14.99 : 34.99, // Certifique-se que o valor está correto (3499 representa R$ 34,99)
-                customerid: customerId,
-                description: "1"
-            })
-        })
-        const pixCustomers = await res.json();
-        await getQrCodPix(pixCustomers.pixCustomersData.id)
-    }
-
-    async function getQrCodPix(paymentId: string) {
-        const res = await fetch('/api/get-pix-client', {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: {
-                'content-type': 'application/json',
-            },
-            body: JSON.stringify({
-                paymentId
-            })
-        })
-        const getPixCustomers = await res.json();
-        setImageQrCode(getPixCustomers.pixCustomersData.encodedImage)
-        setQrCode(getPixCustomers.pixCustomersData.payload)
-        setLoadingPayment(true)
-
-    }
-    let myeconder = `data:image/png;base64,${imageQrCode}`
-    // async function startConfetti() {
-    //     setShowConfetti(true);
-
-    //     setTimeout(() => {
-    //         setShowConfetti(false);
-    //     }, 5000);
-
-    // }
-
-    const [timeLeft, setTimeLeft] = useState<number>(340); // Tempo total: 240 segundos (4 minutos)
-    const [progress, setProgress] = useState<number>(100)
-
-    useEffect(() => {
-        if (!loadingPayment) return
-        const interval = setInterval(() => {
-            setTimeLeft((prev) => {
-                const newTime = prev - 1;
-
-                // Atualiza a barra de progresso
-                setProgress((newTime / 340) * 100);
-
-                if (newTime <= 0) {
-                    clearInterval(interval);
-
-                    location.href = '/'
-                }
-
-                return newTime;
-            });
-        }, 1000); // Atualiza a cada segundo
-
-        return () => clearInterval(interval); // Limpa o intervalo
-    }, [loadingPayment]);
-
-    const cpfPattern = /^(?!000\.000\.000-00)(\d{3}\.\d{3}\.\d{3}-\d{2})$/;
-    const emailPattern = /^[a-zA-Z0-9._%+-]+@(gmail|hotmail|outlook|yahoo)\.com$/
     if (maintenance) {
         return <div className='useViewBg h-screen flex flex-col justify-center items-center '>
             <div className='max-w-[900px] mx-auto px-3'>
@@ -535,95 +275,6 @@ export default function Presentation() {
                             <DialogContent className='bg-white'>
                                 <ModalPayment imageCouple={imageCouple} dataCouple={dataCouple} hour={hour} message={message} nameCouple={nameCouple} typeProduct={typeProduct} youtubeLink={youtubeLink} />
                             </DialogContent>
-                            {/* <DialogContent className='bg-white'>
-                                {
-                                    !loadingPayment ?
-                                        <>
-                                            <DialogHeader>
-                                                <DialogTitle className='text-black font-bold'>Escolha a forma de pagamento</DialogTitle>
-                                            </DialogHeader>
-
-                                            <DialogBody>
-                                                <RadioGroup variant={'subtle'} defaultValue={"1"} value={formPayment} onValueChange={(e) => setFormPayment(e.value)}>
-
-                                                    <div className='flex flex-row gap-3 items-center'>
-                                                        <Image quality={100} alt='pixlogo' width={30} height={30} src={pix} />
-                                                        <Radio className='text-black' value='1'>Pagar com Pix</Radio>
-                                                    </div>
-                                                    {formPayment === "1" &&
-                                                        <div className='flex flex-col gap-7'>
-                                                            <div className='relative'>
-                                                                <Input className='border text-black px-2'  {...register('name_client', { required: "Nome é obrigatório", pattern: { value: /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/, message: "Nome inválido" } })} onChange={(e) => setName(e.target.value)} value={name} placeholder='Nome' />
-                                                                {errors.name_client && <p className='text-red-500 text-xs absolute'>{errors.name_client.message}</p>}
-                                                            </div>
-
-                                                            <div className='relative'>
-                                                                <Input className='border px-2 text-black' {...register('cpfcnpj', {
-                                                                    required: "CPF é obrigatório",
-                                                                    pattern: {
-                                                                        value: cpfPattern,
-                                                                        message: "CPF inválido. Ex: 123.456.789-00"
-                                                                    }
-                                                                })} onChange={handleCpfChange} value={cpfCnpj} placeholder='CPF' />
-                                                                {errors.cpfcnpj && <p className='text-red-500 text-xs absolute'>{errors.cpfcnpj?.message}</p>}
-                                                            </div>
-
-                                                            <div className='relative'>
-                                                                <label>
-                                                                    <p className='text-black'>Digite seu e-mail para receber o QR Code
-                                                                    </p>
-                                                                    <Input className='border px-2 text-black' {...register('email', {
-                                                                        required: "Email é obrigatório para receber seu Qrcode",
-                                                                        pattern: {
-                                                                            value: emailPattern,
-                                                                            message: "Email inválido."
-                                                                        }
-                                                                    })} placeholder='E-mail' onChange={(e) => setEmail(e.target.value)} value={email} />
-                                                                </label>
-
-                                                                {errors.email && <p className='text-red-500 text-xs absolute'>{errors.email?.message}</p>}
-                                                            </div>
-                                                        </div>
-                                                    }
-                                                    <div className='flex gap-3 flex-row items-center pt-3'>
-                                                        <Image quality={100} alt='cardlogo' width={30} height={30} src={card} />
-                                                        <Radio className='text-black' value='2'>Pagar com cartão</Radio>
-                                                    </div>
-                                                </RadioGroup>
-                                            </DialogBody>
-                                            {formPayment && <DialogFooter>
-
-                                                <DialogActionTrigger asChild>
-                                                    <Button display={`${loading ? "none" : ""}`} className='text-black' variant="outline">Cancelar</Button>
-                                                </DialogActionTrigger>
-                                                <ButtonPayment text={loading ? "Aguarde..." : "ir para o Pagamento"} disabled={loading} onClick={handleSubmit(validateFieldsPix)} />
-                                            </DialogFooter>}
-                                            <DialogCloseTrigger className='text-black' />
-                                        </>
-                                        :
-                                        <>
-                                            <div className='px-2 mt-2'>
-                                                <p className="text-gray-700 text-sm text-center">
-                                                    Tempo restante para o pagamento: <strong>{Math.floor(timeLeft / 60)}:{String(timeLeft % 60).padStart(2, '0')}</strong> minutos
-                                                </p>
-                                                <div className="w-full bg-gray-300 rounded-full h-4 mb-6">
-                                                    <div
-                                                        className="bg-blue-500 h-4 rounded-full transition-all duration-500"
-                                                        style={{ width: `${progress}%` }}
-                                                    ></div>
-                                                </div>
-                                            </div>
-                                            <Image width={200} height={300} className='m-auto' alt='qrCode' src={myeconder} />
-                                            <div className='flex flex-col items-center bg-gray-100'>
-                                                <p className='font-bold text-xs text-yellow-600'>Atenção</p>
-                                                <p className='text-center text-black text-xs font-bold px-2'>Assim que fizer o pagamento você receberá no email o QrCode do seu site!</p>
-                                            </div>
-                                            <p className='text-black text-center text-xs px-3 py-2'>{qrCode}</p>
-                                            <Button bg={"green"} onClick={handleCopy} className='select-none ' ><p className=' text-white  font-medium px-2'>{copied ? "copiado" : "Copiar"}</p> <span className=' border border-white rounded-md p-1'><FaCopy className=' text-white' /></span></Button>
-                                        </>
-                                }
-                            </DialogContent> */}
-
                         </div>
                     </aside>
                 </div >
