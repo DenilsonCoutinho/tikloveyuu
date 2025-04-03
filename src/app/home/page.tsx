@@ -255,12 +255,10 @@ export default function Presentation() {
                         </div>
 
                     </section>
-                    <aside className='  flex gap-4 flex-col items-center'>
+                    <aside className=' flex gap-4 flex-col items-center'>
                         <Image width={180} quality={100} alt='comovaificar ' src={comovaificar} />
                         <div className="flex  flex-col">
-                            <div className="overflow-hidden relative border border-redDefault shadow-md shadow-redDefault bg-[#180d21]   rounded-xl max-h-[540px] myscroll overflow-y-auto md:w-80 ">
-                                {/* {<Confetti />} */}
-
+                            <div className="overflow-hidden relative  border border-redDefault shadow-md shadow-redDefault bg-[#180d21]  w-[300px] rounded-xl max-h-[540px] myscroll overflow-y-auto ">
                                 <div className={`previewURLsPhoto  my-10 flex relative justify-center items-center mt-4 ${previewURLs.length > 0 ? "" : "h-80"} rounded-md  w-full px-4 `}>
                                     {
                                         previewURLs.length > 0 ?
