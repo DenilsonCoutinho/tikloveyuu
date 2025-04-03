@@ -5,11 +5,11 @@ import { db as prisma } from "../../src/lib/db";
 import { Z_UNKNOWN } from "zlib";
 
 
-export async function createCouple(idCouple: string, nameCouple: string, initalDate: string, initalHours: string, images: string[], message: string, youtubeLink: string | null, price: number, ) {
-    
+export async function createCouple(idCouple: string, nameCouple: string, initalDate: string, initalHours: string, images: string[], message: string, youtubeLink: string | null, price: number,) {
+
     try {
         // if (affiliateId) {
-         
+
         //     await prisma.user.create({
         //         data: {
         //             ytbMusic: youtubeLink,
@@ -44,8 +44,8 @@ export async function createCouple(idCouple: string, nameCouple: string, initalD
             },
         })
         return { success: "Criado com sucesso! " }
-    } catch (err:unknown) {
-        if(err instanceof Error){
+    } catch (err: unknown) {
+        if (err instanceof Error) {
             return { error: err }
         }
 
@@ -98,10 +98,20 @@ export async function getBycustomerId(customerId: string,) {
 
 
 export async function getCoupleById(idCouple: string) {
-    const res = await prisma.user.findFirst({
-        where: { idCouple }
-    })
-    return res
+    try {
+        if (!idCouple) throw new Error("Seu ID não está correto, Entre em contato com o suporte!")
+        const res = await prisma.user.findFirst({
+            where: { idCouple }
+        })
+        return { couple: res }
+
+    } catch (error) {
+        if (error instanceof Error) {
+            return { error: error.message }
+        }
+        return { erro: error }
+
+    }
 }
 
 export async function getCoupleByUniqueId(idCouple: string) {

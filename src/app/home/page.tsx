@@ -37,6 +37,7 @@ import Prices from '../components/prices';
 import FallingText from '../../../components/FallingText/FallingText';
 import ModalPayment from '../components/modalPayment';
 import RotatingText from '../../../components/RotatingText/RotatingText';
+import Particles from '../../../components/Particles/Particles';
 
 export default function Presentation() {
 
@@ -133,7 +134,8 @@ export default function Presentation() {
         </div>
     }
     return (
-        <>
+        <div className='overflow-hidden'>
+            
             <main className="m-auto">
                 <div className='useViewBg md:h-[33rem]  overflow-hidden  '>
                     <div className='max-w-[1100px] m-auto px-3'>
@@ -295,6 +297,6 @@ export default function Presentation() {
             <Faq />
             <QrCodeSite />
             <Footer />
-        </>
+        </div>
     )
 }

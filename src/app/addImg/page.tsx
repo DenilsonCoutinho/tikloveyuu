@@ -4,6 +4,7 @@ import { FileUploadRoot, FileUploadTrigger } from '@/components/ui/file-button';
 import { handleUpload } from '@/services/uploadImages';
 import { useRef, useState } from 'react';
 import { FaCamera } from 'react-icons/fa';
+import Particles from '../../../components/Particles/Particles';
 
 export default function addImg() {
 
@@ -25,14 +26,25 @@ export default function addImg() {
     }
 
     return (
-        <>
-            <FileUploadRoot ref={fileInputRef} accept={["image/png", "image/gif", "image/jpeg"]} onFileChange={handleFileChange} maxFiles={3}>
+        <div className='h-screen  overflow-hidden'>
+            {/* <FileUploadRoot ref={fileInputRef} accept={["image/png", "image/gif", "image/jpeg"]} onFileChange={handleFileChange} maxFiles={3}>
                 <FileUploadTrigger asChild>
                     <Button variant="outline" className='text-white border-redDefault border w-full py-4' size="sm">
                     </Button>
                 </FileUploadTrigger>
-            </FileUploadRoot>
-
-        </>
+            </FileUploadRoot> */}
+            <div className='h-96 w-96 bg-white z-10 relative'></div>
+            <Particles
+                className='absolute  w-full h-full top-0 bg-defaultBg'
+                particleColors={['#fff', '#4500E5']}
+                particleCount={500}
+                particleSpread={20}
+                speed={0.08}
+                particleBaseSize={50}
+                moveParticlesOnHover={false}
+                alphaParticles={false}
+                disableRotation={false}
+            />
+        </div>
     )
 }
