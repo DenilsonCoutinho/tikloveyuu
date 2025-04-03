@@ -7,7 +7,7 @@ import { Provider } from "@/components/ui/provider"
 import { DialogRoot } from "@/components/ui/dialog";
 import Script from "next/script";
 import { PlanProvider } from "../../context/changePlanContext";
-import { Toaster } from "@/components/ui/toaster";
+import { Toaster } from "./components/toaster";
 
 
 const montserrat = Montserrat({
