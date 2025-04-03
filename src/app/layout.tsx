@@ -43,7 +43,7 @@ export default function RootLayout({
       <body className={`${montserrat.className}   antialiased`}>
         <PlanProvider>
           <Provider>
-            <DialogRoot closeOnInteractOutside={false}>
+            <DialogRoot placement="center" closeOnInteractOutside={false}>
               {children}
             </DialogRoot>
           </Provider>

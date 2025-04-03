@@ -38,6 +38,8 @@ import { FaCopy } from "react-icons/fa";
 import generatorPix from "@/services/generatorPix";
 import { loadStripe } from "@stripe/stripe-js";
 import { getQrCodPix } from "@/services/getQrCodPix";
+import Loader from "./loading";
+import RotatingText from "../../../components/RotatingText/RotatingText";
 
 export default function ModalPayment({ typeProduct, dataCouple, hour, message, nameCouple, youtubeLink, imageCouple }: { typeProduct: number, nameCouple: string, dataCouple: string, hour: string, message: string, youtubeLink: string, imageCouple: File[] }) {
     const [loadingPayment, setLoadingPayment] = useState<boolean>(false);
@@ -66,16 +68,6 @@ export default function ModalPayment({ typeProduct, dataCouple, hour, message, n
         }
     });
 
-    // const handleFileChange = async (event: any) => {
-
-    //     if (event.acceptedFiles) {
-    //         const files: any = event.acceptedFiles.map((file: any) => URL.createObjectURL(file)); // Converte FileList para array de File
-    //         const filesToUpload: any = event.acceptedFiles // Converte FileList para array de File
-
-    //         setPreviewURLs(files);
-    //         setImageCouple(filesToUpload)
-    //     }
-    // };
 
     const handleCpfChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         let value = e.target.value.replace(/\D/g, ''); // Remove tudo que não é dígito
@@ -115,13 +107,7 @@ export default function ModalPayment({ typeProduct, dataCouple, hour, message, n
             await stripeClient.redirectToCheckout({ sessionId });
         } catch (error) {
             console.error('Erro ao redirecionar para o checkout:', error);
-            // toast({
-            //     title: 'Erro',
-            //     description: 'Não foi possível iniciar o checkout.',
-            //     status: 'error',
-            //     duration: 9000,
-            //     isClosable: true,
-            // });
+
         } finally {
             setLoading(false);
         }
@@ -136,7 +122,6 @@ export default function ModalPayment({ typeProduct, dataCouple, hour, message, n
             if (!validCpf && formPayment === "1") throw new Error("CPF inválido!");
             setLoading(true)
             const uploadImages = await handleUpload(imageCouple, userId as string)
-            console.log(uploadImages)
             if (uploadImages?.errorImg) throw new Error(uploadImages.errorImg);
             const idUser = localStorage.getItem("idUserMyLoverTik");
 
@@ -146,7 +131,6 @@ export default function ModalPayment({ typeProduct, dataCouple, hour, message, n
             if (formPayment === "1") {
                 const { pixCustomersDataId } = await generatorPix(idUser as string, name, cpfCnpj, email, typeProduct)
                 const { encodedImage, qrCode } = await getQrCodPix(pixCustomersDataId as string)
-                console.log(encodedImage)
                 setQrCode(qrCode)
                 setEncoder(encodedImage)
                 setLoadingPayment(true)
@@ -158,11 +142,9 @@ export default function ModalPayment({ typeProduct, dataCouple, hour, message, n
 
         } catch (error) {
             if (error instanceof Error) {
-                console.error(error)
                 setLoading(false)
             }
         }
-
 
         setLoading(false)
     }
@@ -195,7 +177,6 @@ export default function ModalPayment({ typeProduct, dataCouple, hour, message, n
 
         return () => clearInterval(interval); // Limpa o intervalo
     }, [loadingPayment]);
-    console.log(encoder)
     const cpfPattern = /^(?!000\.000\.000-00)(\d{3}\.\d{3}\.\d{3}-\d{2})$/;
     const emailPattern = /^[a-zA-Z0-9._%+-]+@(gmail|hotmail|outlook|yahoo)\.com$/
     return (
@@ -261,9 +242,29 @@ export default function ModalPayment({ typeProduct, dataCouple, hour, message, n
                             <DialogActionTrigger asChild>
                                 <Button display={`${loading ? "none" : ""}`} className='text-black' variant="outline">Cancelar</Button>
                             </DialogActionTrigger>
-                            <ButtonPayment text={loading ? "Aguarde..." : "ir para o Pagamento"} disabled={loading} onClick={handleSubmit(validateFieldsPix)} />
+                            {
+                                loading ?
+                                    <Button className="bg-green-400 w-full flex ">
+                                        <RotatingText
+                                            texts={['Aguarde...', 'Gerando PIX!']}
+                                            mainClassName="px-2 sm:px-2 bg-transparent text-white md:max-w-auto text-xl md:px-3  text-black overflow-hidden py-0.5 sm:py-1 md:py-2 justify-center rounded-lg"
+                                            staggerFrom={"last"}
+                                            initial={{ y: "100%" }}
+                                            animate={{ y: 0 }}
+                                            exit={{ y: "-120%" }}
+                                            staggerDuration={0.025}
+                                            splitLevelClassName="overflow-hidden pb-0.5 bg-transparent sm:pb-1 md:pb-1"
+                                            transition={{ type: "", damping: 200, stiffness: 400 }}
+                                            rotationInterval={2000}
+                                        />
+                                        <Loader />
+                                    </Button>
+                                    :
+                                    <ButtonPayment text={"Fazer Pagamento"} disabled={loading} onClick={handleSubmit(validateFieldsPix)} />
+
+                            }
                         </DialogFooter>}
-                        <DialogCloseTrigger className='text-black' />
+                        {!loading && <DialogCloseTrigger className='text-black' />}
                     </>
                     :
                     <>

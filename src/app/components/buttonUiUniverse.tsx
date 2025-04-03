@@ -6,9 +6,9 @@ interface buttonProps {
 }
 export default function ButtonUiUniverse({ disabled, onClick,text }: buttonProps) {
     return (
-        <button onClick={onClick} disabled={disabled} className="uiverse mt-3">
-            <div className="wrapper">
-                <span className=" px-2 flex gap-2 items-center justify-center font-bold  rounded-lg text-xl   text-white ">
+        <button onClick={onClick} disabled={disabled} className="uiverse mt-6 ">
+            <div className="wrapper px-2">
+                <span className=" flex gap-2 items-center justify-center font-bold rounded-lg text-xl text-white ">
                    {text}
                 </span>
                 <div className="circle circle-12"></div>

@@ -146,28 +146,24 @@ export default function Presentation() {
                                 <RotatingText
                                     texts={['Amor!', 'Love!']}
                                     mainClassName="px-2 sm:px-2 bg-[#9500ff] text-white md:max-w-auto font-semibold md:text-5xl text-5xl md:px-3  text-black overflow-hidden py-0.5 sm:py-1 md:py-2 justify-center rounded-lg"
-                                    staggerFrom={"first"}
+                                    staggerFrom={"last"}
                                     initial={{ y: "100%" }}
                                     animate={{ y: 0 }}
                                     exit={{ y: "-120%" }}
                                     staggerDuration={0.025}
                                     splitLevelClassName="overflow-hidden pb-0.5 bg-[#9500ff] sm:pb-1 md:pb-1"
-                                    transition={{ type: "", damping: 30, stiffness: 400 }}
+                                    transition={{ type: "", damping: 200, stiffness: 400 }}
                                     rotationInterval={2000}
                                 />
                             </div>
-                            {/* <p className="text-white  text-center md:text-base text-xs max-w-[690px]  mx-auto font-medium md:leading-6 leading-5 pt-2">
-                                Celebre cada momento do seu relacionamento com um contador dinâmico exclusivo! Preencha o formulário e receba um site personalizado com um QR Code especial para compartilhar com quem você ama. Agora, aproveite também a opção de criar um pedido especial!
-                            </p> */}
+                            
                             <FallingText text={` Celebre cada momento do seu relacionamento com um contador dinâmico exclusivo! Preencha o formulário e receba um site personalizado com um QRCode especial para compartilhar com quem você ama. Agora, aproveite também a opção de criar um pedido especial!`}
                                 highlightWords={["Celebre", "momento", "relacionamento", "exclusivo!", "experiência", "QRCode"]}
-                                // highlightClass="highlighted"
                                 className='mx-auto py-10 md:text-xl text-xs md:max-w-[1100px] sm:max-w-[400px] '
-                                trigger="hover"
+                                trigger="click"
                                 backgroundColor="transparent"
                                 wireframes={false}
                                 gravity={0.56}
-                                // fontSize="1.5rem"
                                 mouseConstraintStiffness={0.9} />
                             <div className='flex md:flex-row flex-col justify-center items-center gap-4 mt-3 max-w-[600px] mx-auto'>
                                 <Button className='shadow-[#4500E5] shadow-lg bg-[#4500E5] hover:bg-[#6638C6] hover:shadow-[#6638C6] m-auto text-white max-w-[300px] w-full ' onClick={() => scrollToDiv("Prices")}>
@@ -262,7 +258,7 @@ export default function Presentation() {
                     <aside className='  flex gap-4 flex-col items-center'>
                         <Image width={180} quality={100} alt='comovaificar ' src={comovaificar} />
                         <div className="flex  flex-col">
-                            <div className=" overflow-hidden relative border border-redDefault shadow-md shadow-redDefault bg-[#180d21]   rounded-xl max-h-[540px] myscroll overflow-y-auto w-80 px-4">
+                            <div className="overflow-hidden relative border border-redDefault shadow-md shadow-redDefault bg-[#180d21]   rounded-xl max-h-[540px] myscroll overflow-y-auto md:w-80 ">
                                 {/* {<Confetti />} */}
 
                                 <div className={`previewURLsPhoto  my-10 flex relative justify-center items-center mt-4 ${previewURLs.length > 0 ? "" : "h-80"} rounded-md  w-full px-4 `}>
@@ -284,14 +280,14 @@ export default function Presentation() {
                                         <p className=" flex gap-2 items-center justify-center font-medium  rounded-lg text-xs   text-white ">Preencha os campos necessários</p>
                                     </button>
                                     :
-                                    <DialogTrigger className='mt-3' asChild>
+                                    <DialogTrigger className='mt-3 ' asChild>
                                         <ButtonUiUniverse text=' Criar meu Contador' disabled={loading} onClick={() => {
                                             submit()
                                         }} />
 
                                     </DialogTrigger>
                             }
-                            <DialogContent className='bg-white'>
+                            <DialogContent  className='bg-white'>
                                 <ModalPayment imageCouple={imageCouple} dataCouple={dataCouple} hour={hour} message={message} nameCouple={nameCouple} typeProduct={typeProduct} youtubeLink={youtubeLink} />
                             </DialogContent>
                         </div>
