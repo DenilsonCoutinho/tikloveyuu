@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import Matter from "matter-js";
 import { Button } from "@/components/ui/button";
+import Loader from "@/app/components/loading";
 
 interface FallingTextProps {
   text?: string;
@@ -31,9 +32,12 @@ const FallingText: React.FC<FallingTextProps> = ({
   const canvasContainerRef = useRef<HTMLDivElement | null>(null);
 
   const [effectStarted, setEffectStarted] = useState(false);
+  const [loading, setloading] = useState(true);
 
   useEffect(() => {
+    setloading(false)
     if (!textRef.current) return;
+
     const words = text.split(" ");
 
     const newHTML = words
@@ -49,13 +53,16 @@ const FallingText: React.FC<FallingTextProps> = ({
       .join(" ");
 
     textRef.current.innerHTML = newHTML;
+
   }, [text, highlightWords]);
 
   useEffect(() => {
     if (trigger === "auto") {
       setEffectStarted(true);
+      setloading(false)
       return;
     }
+
     if (trigger === "scroll" && containerRef.current) {
       const observer = new IntersectionObserver(
         ([entry]) => {
@@ -67,6 +74,7 @@ const FallingText: React.FC<FallingTextProps> = ({
         { threshold: 0.1 }
       );
       observer.observe(containerRef.current);
+
       return () => observer.disconnect();
     }
   }, [trigger]);
@@ -203,12 +211,15 @@ const FallingText: React.FC<FallingTextProps> = ({
     return () => {
       Render.stop(render);
       Runner.stop(runner);
+      setloading(false)
+
       if (render.canvas && canvasContainerRef.current) {
         canvasContainerRef.current.removeChild(render.canvas);
       }
       World.clear(engine.world, false);
       Engine.clear(engine);
     };
+
   }, [
     effectStarted,
     gravity,
@@ -217,19 +228,24 @@ const FallingText: React.FC<FallingTextProps> = ({
     mouseConstraintStiffness,
   ]);
 
-  const handleTrigger = async() => {
+  const handleTrigger = async () => {
     if (!effectStarted && (trigger === "click" || trigger === "hover")) {
       // await new Promise(resolve=>setTimeout(resolve,4000))
       setEffectStarted(true);
     }
-   
+
   };
+  if (loading) {
+    return <div className="py-10">
+      <Loader />
+    </div>
+  }
   return (
     <div
       ref={containerRef}
       className="relative z-[1] w-full h-[10rem] cursor-pointer text-center pt-8 overflow-hidden rounded-2xl"
-    onClick={trigger === "click" ? handleTrigger : undefined}
-    onMouseOver={trigger === "hover" ? handleTrigger : undefined}
+      onClick={trigger === "click" ? handleTrigger : undefined}
+      onMouseOver={trigger === "hover" ? handleTrigger : undefined}
     >
       <div
         ref={textRef}
