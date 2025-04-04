@@ -111,6 +111,13 @@ export default function Presentation() {
         onOpen()
 
     }
+    function isSafari() {
+        if (typeof window === "undefined") return false; // Garante que está no browser
+        return /^((?!Chrome|Chromium|Android).)*Safari/i.test(navigator.userAgent) && navigator.vendor.includes("Apple");
+    }
+
+
+    console.log(isSafari());
 
     if (maintenance) {
         return <div className='useViewBg h-screen flex flex-col justify-center items-center '>
@@ -135,7 +142,7 @@ export default function Presentation() {
     }
     return (
         <div className='overflow-hidden'>
-            
+
             <main className="m-auto">
                 <div className='useViewBg md:h-[33rem]  overflow-hidden  '>
                     <div className='max-w-[1100px] m-auto px-3'>
@@ -158,15 +165,19 @@ export default function Presentation() {
                                     rotationInterval={2000}
                                 />
                             </div>
-                            
-                            <FallingText text={` Celebre cada momento do seu relacionamento com um contador dinâmico exclusivo! Preencha o formulário e receba um site personalizado com um QRCode especial para compartilhar com quem você ama. Agora, aproveite também a opção de criar um pedido especial!`}
-                                highlightWords={["Celebre", "momento", "relacionamento", "exclusivo!", "experiência", "QRCode"]}
-                                className='mx-auto py-10 md:text-xl text-xs md:max-w-[1100px] sm:max-w-[400px] '
-                                trigger="click"
-                                backgroundColor="transparent"
-                                wireframes={false}
-                                gravity={0.56}
-                                mouseConstraintStiffness={0.9} />
+
+                            {isSafari() ? <p className='mx-auto text-center py-10 md:text-xl text-xs md:max-w-[1100px] sm:max-w-[400px] '>
+                                Celebre cada momento do seu relacionamento com um contador dinâmico exclusivo! Preencha o formulário e receba um site personalizado com um QRCode especial para compartilhar com quem você ama. Agora, aproveite também a opção de criar um pedido especial!
+                            </p>
+                                :
+                                <FallingText text={` Celebre cada momento do seu relacionamento com um contador dinâmico exclusivo! Preencha o formulário e receba um site personalizado com um QRCode especial para compartilhar com quem você ama. Agora, aproveite também a opção de criar um pedido especial!`}
+                                    highlightWords={["Celebre", "momento", "relacionamento", "exclusivo!", "experiência", "QRCode"]}
+                                    className='mx-auto py-10 md:text-xl text-xs md:max-w-[1100px] sm:max-w-[400px] '
+                                    trigger="click"
+                                    backgroundColor="transparent"
+                                    wireframes={false}
+                                    gravity={0.56}
+                                    mouseConstraintStiffness={0.9} />}
                             <div className='flex md:flex-row flex-col justify-center items-center gap-4 mt-3 max-w-[600px] mx-auto'>
                                 <Button className='shadow-[#4500E5] shadow-lg bg-[#4500E5] hover:bg-[#6638C6] hover:shadow-[#6638C6] m-auto text-white max-w-[300px] w-full ' onClick={() => scrollToDiv("Prices")}>
                                     Criar meu contador dinâmico
@@ -287,7 +298,7 @@ export default function Presentation() {
 
                                     </DialogTrigger>
                             }
-                            <DialogContent  className='bg-white'>
+                            <DialogContent className='bg-white'>
                                 <ModalPayment imageCouple={imageCouple} dataCouple={dataCouple} hour={hour} message={message} nameCouple={nameCouple} typeProduct={typeProduct} youtubeLink={youtubeLink} />
                             </DialogContent>
                         </div>
