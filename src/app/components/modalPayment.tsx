@@ -246,7 +246,7 @@ export default function ModalPayment({ typeProduct, dataCouple, hour, message, n
                                 loading ?
                                     <Button className="bg-green-400 w-full flex ">
                                         <RotatingText
-                                            texts={['Aguarde...', 'Gerando PIX!']}
+                                            texts={['Aguarde...', `${formPayment === "1" ? "Gerando PIX!" : "Gerando Checkout"}`]}
                                             mainClassName="px-2 sm:px-2 bg-transparent text-white md:max-w-auto text-xl md:px-3  text-black overflow-hidden py-0.5 sm:py-1 md:py-2 justify-center rounded-lg"
                                             staggerFrom={"last"}
                                             initial={{ y: "100%" }}
