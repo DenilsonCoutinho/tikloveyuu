@@ -36,15 +36,12 @@ export default function RootLayout({
     <html suppressHydrationWarning lang="en">
       <head>
         <meta name="google-site-verification" content="QUHtQpp0zPPj6YOv5xLy9PYCyP-HoWXECaoijTaNmgo" />
-        <Script
-          src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"
-          strategy="beforeInteractive"
-        ></Script>
+
       </head>
       <body className={`${montserrat.className}   antialiased`}>
         <PlanProvider>
           <Provider>
-      <Toaster/>
+            <Toaster />
             <DialogRoot placement="center" closeOnInteractOutside={false}>
               {children}
             </DialogRoot>

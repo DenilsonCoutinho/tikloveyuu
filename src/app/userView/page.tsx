@@ -12,6 +12,7 @@ import Particles from "../../../components/Particles/Particles";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@radix-ui/react-toast";
 import FuzzyText from "../../../components/FuzzyText/FuzzyText";
+import SplashCursor from "../../../components/SplashCursor/SplashCursor";
 interface UserViewProps {
     id: string;
     nameCouple: string | null;
@@ -51,16 +52,7 @@ function UserViewComponent() {
                     throw new Error(res?.error as string)
                 }
                 setData(res?.couple || null)
-                emojiBlast({
-                    emojis: ["💝", "💞", "", "💖", "💜", "💘"],
-
-                    position: {
-                        x: innerWidth / 2,
-                        y: innerHeight / 2
-                    }
-                    ,
-                    emojiCount: () => 14
-                })
+               
                 await new Promise(resolve => setTimeout(resolve, 1000))
                 setLoading(false)
             } catch (error) {
@@ -95,8 +87,8 @@ function UserViewComponent() {
 
     return (
         IsError ? <>
+       
             <div className={`  flex-col bg-defaultBg overflow-x-hidden overflow-y-hidden relative min-h-screen overflow-auto  bg-contain py-10 flex justify-center items-center`}>
-
                 <FuzzyText
                     baseIntensity={0.2}
                     hoverIntensity={0.5}
@@ -123,7 +115,7 @@ function UserViewComponent() {
                     particleSpread={15}
                     speed={0.08}
                     cameraDistance={52}
-                    particleBaseSize={20}
+                    particleBaseSize={isMobile() ?80:40}
                     moveParticlesOnHover={isMobile() ? false : true}
                     alphaParticles={false}
                     disableRotation={false}
@@ -142,13 +134,16 @@ function UserViewComponent() {
                             <ButtonLike onClick={() => {
                                 emojiBlast({
                                     emojis: ["💝", "💞", "💖", "💜", "💘"],
-
+                                    physics:{
+                                        fontSize:{ max: 24, min: 24 }
+                                    },
                                     position: {
                                         x: innerWidth / 2,
-                                        y: innerHeight / 2
+                                        y: innerHeight / 12
                                     }
                                     ,
-                                    emojiCount: () => 2
+                                    emojiCount: () => 4
+
                                 })
                             }} />
                             <ContadorEterno initialDate={data?.initialDate} initialHour={data?.initialHours} />

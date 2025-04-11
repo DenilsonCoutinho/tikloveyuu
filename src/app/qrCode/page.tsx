@@ -42,6 +42,7 @@ function QrcodeComponet() {
     };
     return (
         <div className={` min-h-screen overflow-auto bg-defaultBg bg-contain py-10 flex justify-center items-center`}>
+            
             <div className='flex flex-col items-center gap-4'>
                 <div id="capture" style={{ width: "295px", height: "295px", padding: '20px', backgroundColor: '#f5f5f5' }}>
                     <QRCode value={`https://www.tikloveyuu.com/userView?id=${code}`} />
