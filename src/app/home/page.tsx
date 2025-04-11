@@ -39,6 +39,7 @@ import ModalPayment from '../components/modalPayment';
 import RotatingText from '../../../components/RotatingText/RotatingText';
 import Particles from '../../../components/Particles/Particles';
 import SplashCursor from '../../../components/SplashCursor/SplashCursor';
+import ContadorEternoHome from '../components/counterHome';
 
 export default function Presentation() {
 
@@ -116,9 +117,6 @@ export default function Presentation() {
         if (typeof window === "undefined") return false; // Garante que está no browser
         return /^((?!Chrome|Chromium|Android).)*Safari/i.test(navigator.userAgent) && navigator.vendor.includes("Apple");
     }
-
-
-    console.log(isSafari());
 
     if (maintenance) {
         return <div className='useViewBg h-screen flex flex-col justify-center items-center '>
@@ -272,8 +270,8 @@ export default function Presentation() {
                     <aside className=' flex gap-4 flex-col items-center'>
                         <Image width={180} quality={100} alt='comovaificar ' src={comovaificar} />
                         <div className="flex  flex-col">
-                            <div className="overflow-hidden relative  border border-redDefault shadow-md shadow-redDefault bg-[#180d21]  w-[300px] rounded-xl max-h-[540px] myscroll overflow-y-auto ">
-                                <div className={`previewURLsPhoto  my-10 flex relative justify-center items-center mt-4 ${previewURLs.length > 0 ? "" : "h-80"} rounded-md  w-full px-4 `}>
+                            <div className="overflow-hidden relative  border border-redDefault shadow-md shadow-redDefault bg-[#180d21] rounded-xl max-h-[540px] myscroll overflow-y-auto ">
+                                <div className={`previewURLsPhoto  my-10 flex relative justify-center items-center mt-4 ${previewURLs.length > 0 ? "" : "h-80"} rounded-md  w-full px- `}>
                                     {
                                         previewURLs.length > 0 ?
                                             <MySwiper previewURLs={previewURLs} />
@@ -281,9 +279,10 @@ export default function Presentation() {
                                             <Image alt="icon-imagem" src={iconImg} width={40} height={40} />
                                     }
                                 </div>
-                                {hour && <ContadorEterno initialDate={dataCouple} initialHour={hour} />}
-                                <div className='border-b border-white py-1'></div>
-                                {hour && <p className=' text-white text-center mt-3 text-xs'>{message}</p>}
+                                {hour && <ContadorEternoHome initialDate={dataCouple} initialHour={hour} />}
+                                <div className="border-b border-white opacity-15 mb-3 px-3 max-w-72 w-full  mx-auto "></div>
+
+                                {hour && <p className=' text-white text-center mt-3 text-xs text-wrap max-w-72 w-full mx-auto'>{message}</p>}
                             </div>
                             {
                                 !nameCouple || !dataCouple || !hour || imageCouple.length < 1 ?
