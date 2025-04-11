@@ -122,7 +122,7 @@ function UserViewComponent() {
                 />
                 <div className="flex flex-col-reverse z-20">
                     <div>
-                        <div className="relative  bg-transparent my-3 overflow-hidden  border-slate-600 rounded-xl m-auto w-80 px-5">
+                        <div className="relative  bg-transparent my-3 overflow-hidden  border-slate-600 rounded-xl m-auto  px-5">
                             <p className="text-white text-center font- text-xl">{data?.nameCouple}</p>
                             <div className="previewURLsPhoto my-10 flex flex- justify-center items-center mt-4  rounded-md  w-full px-4 ">
                                 {

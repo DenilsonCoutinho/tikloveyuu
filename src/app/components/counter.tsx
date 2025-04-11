@@ -57,7 +57,7 @@ function ContadorEterno({ initialDate, initialHour }: CountProps) {
     return (
         <div>
             <h1 className='text-white text-center font-semibold'>Juntos há:</h1>
-            {initialDate && initialHour && <p className='boujee-text font-semibold text-center text-[16px]'>
+            {initialDate && initialHour && <p className='boujee-text font-medium text-center text-[21px]'>
                 {tempo.anos} {tempo.anos > 1 ? "anos" : "ano"}, {tempo.meses} {tempo.meses > 1 ? "meses" : "mês"} , {tempo.dias} dias, {tempo.horas} horas, {tempo.minutos} minutos e {tempo.segundos} segundos
             </p>}
         </div>
