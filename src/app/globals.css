@@ -617,7 +617,7 @@ input {
   filter: invert(1);
 }
 .useViewBg{
-  background-image: url('../assets/bgView.png');
+  /* background-image: url('../assets/bgView.png'); */
 }
 
 @keyframes animar2 {

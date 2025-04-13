@@ -38,7 +38,6 @@ import FallingText from '../../../components/FallingText/FallingText';
 import ModalPayment from '../components/modalPayment';
 import RotatingText from '../../../components/RotatingText/RotatingText';
 import Particles from '../../../components/Particles/Particles';
-import SplashCursor from '../../../components/SplashCursor/SplashCursor';
 import ContadorEternoHome from '../components/counterHome';
 
 export default function Presentation() {

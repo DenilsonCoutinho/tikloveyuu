@@ -1,3 +1,7 @@
+/*
+	Installed from https://reactbits.dev/ts/default/
+*/
+
 "use client";
 import React, { useEffect, useRef } from "react";
 
@@ -1539,8 +1543,26 @@ export default function SplashCursor({
   ]);
 
   return (
-    <div className="fixed top-0 left-0 z-50 pointer-events-none w-full h-full">
-      <canvas ref={canvasRef} id="fluid" className="w-screen h-screen block"></canvas>
+    <div
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        zIndex: 50,
+        pointerEvents: "none",
+        width: "100%",
+        height: "100%",
+      }}
+    >
+      <canvas
+        ref={canvasRef}
+        id="fluid"
+        style={{
+          width: "100vw",
+          height: "100vh",
+          display: "block",
+        }}
+      />
     </div>
   );
 }

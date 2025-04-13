@@ -12,7 +12,7 @@ import Particles from "../../../components/Particles/Particles";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@radix-ui/react-toast";
 import FuzzyText from "../../../components/FuzzyText/FuzzyText";
-import SplashCursor from "../../../components/SplashCursor/SplashCursor";
+import SplashCursor from "@/blocks/Animations/SplashCursor/SplashCursor";
 interface UserViewProps {
     id: string;
     nameCouple: string | null;
@@ -120,6 +120,7 @@ function UserViewComponent() {
                     alphaParticles={false}
                     disableRotation={false}
                 />
+                <SplashCursor/>
                 <div className="flex flex-col-reverse z-20">
                     <div>
                         <div className="relative  bg-transparent my-3 overflow-hidden px-1  border-slate-600 rounded-xl ">
