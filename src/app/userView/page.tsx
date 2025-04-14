@@ -108,7 +108,7 @@ function UserViewComponent() {
         </> :
             <div className={`  bg-defaultBg overflow-x-hidden overflow-y-hidden relative min-h-screen overflow-auto  bg-contain py-2 flex justify-center items-center`}>
 
-                <Particles
+                {/* <Particles
                     className='fixed z-10 w-full h-full top-0 bg-defaultBg'
                     particleColors={['#fff']}
                     particleCount={500}
@@ -119,8 +119,8 @@ function UserViewComponent() {
                     moveParticlesOnHover={isMobile() ? false : true}
                     alphaParticles={false}
                     disableRotation={false}
-                />
-                <SplashCursor/>
+                /> */}
+                <SplashCursor DENSITY_DISSIPATION={2}/>
                 <div className="flex flex-col-reverse z-20">
                     <div>
                         <div className="relative  bg-transparent my-3 overflow-hidden px-1  border-slate-600 rounded-xl ">
