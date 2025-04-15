@@ -18,12 +18,15 @@ function ContadorEterno({ initialDate, initialHour }: CountProps) {
   useEffect(() => {
     if (!initialDate || !initialHour) {
       console.error("Data ou hora inicial não fornecida.");
+      alert("Data ou hora inicial não fornecida.")
       return;
     }
 
     const dataInicial = moment(`${initialDate}T${initialHour}`, "YYYY-MM-DDTHH:mm");
     if (!dataInicial.isValid()) {
       console.error("Data inicial inválida.");
+      alert("erro no dataInicial")
+
       return;
     }
 
