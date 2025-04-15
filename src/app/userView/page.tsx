@@ -14,11 +14,11 @@ import { ToastAction } from "@radix-ui/react-toast";
 import FuzzyText from "../../../components/FuzzyText/FuzzyText";
 import SplashCursor from "@/blocks/Animations/SplashCursor/SplashCursor";
 
-import { Alex_Brush,Dancing_Script,Allura} from 'next/font/google'
+import { Alex_Brush, Dancing_Script, Allura } from 'next/font/google'
 
 const alexBrush = Dancing_Script({
-  subsets: ['latin'],
-  weight: '700',
+    subsets: ['latin'],
+    weight: '700',
 
 })
 interface UserViewProps {
@@ -60,22 +60,10 @@ function UserViewComponent() {
                     throw new Error(res?.error as string)
                 }
                 setData(res?.couple || null)
-               
+
                 await new Promise(resolve => setTimeout(resolve, 1000))
                 setLoading(false)
-                emojiBlast({
-                    emojis: ["💝", "💞", "💖", "💜", "💘"],
-                    physics:{
-                        fontSize:{ max: 24, min: 24 }
-                    },
-                    position: {
-                        x: innerWidth / 2,
-                        y: innerHeight / 12
-                    }
-                    ,
-                    emojiCount: () => 14
 
-                })
             } catch (error) {
                 if (error instanceof Error) {
                     toast({
@@ -108,7 +96,7 @@ function UserViewComponent() {
 
     return (
         IsError ? <>
-       
+
             <div className={`  flex-col bg-defaultBg overflow-x-hidden overflow-y-hidden relative min-h-screen overflow-auto  bg-contain py-10 flex justify-center items-center`}>
                 <FuzzyText
                     baseIntensity={0.2}
@@ -128,7 +116,7 @@ function UserViewComponent() {
             </div>
         </> :
             <div className={`  bg-defaultBg overflow-x-hidden overflow-y-hidden relative min-h-screen overflow-auto  bg-contain py-2 flex justify-center items-center`}>
-                <SplashCursor DENSITY_DISSIPATION={isMobile()?2:3.5}/>
+                <SplashCursor DENSITY_DISSIPATION={isMobile() ? 2 : 3.5} />
                 <div className="flex flex-col-reverse z-20">
                     <div>
                         <div className="relative  bg-transparent my-3 overflow-hidden px-1  border-slate-600 rounded-xl ">
@@ -143,8 +131,8 @@ function UserViewComponent() {
                             <ButtonLike onClick={() => {
                                 emojiBlast({
                                     emojis: ["💝", "💞", "💖", "💜", "💘"],
-                                    physics:{
-                                        fontSize:{ max: 24, min: 24 }
+                                    physics: {
+                                        fontSize: { max: 24, min: 24 }
                                     },
                                     position: {
                                         x: innerWidth / 2,
@@ -155,7 +143,10 @@ function UserViewComponent() {
 
                                 })
                             }} />
-                            <ContadorEterno initialDate={data?.initialDate} initialHour={data?.initialHours} />
+                            {
+                                data?.initialDate && data?.initialHours &&
+                                <ContadorEterno initialDate={data?.initialDate} initialHour={data?.initialHours} />
+                            }
                         </div>
                         <div className="border-b border-white opacity-15 mb-3 px-3 max-w-72 mx-auto "></div>
                         <p className="text-justify m-auto max-w-96 px-3 text-sm text-white  overflow-y-auto z-50 relative leading-8 ">{data?.messages}</p>
