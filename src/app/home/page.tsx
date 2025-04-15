@@ -164,7 +164,7 @@ export default function Presentation() {
                                 />
                             </div>
 
-                            {isSafari() ? <p className='mx-auto text-center py-10 md:text-xl text-xs md:max-w-[1100px] sm:max-w-[400px] '>
+                            {isSafari() ? <p className='mx-auto text-center py-10 md:text-xl text-xs md:max-w-[1100px] sm:max-w-[400px] text-white'>
                                 Celebre cada momento do seu relacionamento com um contador dinâmico exclusivo! Preencha o formulário e receba um site personalizado com um QRCode especial para compartilhar com quem você ama. Agora, aproveite também a opção de criar um pedido especial!
                             </p>
                                 :
