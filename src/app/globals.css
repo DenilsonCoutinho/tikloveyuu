@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 
-
 @layer utilities {
   .text-balance {
     text-wrap: balance;
@@ -47,7 +46,7 @@
 }
 
 .buttonLike:active {
-  scale: 1.2;
+  scale: 1;
 }
 
 .buttonLike:hover {
@@ -162,7 +161,7 @@
 .button__text {
   display: inline-block;
   transition: color .2s;
-  padding: 2px 1.5rem 2px;
+  padding: 2px 1rem 2px;
   padding-left: .75rem;
   overflow: hidden;
   white-space: nowrap;
