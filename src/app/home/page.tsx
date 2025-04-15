@@ -125,16 +125,13 @@ export default function Presentation() {
                 </div>
             </div>
             <h1 className="text-white md:text-6xl text-2xl font-black text-center">Estamos realizando melhorias </h1>
-            {/* <p className="text-white text-base font-medium text-center">Nosso site está passando por uma manutenção para trazer uma experiência ainda melhor para você. Voltamos em breve</p> */}
             <FallingText text={`Nosso site está passando por uma manutenção para trazer uma experiência ainda melhor para você. Voltamos em breve`}
                 highlightWords={["Nosso", "site", "passando", "manutenção", "experiência", "melhor"]}
-                // highlightClass="highlighted"
                 className='mx-auto md:text-xl text-xs md:max-w-[1100px] sm:max-w-[400px] '
                 trigger="hover"
                 backgroundColor="transparent"
                 wireframes={false}
                 gravity={0.56}
-                // fontSize="1.5rem"
                 mouseConstraintStiffness={0.9} />
         </div>
     }

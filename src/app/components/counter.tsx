@@ -22,7 +22,7 @@ function ContadorEterno({ initialDate, initialHour }: CountProps) {
       return;
     }
 
-    const dataInicial = moment(`${initialDate}T${initialHour}`, "YYYY-MM-DDTHH:mm");
+    const dataInicial = moment(`${initialDate} ${initialHour}`, "YYYY-MM-DDTHH:mm");
     if (!dataInicial.isValid()) {
       console.error("Data inicial inválida.");
       alert("erro no dataInicial")
