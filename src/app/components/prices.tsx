@@ -8,6 +8,7 @@ import { usePlan } from "../../../context/changePlanContext";
 
 interface inputProps {
     setSelectedInput: (type: number) => void;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 export default function Prices({setSelectedInput}:inputProps) {
 

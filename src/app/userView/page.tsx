@@ -164,11 +164,13 @@ function UserViewComponent() {
                         </div>
                         <div className="border-b border-white opacity-15 mb-3 px-3 max-w-72 mx-auto "></div>
                         <p className="text-justify m-auto max-w-96 px-3 text-sm text-white  overflow-y-auto z-50 relative leading-8 ">{data?.messages}</p>
+                        <div className="pt-5">
+                            {
+                                data?.ytbMusic &&
+                                <iframe width="330" height="186" className="m-auto rounded-2xl z-50" src={`https://www.youtube.com/embed/${new URL(data?.ytbMusic || "").pathname.split('/')[1]}?autoplay=1&mute=1`} title="YouTube video player" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+                            }
+                        </div>
                     </div>
-                    {
-                        data?.ytbMusic &&
-                        <iframe width="330" height="186" className="m-auto rounded-2xl z-50" src={`https://www.youtube.com/embed/${new URL(data?.ytbMusic || "").pathname.split('/')[1]}?autoplay=1&mute=1`} title="YouTube video player" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
-                    }
                 </div>
             </div>
     )
