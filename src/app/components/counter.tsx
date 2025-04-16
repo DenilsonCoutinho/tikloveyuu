@@ -19,7 +19,7 @@ function ContadorEterno({ initialDate, initialHour }: CountProps) {
 
   useEffect(() => {
     if (!initialDate || !initialHour) {
-      console.error("Data ou hora inicial não fornecida.");
+      console.log("Data ou hora inicial não fornecida.");
       return;
     }
 
@@ -32,7 +32,7 @@ function ContadorEterno({ initialDate, initialHour }: CountProps) {
     const dataInicial = moment(dataFormatada, "YYYY-MM-DD HH:mm").utcOffset(-3);
 
     if (!dataInicial.isValid()) {
-      console.error("Data inválida após formatação:", dataFormatada);
+      console.log("Data inválida após formatação:", dataFormatada);
       return;
     }
 
