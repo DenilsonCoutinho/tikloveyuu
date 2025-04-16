@@ -60,11 +60,10 @@ function ContadorEterno({ initialDate, initialHour }: CountProps) {
 
     const interval = setInterval(atualizarContador, 1000);
     return () => clearInterval(interval);
-  }, [initialDate, initialHour]);
+  }, [tempo]);
   return (
     <>
       {initialDate && initialHour &&
-        tempo.segundos >= 0 ?
         <div>
           <h1 className="text-white text-center font-semibold">Juntos há:</h1>
           <p className="boujee-text font-semibold text-center text-[19px]">
@@ -73,10 +72,6 @@ function ContadorEterno({ initialDate, initialHour }: CountProps) {
             {tempo.dias} {tempo.dias === 1 ? "dia" : "dias"},{" "}
             {tempo.horas} horas, {tempo.minutos} minutos e {tempo.segundos} segundos
           </p>
-        </div>
-        :
-        <div className='pt-3'>
-          <Loader />
         </div>
       }
     </>
