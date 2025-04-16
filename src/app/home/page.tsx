@@ -268,14 +268,26 @@ export default function Presentation() {
                         <Image width={180} quality={100} alt='comovaificar ' src={comovaificar} />
                         <div className="flex  flex-col">
                             <div className="overflow-hidden relative w-72 border border-redDefault shadow-md shadow-redDefault bg-[#180d21] rounded-xl max-h-[540px] myscroll overflow-y-auto ">
+                                <Particles
+                                    className='absolute  z-10  h-full w-full top-0 bg-defaultBg'
+                                    particleColors={['#fff']}
+                                    particleCount={500}
+                                    particleSpread={15}
+                                    speed={0.08}
+                                    cameraDistance={52}
+                                    particleBaseSize={80}
+                                    // moveParticlesOnHover={isMobile() ? false : true}
+                                    alphaParticles={false}
+                                    disableRotation={false}
+                                />
                                 <div className={`previewURLsPhoto  my-10 flex relative justify-center items-center mt-4 ${previewURLs.length > 0 ? "" : "h-80"} rounded-md  w-full px- `}>
                                     {
                                         previewURLs.length > 0 ?
-                                        <div className='px-4 max-w-72'>
-                                            <MySwiper previewURLs={previewURLs} />
-                                        </div>
+                                            <div className='px-4 max-w-72'>
+                                                <MySwiper previewURLs={previewURLs} />
+                                            </div>
                                             :
-                                            <Image alt="icon-imagem" src={iconImg} width={40} height={40} />
+                                            <Image alt="icon-imagem" src={iconImg} width={40} height={40} className='z-50' />
                                     }
                                 </div>
                                 {hour && <ContadorEternoHome initialDate={dataCouple} initialHour={hour} />}
