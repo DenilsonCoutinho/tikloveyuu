@@ -7,6 +7,7 @@ interface CountProps {
 }
 
 function ContadorEterno({ initialDate, initialHour }: CountProps) {
+  console.log("aqui no contador")
   const [tempo, setTempo] = useState({
     anos: 0,
     meses: 0,
@@ -63,7 +64,7 @@ function ContadorEterno({ initialDate, initialHour }: CountProps) {
 
   return (
     <>
-      {initialDate && initialHour && (
+      {initialDate && initialHour && 
         <div>
           <h1 className="text-white text-center font-semibold">Juntos há:</h1>
           <p className="boujee-text font-semibold text-center text-[19px]">
@@ -73,7 +74,7 @@ function ContadorEterno({ initialDate, initialHour }: CountProps) {
             {tempo.horas} horas, {tempo.minutos} minutos e {tempo.segundos} segundos
           </p>
         </div>
-      )}
+      }
     </>
   );
 }

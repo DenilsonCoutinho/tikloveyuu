@@ -54,6 +54,7 @@ function UserViewComponent() {
                     throw new Error("Seu ID não está disponivel, Recarregue a página!")
                 }
                 const res = await getCoupleById(id)
+                console.log(res)
                 if (res.error) {
                     setData(null)
                     throw new Error(res?.error as string)
