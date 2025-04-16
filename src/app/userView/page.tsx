@@ -159,7 +159,6 @@ function UserViewComponent() {
                                 })
                             }} />
                             {
-                                data?.initialDate && data?.initialHours &&
                                 <ContadorEterno initialDate={data?.initialDate} initialHour={data?.initialHours} />
                             }
                         </div>

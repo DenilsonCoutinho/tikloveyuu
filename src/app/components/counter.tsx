@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
+import Loader from './loading';
 
 interface CountProps {
   initialDate: string | undefined; // Ex: "2025-03-16"
@@ -7,7 +8,6 @@ interface CountProps {
 }
 
 function ContadorEterno({ initialDate, initialHour }: CountProps) {
-  console.log("aqui no contador")
   const [tempo, setTempo] = useState({
     anos: 0,
     meses: 0,
@@ -61,10 +61,9 @@ function ContadorEterno({ initialDate, initialHour }: CountProps) {
     const interval = setInterval(atualizarContador, 1000);
     return () => clearInterval(interval);
   }, [initialDate, initialHour]);
-  console.log(tempo)
   return (
     <>
-      {initialDate && initialHour && 
+      {tempo.segundos > 0 ?
         <div>
           <h1 className="text-white text-center font-semibold">Juntos há:</h1>
           <p className="boujee-text font-semibold text-center text-[19px]">
@@ -73,6 +72,10 @@ function ContadorEterno({ initialDate, initialHour }: CountProps) {
             {tempo.dias} {tempo.dias === 1 ? "dia" : "dias"},{" "}
             {tempo.horas} horas, {tempo.minutos} minutos e {tempo.segundos} segundos
           </p>
+        </div>
+        :
+        <div className='pt-3'>
+          <Loader />
         </div>
       }
     </>
