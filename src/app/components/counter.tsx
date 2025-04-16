@@ -22,12 +22,16 @@ function ContadorEterno({ initialDate, initialHour }: CountProps) {
       return;
     }
 
-    // Usa espaço no lugar de "T" e evita strict mode
-    const dataFormatada = `${initialDate} ${initialHour}`; // Ex: "2025-03-16 22:00"
+    // ✨ Limpa e prepara a data e hora
+    const safeDate = initialDate.trim().split("T")[0]; // remove 'T' se existir
+    const safeHour = initialHour.trim().substring(0, 5); // pega só "HH:mm"
+    const dataFormatada = `${safeDate} ${safeHour}`; // ex: "2025-03-16 22:00"
+
+    // Usa UTC-3 para garantir mesmo fuso horário
     const dataInicial = moment(dataFormatada, "YYYY-MM-DD HH:mm").utcOffset(-3);
 
     if (!dataInicial.isValid()) {
-      console.error("Data inicial inválida:", dataFormatada);
+      console.error("Data inválida após formatação:", dataFormatada);
       return;
     }
 
