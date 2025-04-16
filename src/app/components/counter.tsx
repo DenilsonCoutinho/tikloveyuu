@@ -16,44 +16,45 @@ function ContadorEterno({ initialDate, initialHour }: CountProps) {
   });
 
   useEffect(() => {
-  if (!initialDate || !initialHour) {
-    console.error("Data ou hora inicial não fornecida.");
-    return;
-  }
-
-  // Normaliza formatos
-  const dataFormatada = initialDate.includes("T") ? initialDate : `${initialDate}T${initialHour}`;
-  const dataInicial = moment(dataFormatada, "YYYY-MM-DDTHH:mm", true);
-
-  if (!dataInicial.isValid()) {
-    console.error("Data inicial inválida:", dataFormatada);
-    return;
-  }
-
-  const atualizarContador = () => {
-    const agora = moment();
-
-    const diffAnos = agora.diff(dataInicial, "years");
-    const diffMeses = agora.diff(dataInicial, "months") % 12;
-    const diffDias = agora.diff(dataInicial.clone().add(diffAnos, "years").add(diffMeses, "months"), "days");
-
-    const diffHoras = agora.hours() - dataInicial.hours();
-    const diffMinutos = agora.minutes() - dataInicial.minutes();
-    const diffSegundos = agora.seconds() - dataInicial.seconds();
-
-    setTempo({
-      anos: diffAnos,
-      meses: diffMeses,
-      dias: diffDias,
-      horas: diffHoras < 0 ? diffHoras + 24 : diffHoras,
-      minutos: diffMinutos < 0 ? diffMinutos + 60 : diffMinutos,
-      segundos: diffSegundos < 0 ? diffSegundos + 60 : diffSegundos,
-    });
-  };
-
-  const interval = setInterval(atualizarContador, 1000);
-  return () => clearInterval(interval);
-}, [initialDate, initialHour]);
+    if (!initialDate || !initialHour) {
+      console.error("Data ou hora inicial não fornecida.");
+      return;
+    }
+  
+    // Junta e normaliza data + hora
+    const dataFormatada = `${initialDate}T${initialHour}`;
+    const dataInicial = moment(dataFormatada, moment.ISO_8601, true).local();
+  
+    if (!dataInicial.isValid()) {
+      console.error("Data inicial inválida:", dataFormatada);
+      return;
+    }
+  
+    const atualizarContador = () => {
+      const agora = moment();
+  
+      const diffAnos = agora.diff(dataInicial, "years");
+      const diffMeses = agora.diff(dataInicial.clone().add(diffAnos, "years"), "months");
+      const diffDias = agora.diff(dataInicial.clone().add(diffAnos, "years").add(diffMeses, "months"), "days");
+  
+      const diffHoras = agora.diff(dataInicial.clone().add(diffAnos, "years").add(diffMeses, "months").add(diffDias, "days"), "hours");
+      const diffMinutos = agora.diff(dataInicial.clone().add(diffAnos, "years").add(diffMeses, "months").add(diffDias, "days").add(diffHoras, "hours"), "minutes");
+      const diffSegundos = agora.diff(dataInicial.clone().add(diffAnos, "years").add(diffMeses, "months").add(diffDias, "days").add(diffHoras, "hours").add(diffMinutos, "minutes"), "seconds");
+  
+      setTempo({
+        anos: diffAnos,
+        meses: diffMeses,
+        dias: diffDias,
+        horas: diffHoras,
+        minutos: diffMinutos,
+        segundos: diffSegundos,
+      });
+    };
+  
+    const interval = setInterval(atualizarContador, 1000);
+    return () => clearInterval(interval);
+  }, [initialDate, initialHour]);
+  
 
   return (
     <>
