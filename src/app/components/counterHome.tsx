@@ -70,7 +70,7 @@ function ContadorEterno({ initialDate, initialHour }: CountProps) {
   return (
     <>
       {
-       <div className='px-1 relative z-40'>
+       <div className='px-1 relative z-40 notranslate'>
           <h1 className="text-white text-center font-semibold">Juntos há:</h1>
           <p className="boujee-text font-semibold text-center text-[15px]">
             {anos && anos} {anos && anos === 1 ? "ano" : "anos"},{" "}
