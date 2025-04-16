@@ -62,6 +62,7 @@ export default function Presentation() {
     const [youtubeLink, setYoutubeLink] = useState<string>("")
     const [typeProduct, setTypeProduct] = useState<number>(1)
     const [dataCouple, setDataCouple] = useState<string>("")
+    console.log(dataCouple)
     const [imageCouple, setImageCouple] = useState<any>([])
     const [message, setMessage] = useState<string>("")
     const [previewURLs, setPreviewURLs] = useState<[]>([])
@@ -270,7 +271,9 @@ export default function Presentation() {
                                 <div className={`previewURLsPhoto  my-10 flex relative justify-center items-center mt-4 ${previewURLs.length > 0 ? "" : "h-80"} rounded-md  w-full px- `}>
                                     {
                                         previewURLs.length > 0 ?
+                                        <div className='px-4 max-w-72'>
                                             <MySwiper previewURLs={previewURLs} />
+                                        </div>
                                             :
                                             <Image alt="icon-imagem" src={iconImg} width={40} height={40} />
                                     }
