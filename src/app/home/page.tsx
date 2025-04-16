@@ -280,7 +280,7 @@ export default function Presentation() {
                                     alphaParticles={false}
                                     disableRotation={false}
                                 />
-                                <div className={`previewURLsPhoto  my-10 flex relative justify-center items-center mt-4 ${previewURLs.length > 0 ? "" : "h-80"} rounded-md  w-full px- `}>
+                                <div className={`previewURLsPhoto   my-10 flex relative z-40 justify-center items-center mt-4 ${previewURLs.length > 0 ? "" : "h-80"} rounded-md  w-full px- `}>
                                     {
                                         previewURLs.length > 0 ?
                                             <div className='px-4 max-w-72'>
