@@ -63,7 +63,8 @@ function ContadorEterno({ initialDate, initialHour }: CountProps) {
   }, [initialDate, initialHour]);
   return (
     <>
-      {tempo.segundos >= 0 ?
+      {initialDate && initialHour &&
+        tempo.segundos >= 0 ?
         <div>
           <h1 className="text-white text-center font-semibold">Juntos há:</h1>
           <p className="boujee-text font-semibold text-center text-[19px]">
