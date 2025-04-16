@@ -61,7 +61,7 @@ function ContadorEterno({ initialDate, initialHour }: CountProps) {
     const interval = setInterval(atualizarContador, 1000);
     return () => clearInterval(interval);
   }, [initialDate, initialHour]);
-
+  console.log(tempo)
   return (
     <>
       {initialDate && initialHour && 
