@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
-import Loader from './loading';
 
 interface CountProps {
   initialDate: string | undefined; // Ex: "2025-03-16"
@@ -8,14 +7,13 @@ interface CountProps {
 }
 
 function ContadorEterno({ initialDate, initialHour }: CountProps) {
-  const [tempo, setTempo] = useState({
-    anos: 0,
-    meses: 0,
-    dias: 0,
-    horas: 0,
-    minutos: 0,
-    segundos: 0,
-  });
+
+  const [anos, setAnos] = useState<number | undefined>()
+  const [meses, setMeses] = useState<number | undefined>()
+  const [dias, setDias] = useState<number | undefined>()
+  const [minutos, setMinutos] = useState<number | undefined>()
+  const [segundos, setSegundos] = useState<number | undefined>()
+  const [hour, setHour] = useState<number | undefined>()
 
   useEffect(() => {
     if (!initialDate || !initialHour) {
@@ -48,29 +46,42 @@ function ContadorEterno({ initialDate, initialHour }: CountProps) {
       const diffMinutos = agora.diff(horaBase.clone().add(diffHoras, "hours"), "minutes");
       const diffSegundos = agora.diff(horaBase.clone().add(diffHoras, "hours").add(diffMinutos, "minutes"), "seconds");
 
-      setTempo({
-        anos: diffAnos,
-        meses: diffMeses,
-        dias: diffDias,
-        horas: diffHoras,
-        minutos: diffMinutos,
-        segundos: diffSegundos,
-      });
+      // setTempo({
+      //   anos: diffAnos,
+      //   meses: diffMeses,
+      //   dias: diffDias,
+      //   horas: diffHoras,
+      //   minutos: diffMinutos,
+      //   segundos: diffSegundos,
+      // });
+      setAnos(diffAnos)
+      setMeses(diffMeses)
+      setDias(diffDias)
+      setHour(diffHoras)
+      setMinutos(diffMinutos)
+      setSegundos(diffSegundos)
     };
-
     const interval = setInterval(atualizarContador, 1000);
-    return () => clearInterval(interval);
-  }, [tempo]);
+    return () => {
+      setAnos(anos)
+      setMeses(meses)
+      setDias(dias)
+      setHour(hour)
+      setMinutos(minutos)
+      setSegundos(segundos)
+      clearInterval(interval)
+    };
+  }, [initialDate, initialHour]);
   return (
     <>
-      {initialDate && initialHour &&
-        <div>
+      {
+       anos && <div className='notranslate'>
           <h1 className="text-white text-center font-semibold">Juntos há:</h1>
           <p className="boujee-text font-semibold text-center text-[19px]">
-            {tempo.anos} {tempo.anos === 1 ? "ano" : "anos"},{" "}
-            {tempo.meses} {tempo.meses === 1 ? "mês" : "meses"},{" "}
-            {tempo.dias} {tempo.dias === 1 ? "dia" : "dias"},{" "}
-            {tempo.horas} horas, {tempo.minutos} minutos e {tempo.segundos} segundos
+            {anos && anos} {anos && anos === 1 ? "ano" : "anos"},{" "}
+            {meses && meses} {meses && meses === 1 ? "mês" : "meses"},{" "}
+            {dias && dias} {dias && dias === 1 ? "dia" : "dias"},{" "}
+            {hour && hour} horas, {minutos} minutos e {segundos} segundos
           </p>
         </div>
       }

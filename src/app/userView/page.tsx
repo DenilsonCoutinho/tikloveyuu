@@ -118,7 +118,7 @@ function UserViewComponent() {
                 </FuzzyText>
             </div>
         </> :
-            <div className={`  bg-defaultBg overflow-x-hidden overflow-y-hidden relative min-h-screen overflow-auto  bg-contain py-2 flex justify-center items-center`}>
+            <div className={` notranslate bg-defaultBg overflow-x-hidden overflow-y-hidden relative min-h-screen overflow-auto  bg-contain py-2 flex justify-center items-center`}>
 
                 <Particles
                     className='fixed z-10 w-full h-full top-0 bg-defaultBg'
