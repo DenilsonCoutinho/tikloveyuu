@@ -291,9 +291,9 @@ export default function Presentation() {
                                     }
                                 </div>
                                 {hour && <ContadorEternoHome initialDate={dataCouple} initialHour={hour} />}
-                                <div className="border-b border-white opacity-15 mb-3 px-3 max-w-72 w-full  mx-auto "></div>
+                                <div className="border-b relative z-40 border-white opacity-15 mb-3 px-3 max-w-72 w-full  mx-auto "></div>
 
-                                {hour && <p className=' text-white text-center mt-3 text-xs text-wrap max-w-72 w-full mx-auto'>{message}</p>}
+                                {hour && <p className='px-2 relative z-40 text-white text-center mt-3 text-xs text-wrap max-w-72 w-full mx-auto'>{message}</p>}
                             </div>
                             {
                                 !nameCouple || !dataCouple || !hour || imageCouple.length < 1 ?

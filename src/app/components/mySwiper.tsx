@@ -27,7 +27,7 @@ export default function MySwiper({ previewURLs }: any) {
                 loop={true}
 
                 modules={[EffectCube, Pagination, Autoplay]}
-                className="mySwiper max-w-72 "
+                className="mySwiper max-w-72 relative z-40"
             >
 
                 {
