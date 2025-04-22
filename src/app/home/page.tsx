@@ -273,7 +273,7 @@ export default function Presentation() {
                     </section>
                     <aside className='w-full md:w-72 flex gap-4 flex-col items-center'>
                         <Image width={180} quality={100} alt='comovaificar ' src={comovaificar} />
-                        <div className="flex w-72 flex-col ">
+                        <div className="flex md:w-72 w-full flex-col ">
                             <div className="overflow-hidden relative border border-redDefault shadow-md shadow-redDefault bg-[#180d21] rounded-xl max-h-[540px] myscroll overflow-y-auto ">
                                 <Particles
                                     className='absolute  z-10  h-screen w-full  '
@@ -292,7 +292,7 @@ export default function Presentation() {
                                 <div className={`previewURLsPhoto   my-10 flex relative z-40 justify-center items-center mt-4 ${previewURLs.length > 0 ? "" : ""} h-80 rounded-md  w-full px- `}>
                                     {
                                         previewURLs.length > 0 ?
-                                            <div className='px-4 max-w-72'>
+                                            <div className='px-4 md:max-w-72'>
                                                 <MySwiper previewURLs={previewURLs} />
                                             </div>
                                             :
@@ -306,7 +306,7 @@ export default function Presentation() {
                                             fontSize: { max: 24, min: 24 }
                                         },
                                         position: {
-                                            x: innerWidth / 1.3,
+                                            x: innerWidth / 2,
                                             y: innerHeight / 6
                                         }
                                         ,
