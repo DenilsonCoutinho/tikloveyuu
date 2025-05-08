@@ -28,7 +28,7 @@ function ContadorEterno({ initialDate, initialHour }: CountProps) {
 
     // Usa UTC-3 para garantir mesmo fuso horário
     const dataInicial = moment(dataFormatada, "YYYY-MM-DD HH:mm").utcOffset(-3);
-
+    console.log(dataInicial)
     if (!dataInicial.isValid()) {
       console.log("Data inválida após formatação:", dataFormatada);
       return;
@@ -72,10 +72,11 @@ function ContadorEterno({ initialDate, initialHour }: CountProps) {
       clearInterval(interval)
     };
   }, [initialDate, initialHour]);
+
   return (
     <>
       {
-       anos && <div className='notranslate'>
+        initialDate && <div className='notranslate'>
           <h1 className="text-white text-center font-semibold">Juntos há:</h1>
           <p className="boujee-text font-semibold text-center text-[19px]">
             {anos && anos} {anos && anos === 1 ? "ano" : "anos"},{" "}
