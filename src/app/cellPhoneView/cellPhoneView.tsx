@@ -156,11 +156,11 @@ interface UserViewProps {
 
 
   return (
-    <div className="bg-[#181818]  h-screen overflow-y-auto px-2 py-2 flex justify-center items-center">
+    <div className="bg-[#181818]  h-screen overflow-y-auto px-2 py-2 flex justify-center">
 
       {steps < 2 && <audio className='my-audio' ref={audioRef} src="/toque-de-ligacao-iphone-hxujgs29dy0_BCpf5pyi.mp3" preload="auto" loop />}
       <div
-        className="relative w-full h-full rounded-2xl border-[2px] border-[#282828] p-[7px]  overflow-hidden"
+        className="relative w-full h-[89%] rounded-2xl border-[2px] border-[#282828] p-[2px]  overflow-hidden"
       >
         <div className="absolute inset-0 bgCellPhone z-0" />
 
