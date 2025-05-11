@@ -117,8 +117,10 @@ interface UserViewProps {
     document.querySelector('.images-mom')?.classList.remove("opacityTo-0")
     document.querySelector('.images-mom')?.classList.add("opacityTo-1")
     document.querySelector('.text-rgb-shine')?.classList.remove("text-7xl", "w-40")
-    document.querySelector('.text-rgb-shine')?.classList.add("text-3xl")
+    document.querySelector('.text-rgb-shine')?.classList.add("text-5xl")
     document.querySelector('.message')?.classList.remove("hidden")
+    document.querySelector('.happy-mom')?.classList.remove("pt-32")
+    document.querySelector('.happy-mom')?.classList.add("pt-10")
 
   }
   useLayoutEffect(() => {
@@ -231,8 +233,8 @@ interface UserViewProps {
         </div>}
 
         {steps === 2 && <div
-          className="absolute inset-0 container-top rounded-[25px]  flex flex-col items-center  pt-10 text-white">
-          <h1 className={`text-center text-7xl w-40 text-rgb-shine px-3 ${lora?.className}`}>
+          className="justify-center z-20 relative my-auto container-top rounded-[25px]  flex flex-col items-center happy-mom  pt-32 text-white">
+          <h1 className={`text-center text-7xl w-40 text-rgb-shine  z-40 relative  px-3 ${lora?.className}`}>
             Feliz dia das mães
           </h1>
           <div
@@ -245,8 +247,8 @@ interface UserViewProps {
                       <div className="relative bg-cover text-transparent bg-no-repeat bg-center h-full" >
                         <img
                           className=" w-full h-full object-cover "
-                          width={222}
-                          height={222}
+                          width={322}
+                          height={322}
                           alt='323'
                           src={img}
                         />
@@ -258,7 +260,7 @@ interface UserViewProps {
               </Swiper>
             </>
           </div>
-          <div className='message max-h-32 overflow-y-auto hidden '>
+          <div className='message max-h-52 overflow-y-auto hidden '>
             <h1 className="text-center text-[#ffffff] text-xs font-medium px-3 texto-reluzente ">
               {data?.messages}
             </h1>
