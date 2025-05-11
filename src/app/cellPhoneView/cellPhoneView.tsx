@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { Alex_Brush, Dancing_Script, Lora } from 'next/font/google';
-import React, { useEffect, useLayoutEffect } from 'react';
+import React, { Suspense, useEffect, useLayoutEffect } from 'react';
 import { useRef, useState } from "react";
 import { FaLockOpen, FaPhoneAlt } from 'react-icons/fa'
 
@@ -64,7 +64,7 @@ interface UserViewProps {
 
 
 
-export default function CellPhoneView() {
+ function CellPhoneView() {
 
 
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -275,4 +275,13 @@ export default function CellPhoneView() {
 
     </div>
   );
+}
+
+
+export default function CellPhone() {
+    return (
+        <Suspense fallback={<div className="h-screen flex flex-col bg-defaultBg justify-center items-center"><div className="lds-heart" ><div></div></div></div >}>
+            {<CellPhoneView />}
+        </Suspense>
+    );
 }
