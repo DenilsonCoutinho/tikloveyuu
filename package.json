@@ -48,7 +48,8 @@
     "tailwind-merge": "^3.1.0",
     "tailwindcss-animate": "^1.0.7",
     "tsparticles": "^3.5.0",
-    "uuid": "^10.0.0"
+    "uuid": "^10.0.0",
+    "zustand": "^5.0.4"
   },
   "devDependencies": {
     "@types/matter-js": "^0.19.8",

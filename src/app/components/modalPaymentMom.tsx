@@ -40,8 +40,10 @@ import { loadStripe } from "@stripe/stripe-js";
 import { getQrCodPix } from "@/services/getQrCodPix";
 import Loader from "./loading";
 import RotatingText from "../../../components/RotatingText/RotatingText";
+import { createMom } from "../../../actions/mom";
+import { handleUploadMom } from "@/services/uploadImagesMom";
 
-export default function ModalPayment({ typeProduct, dataCouple, hour, message, nameCouple, youtubeLink, imageCouple }: { typeProduct: number, nameCouple: string, dataCouple: string, hour: string, message: string, youtubeLink: string, imageCouple: File[] }) {
+export default function ModalPaymentMom({ message, namecall, images }: { namecall: string, message: string, images: File[] }) {
     const [loadingPayment, setLoadingPayment] = useState<boolean>(false);
     const [formPayment, setFormPayment] = useState<string>('');
     const [copied, setCopied] = useState<boolean>(false)
@@ -93,7 +95,7 @@ export default function ModalPayment({ typeProduct, dataCouple, hour, message, n
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    typeProduct,
+                    typeProduct: "3",
                     idUser
                 }),
             });
@@ -117,36 +119,29 @@ export default function ModalPayment({ typeProduct, dataCouple, hour, message, n
         const userId = localStorage.getItem("idUserMyLoverTik");
 
         const validCpf = await validateCpf(data.cpfcnpj);
-
         try {
-            console.log("1")
-
             if (!validCpf && formPayment === "1") throw new Error("CPF inválido!");
             setLoading(true)
-            const uploadImages = await handleUpload(imageCouple, userId as string)
+            const uploadImages = await handleUploadMom(images, userId as string)
             if (uploadImages?.errorImg) throw new Error(uploadImages.errorImg);
             const idUser = localStorage.getItem("idUserMyLoverTik");
-            console.log("2")
 
-            const price = typeProduct === 1 ? 14.99 : 34.99
-            const create_Couple = await createCouple(idUser as string, nameCouple, dataCouple, hour, uploadImages.imgUpload!, message, youtubeLink, price)
-            if (create_Couple?.error?.message) throw new Error("Erro ao criar casal");
-            if (formPayment === "1") {
-                const { pixCustomersDataId } = await generatorPix(idUser as string, name, cpfCnpj, email, typeProduct)
+            const create_mom = await createMom(message, namecall, uploadImages.imgUpload!, userId as string)
+            if (create_mom?.error?.message) throw new Error("Erro ao criar casal");
+                const { pixCustomersDataId } = await generatorPix(idUser as string, name, cpfCnpj, email, 3)
                 const { encodedImage, qrCode } = await getQrCodPix(pixCustomersDataId as string)
                 setQrCode(qrCode)
                 setEncoder(encodedImage)
                 setLoadingPayment(true)
                 setLoading(false)
-                return
-            } else {
-                return handleCheckout()
-            }
 
         } catch (error) {
+                console.log(error)
+
             if (error instanceof Error) {
                 setLoading(false)
                 console.log(error.message)
+
             }
         }
 
@@ -235,10 +230,10 @@ export default function ModalPayment({ typeProduct, dataCouple, hour, message, n
                                         </div>
                                     </div>
                                 }
-                                <div className='flex gap-3 flex-row items-center pt-3'>
+                                {/* <div className='flex gap-3 flex-row items-center pt-3'>
                                     <Image quality={100} alt='cardlogo' width={30} height={30} src={card} />
                                     <Radio className='text-black' value='2'>Pagar com cartão</Radio>
-                                </div>
+                                </div> */}
                             </RadioGroup>
                         </DialogBody>
                         {formPayment && <DialogFooter>
@@ -286,7 +281,7 @@ export default function ModalPayment({ typeProduct, dataCouple, hour, message, n
                         <Image width={200} height={300} className='m-auto' alt='qrCode' src={`data:image/png;base64,${encoder}`} />
                         <div className='flex flex-col items-center bg-gray-100'>
                             <p className='font-bold text-xs text-yellow-600'>Atenção</p>
-                            <p className='text-center text-black text-xs font-bold px-2'>Assim que fizer o pagamento você receberá no email o QrCode do seu site!</p>
+                            <p className='text-center text-black text-xs font-bold px-2'>Assim que fizer o pagamento você receberá no email o QrCode e link do seu site!</p>
                         </div>
                         <p className='text-black text-center text-xs px-3 py-2'>{qrCode}</p>
                         <Button bg={"green"} onClick={handleCopy} className='select-none ' ><p className=' text-white  font-medium px-2'>{copied ? "copiado" : "Copiar"}</p> <span className=' border border-white rounded-md p-1'><FaCopy className=' text-white' /></span></Button>

@@ -22,3 +22,14 @@ export const deleteFolderReq = async (userId: string | null) => {
         await deleteObject(item);
     }
 };
+
+export const deleteFolderMom = async (userId: string | null) => {
+    const storage = getStorage(app)
+
+    const folderRef = ref(storage, `mom/${userId}/images`);
+    const listRef = await listAll(folderRef);
+
+    for (const item of listRef.items) {
+        await deleteObject(item);
+    }
+};

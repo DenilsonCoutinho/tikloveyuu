@@ -28,7 +28,7 @@ model User {
   createdAt       DateTime   @default(now())
   idSession       String?
   price           Float?
-  affiliateId     String?    
+  affiliateId     String?
   affiliate       Affiliate? @relation("AffiliateUsers", fields: [affiliateId], references: [code])
 }
 
@@ -50,8 +50,20 @@ model RequestSend {
   createdAt       DateTime @default(now())
 }
 
+model CellPhone {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  nameCall  String?
+  // imageCall String?
+  images    String[]
+  idCall    String   @unique
+  email     String?
+  paid      String?
+  messages  String?
+  idCostumerAsaas String?
+}
+
 model Affiliate {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId// Mapeia o campo 'id' para '_id' do MongoDB
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId // Mapeia o campo 'id' para '_id' do MongoDB
   code       String   @unique // 'code' será único, mas o MongoDB gerenciará o '_id'
   name       String
   email      String   @unique

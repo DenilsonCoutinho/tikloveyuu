@@ -93,13 +93,7 @@ export default function Presentation() {
 
 
     useEffect(() => {
-        // const urlParams = new URLSearchParams(window.location.search);
-        // const refUser = urlParams.get('ref');
-        // if (refUser) {
-        //     localStorage.setItem('ref', refUser);
-        // }
         setPreviewURLs([])
-
         const newId = uuidv4();
         try {
             localStorage.setItem("idUserMyLoverTik", newId);
@@ -175,7 +169,7 @@ export default function Presentation() {
                                 :
                                 <FallingText text={` Celebre cada momento do seu relacionamento com um contador dinâmico exclusivo! Preencha o formulário e receba um site personalizado com um QRCode especial para compartilhar com quem você ama. Agora, aproveite também a opção de criar um pedido especial!`}
                                     highlightWords={["Celebre", "momento", "relacionamento", "exclusivo!", "experiência", "QRCode"]}
-                                    className='mx-auto py-10 md:text-xl text-xs md:max-w-[1100px] sm:max-w-[400px] '
+                                    className='mx-auto py-10 md:text-xl text-xs md:max-w-[1100px] sm:max-w-[400px] text-white'
                                     trigger="click"
                                     backgroundColor="transparent"
                                     wireframes={false}
@@ -185,14 +179,20 @@ export default function Presentation() {
                                 <Button className='shadow-[#4500E5] shadow-lg bg-[#4500E5] hover:bg-[#6638C6] hover:shadow-[#6638C6] m-auto text-white max-w-[300px] w-full ' onClick={() => scrollToDiv("Prices")}>
                                     Criar meu contador dinâmico
                                 </Button>
-                                <h1 className='text- text-white'>OU</h1>
                                 <Link className=' max-w-[300px] w-full m-auto' href={"/sendRequest"}>
+                                    <div></div>
+                                    <Button className='relative shadow-[#4500E5] shadow-lg bg-[#4500E5] hover:bg-[#6638C6] hover:shadow-[#6638C6] text-white max-w-[300px] w-full m-auto  px-4'>
+                                       
+                                        Enviar um pedido especial
+                                    </Button>
+                                </Link>
+                                <Link className=' max-w-[300px] w-full m-auto' href={"/cellPhone"}>
                                     <div></div>
                                     <Button className='relative shadow-[#4500E5] shadow-lg bg-[#4500E5] hover:bg-[#6638C6] hover:shadow-[#6638C6] text-white max-w-[300px] w-full m-auto  px-4'>
                                         <span className="absolute top-[-13px] right-[-10px] bg-[#ff8000] text-xs font-bold text-white px-2 py-1 rounded-full">
                                             Destaque
                                         </span>
-                                        Enviar um pedido especial
+                                        Presentear minha mãe
                                     </Button>
                                 </Link>
                             </div>
