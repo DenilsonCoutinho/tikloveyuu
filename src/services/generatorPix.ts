@@ -2,7 +2,7 @@ import { updatecustomerId } from "../../actions/couple"
 import { updatecustomerMomId } from "../../actions/mom"
 import { generatoClient } from "./generatoClient"
 
-export default async function generatorPix(idUser: string, name: string, cpfCnpj: string, email: string, typeProduct: number): Promise<{ pixCustomersDataId?: string, error?: string }> {
+export default async function generatorPix(idUser: string, name: string, cpfCnpj: string, email: string, typeProduct: number,description:string): Promise<{ pixCustomersDataId?: string, error?: string }> {
 
     const { customerId, erro } = await generatoClient(name, cpfCnpj)
 
@@ -28,7 +28,7 @@ export default async function generatorPix(idUser: string, name: string, cpfCnpj
         body: JSON.stringify({
             value: typeProduct === 1 ? 14.99 : typeProduct === 2 ? 34.99 : 14.99, // Certifique-se que o valor está correto (3499 representa R$ 34,99)
             customerid: customerId,
-            description: "1"
+            description: description
         })
     })
     const pixCustomers = await res.json();

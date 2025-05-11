@@ -132,7 +132,7 @@ export default function ModalPayment({ typeProduct, dataCouple, hour, message, n
             const create_Couple = await createCouple(idUser as string, nameCouple, dataCouple, hour, uploadImages.imgUpload!, message, youtubeLink, price)
             if (create_Couple?.error?.message) throw new Error("Erro ao criar casal");
             if (formPayment === "1") {
-                const { pixCustomersDataId } = await generatorPix(idUser as string, name, cpfCnpj, email, typeProduct)
+                const { pixCustomersDataId } = await generatorPix(idUser as string, name, cpfCnpj, email, typeProduct,"1")
                 const { encodedImage, qrCode } = await getQrCodPix(pixCustomersDataId as string)
                 setQrCode(qrCode)
                 setEncoder(encodedImage)

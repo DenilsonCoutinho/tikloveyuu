@@ -128,7 +128,7 @@ export default function ModalPaymentMom({ message, namecall, images }: { namecal
 
             const create_mom = await createMom(message, namecall, uploadImages.imgUpload!, userId as string)
             if (create_mom?.error?.message) throw new Error("Erro ao criar casal");
-                const { pixCustomersDataId } = await generatorPix(idUser as string, name, cpfCnpj, email, 3)
+                const { pixCustomersDataId } = await generatorPix(idUser as string, name, cpfCnpj, email, 3,"3")
                 const { encodedImage, qrCode } = await getQrCodPix(pixCustomersDataId as string)
                 setQrCode(qrCode)
                 setEncoder(encodedImage)
