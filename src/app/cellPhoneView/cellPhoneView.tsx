@@ -261,8 +261,9 @@ interface UserViewProps {
             </>
           </div>
           <div className='message max-h-52 overflow-y-auto hidden '>
-            <h1 className="text-center text-[#ffffff] text-xs font-medium px-3 texto-reluzente ">
+            <h1 className="text-center text-wrap text-[#353232] text-xs font-medium px-3 texto-reluzente ">
               {data?.messages}
+              
             </h1>
           </div>
         </div>}
