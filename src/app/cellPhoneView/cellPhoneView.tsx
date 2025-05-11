@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Alex_Brush, Dancing_Script, Lora } from 'next/font/google';
 import React, { Suspense, useEffect, useLayoutEffect } from 'react';
 import { useRef, useState } from "react";
-import { FaLockOpen, FaPhoneAlt } from 'react-icons/fa'
+import { FaLockOpen, FaPhoneAlt, FaUser } from 'react-icons/fa'
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -156,16 +156,16 @@ interface UserViewProps {
 
 
   return (
-    <div className="bg-[#181818]  h-screen px-2 py-2 flex justify-center items-center">
+    <div className="bg-[#181818]  h-screen overflow-y-auto px-2 py-2 flex justify-center items-center">
 
       {steps < 2 && <audio className='my-audio' ref={audioRef} src="/toque-de-ligacao-iphone-hxujgs29dy0_BCpf5pyi.mp3" preload="auto" loop />}
       <div
-        className="relative w-[290px] h-[500px]  rounded-2xl   border-[2px] border-[#282828] p-[7px] shadow-[2px_5px_15px_rgba(0,0,0,0.486)] overflow-hidden"
+        className="relative w-full h-full rounded-2xl border-[2px] border-[#282828] p-[7px]  overflow-hidden"
       >
         <div className="absolute inset-0 bgCellPhone z-0" />
 
         {steps === 0 && <>
-          <div className="absolute bottom-56 left-0 w-full  flex justify-center z-20 container-bottom">
+          <div className="absolute bottom-64 left-0 w-full  flex justify-center z-20 container-bottom">
             <button className="uiverse" onClick={() => { step_0() }}>
               <div className="wrapper">
                 <span>Desbloquear</span>
@@ -187,16 +187,18 @@ interface UserViewProps {
         </>}
 
         {steps === 1 && <div className='z-10 r'>
-          {/* <audio
-            ref={audioRef} src="/toque-de-ligacao-iphone-hxujgs29dy0_BCpf5pyi.mp3" preload="" /> */}
           <div
             className="absolute inset-0 container-top  rounded-[25px]  flex flex-col items-center  pt-10 text-white"
           >
             <div className="absolute inset-0 bgCellPhone z-0" />
 
             <div className="pulse-container relative w-14 h-14 ">
-              <div className="bg-white w-14 h-14 rounded-full pulse-ring absolute top-0 left-0 "></div>
-              <div className="bg-white w-14 h-14 rounded-full  absolute top-0 left-0 "></div>
+              <div className="bg-white w-14 h-14 rounded-full pulse-ring absolute top-0 left-0 ">
+              </div>
+              <div className="bg-white w-14 h-14 rounded-full flex justify-center items-center  absolute top-0 left-0 ">
+                <FaUser className='text-gray-400'/>
+
+              </div>
             </div>
             <div className="text-xs mt-1 text-slate-600 z-20">Ligação</div>
             <h1 className=" text-slate-600 text-base font-bold text-center leading-[35px] z-20">
@@ -231,16 +233,16 @@ interface UserViewProps {
         {steps === 2 && <div
           className="absolute inset-0 container-top rounded-[25px]  flex flex-col items-center  pt-10 text-white">
           <h1 className={`text-center text-7xl w-40 text-rgb-shine px-3 ${lora?.className}`}>
-            Feliz dia das mãe
+            Feliz dia das mães
           </h1>
           <div
-            className="h-72 w-52 images-mom border opacityTo-0  duration-1000 rounded-xl border-slate-300">
+            className="h-80 w-52 images-mom border opacityTo-0  duration-1000 rounded-xl border-slate-300">
             <>
               <Swiper pagination={true} modules={[Pagination]} className="mySwiper">
                 {
                   data?.images.map((img: any, i: any) => {
                     return <SwiperSlide id='' key={"image" + i}>
-                      <div className="relative bg-cover text-transparent bg-no-repeat bg-center h-[360px]" >
+                      <div className="relative bg-cover text-transparent bg-no-repeat bg-center h-full" >
                         <img
                           className=" w-full h-full object-cover "
                           width={222}
