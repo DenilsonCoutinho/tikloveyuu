@@ -11,7 +11,6 @@ export async function getQrCodPix(paymentId: string): Promise<{ encodedImage: st
             })
         })
         const getPixCustomers = await res.json();
-        console.log("aqui",getPixCustomers)
         return { encodedImage: getPixCustomers.pixCustomersData.encodedImage, qrCode: getPixCustomers.pixCustomersData.payload }
 
     } catch (error) {

@@ -33,3 +33,14 @@ export const deleteFolderMom = async (userId: string | null) => {
         await deleteObject(item);
     }
 };
+
+export const deleteFolderSurprise = async (userId: string | null) => {
+    const storage = getStorage(app)
+
+    const folderRef = ref(storage, `CreateCard/${userId}/images`);
+    const listRef = await listAll(folderRef);
+
+    for (const item of listRef.items) {
+        await deleteObject(item);
+    }
+};

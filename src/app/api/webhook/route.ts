@@ -1,13 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { deleteCoupleById, getCoupleById, getCoupleByUniqueId, updateEmailCouple } from "../../../../actions/couple";
-import { deleteFolder, deleteFolderReq } from "@/lib/deleteimagesfirebase";
+import { deleteFolder, deleteFolderReq, deleteFolderSurprise } from "@/lib/deleteimagesfirebase";
 import { headers } from "next/headers";
 const nodemailer = require("nodemailer");
 
 import stripe from '@/lib/stripe';
 import { db as prisma } from "@/lib/db";
 import { deleteReqById } from "../../../../actions/requestSend";
+import { deleteSurpriseById } from "../../../../actions/surpriseSend";
 const secret = process.env.STRIPE_WEBHOOK_SECRET;
 
 export async function POST(req: NextRequest) {
@@ -55,6 +56,51 @@ export async function POST(req: NextRequest) {
                               <div style="text-align: center; margin: 20px 0;">
                                 <a 
                                   href="https://www.tikloveyuu.com/qrCode?id=${checkout_session_completed.metadata.idUser}"
+                                  style="
+                                    background-color: #6638C6;
+                                    color: white;
+                                    padding: 15px 30px;
+                                    text-decoration: none;
+                                    border-radius: 5px;
+                                    font-size: 16px;
+                                  ">
+                                  Acessar seu Link
+                                </a>
+                              </div>
+                              <p style="margin-top: 20px;">Caso tenha algum problema, entre em contato conosco em <a href="mailto:denidesenvolvimentos@gmail.com" style="color: #6638C6;">denidesenvolvimentos@gmail.com</a>.</p>
+                              <p>Atenciosamente,<br>deni-desenvolvimentos</p>
+                            </div>
+                            <div style="background-color: #f1f1f1; padding: 10px; text-align: center; color: #777; font-size: 12px;">
+                              <p>Este é um e-mail automático, por favor, não responda.</p>
+                            </div>
+                          </div>
+                        `,
+                });
+                await prisma.user.update({
+                  where: { idCouple },
+                  data: {
+                    email: checkout_session_completed.customer_details?.email,
+                  }
+                })
+                break
+              }
+
+                if (checkout_session_completed.metadata.type === "5") {
+                await transporter.sendMail({
+                  from: 'deni-desenvolvimentos <denidesenvolvimentos@gmail.com>', // sender address
+                  to: checkout_session_completed.customer_details?.email, // list of receivers
+                  subject: "Seu link e QR Code", // Subject line
+                  html: `
+                          <div style="font-family: Arial, sans-serif; color: #333;">
+                            <div style="background-color: #0E0813; padding: 20px; text-align: center;">
+                              <h1 style="color: #4500E5;">Obrigado por sua compra!</h1>
+                            </div>
+                            <div style="padding: 20px;">
+                              <p>Olá,</p>
+                              <p>Seu pedido foi processado com sucesso. Clique no botão abaixo para acessar o seu link e QR Code:</p>
+                              <div style="text-align: center; margin: 20px 0;">
+                                <a 
+                                  href="https://www.tikloveyuu.com/createSurprise/qrCode?id=${checkout_session_completed.metadata.idUser}"
                                   style="
                                     background-color: #6638C6;
                                     color: white;
@@ -135,6 +181,14 @@ export async function POST(req: NextRequest) {
 
             await deleteFolder(sessionExpired.metadata.idUser)
             await deleteCoupleById(sessionExpired.metadata.idUser)
+
+            break;
+          }
+
+            if (sessionExpired.metadata && sessionExpired.metadata.type === "5") {
+
+            await deleteFolderSurprise(sessionExpired.metadata.idUser)
+            await deleteSurpriseById(sessionExpired.metadata.idUser)
 
             break;
           }

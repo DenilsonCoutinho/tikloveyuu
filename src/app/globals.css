@@ -2205,3 +2205,100 @@ radial-gradient(at 79% 90%, hsla(17,100%,76%,1) 0px, transparent 50%);
 .opacityTo-1{
   opacity:1;
 }
+
+/* From Uiverse.io by adamgiebl */ 
+.containerCreateCard {
+  /* padding: 0.2em; */
+   width: 300px;
+  height: 300px;
+  border-radius: 1em;
+  overflow: hidden;
+  /* box-shadow: 0 10px 20px #dbdbdb; */
+  font-family: sans-serif;
+  /* background: white; */
+  pointer-events: none;
+}
+
+.palette {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  border-radius: 1rem;
+  overflow: hidden;
+  pointer-events: auto;
+}
+
+.palette:hover > #color-code {
+  opacity: 0;
+}
+
+.color {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  transform-origin: center;
+  transition: 0.3s ease-in-out;
+  box-sizing: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.color span {
+  color: white;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+#color1 {
+  rotate: 45deg;
+  translate: 212.13px 0;
+  z-index: 9;
+}
+
+#color1:hover {
+  translate: 0 0;
+  rotate: 0deg;
+  z-index: 99;
+}
+
+#color2 {
+  rotate: 45deg;
+  translate: 0 212.13px;
+  z-index: 9;
+}
+
+#color2:hover {
+  translate: 0 0;
+  rotate: 0deg;
+  z-index: 99;
+}
+
+#color2 span {
+  color: #1A1A1A;
+}
+
+#color3 {
+  rotate: 45deg;
+  translate: -212.13px 0;
+  z-index: 9;
+}
+
+#color3:hover {
+  translate: 0 0;
+  rotate: 0deg;
+  z-index: 99;
+}
+
+#color4 {
+  rotate: 45deg;
+  translate: 0 -212.13px;
+  z-index: 9;
+}
+
+#color4:hover {
+  translate: 0 0;
+  rotate: 0deg;
+  z-index: 99;
+}
+

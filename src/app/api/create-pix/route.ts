@@ -43,9 +43,7 @@ export async function POST(req: NextRequest) {
     tomorrow.setDate(tomorrow.getDate() + 1);
     // Formatar a data no padrão yyyy-mm-dd
     const dueDate = tomorrow.toISOString().split('T')[0];
-    console.log(dueDate);
     const { value, customerid, description } = await req.json();
-    console.log("description: ", description)
     try {
         const pixCustomers = await fetch('https://api.asaas.com/v3/payments', {
             method: 'POST',

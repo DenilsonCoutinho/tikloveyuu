@@ -32,6 +32,21 @@ model User {
   affiliate       Affiliate? @relation("AffiliateUsers", fields: [affiliateId], references: [code])
 }
 
+model SurpriseSend {
+  id                 String   @id @default(auto()) @map("_id") @db.ObjectId
+  idSurprise         String   @unique
+  typeSurprise       String?
+  nameCoupleSurprise String?
+  paid               String?
+  yesMove            Boolean?
+  message            String?
+  email              String?
+  images             String[]
+  idCostumerAsaas    String?
+  idSession          String?
+  createdAt          DateTime @default(now())
+}
+
 model RequestSend {
   id              String   @id @default(auto()) @map("_id") @db.ObjectId
   requestSend     String
@@ -51,14 +66,14 @@ model RequestSend {
 }
 
 model CellPhone {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  nameCall  String?
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  nameCall        String?
   // imageCall String?
-  images    String[]
-  idCall    String   @unique
-  email     String?
-  paid      String?
-  messages  String?
+  images          String[]
+  idCall          String   @unique
+  email           String?
+  paid            String?
+  messages        String?
   idCostumerAsaas String?
 }
 

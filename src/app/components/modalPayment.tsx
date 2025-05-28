@@ -126,7 +126,6 @@ export default function ModalPayment({ typeProduct, dataCouple, hour, message, n
             const uploadImages = await handleUpload(imageCouple, userId as string)
             if (uploadImages?.errorImg) throw new Error(uploadImages.errorImg);
             const idUser = localStorage.getItem("idUserMyLoverTik");
-            console.log("2")
 
             const price = typeProduct === 1 ? 14.99 : 34.99
             const create_Couple = await createCouple(idUser as string, nameCouple, dataCouple, hour, uploadImages.imgUpload!, message, youtubeLink, price)
