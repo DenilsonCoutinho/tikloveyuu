@@ -33,7 +33,6 @@ export default function SmoothText({ text }: { text: string | null | undefined }
             )
 
             // Esta função executa APÓS a animação terminar
-            console.log("Animação da carta de amor terminou! 💕")
             setAnimationComplete(true)
 
             // Aguarda um pouco e mostra uma mensagem especial
@@ -52,11 +51,11 @@ export default function SmoothText({ text }: { text: string | null | undefined }
 
     return (
         <div className="container" ref={containerRef}>
-            <p className="text-3xl select-none font-bold">EU AVISEI💜</p>
-            <h1 className="h1 select-none">
+            <p className="text-3xl select-none font-bold text-white">EU AVISEI💜</p>
+            <h1 className="h1 select-none text-white">
                {text}
             </h1>
-            {<Button onClick={() => setStep(3)} disabled={animationComplete} className="border bg-transparent px-10 z-10">Próximo</Button>}
+            {<Button onClick={() => setStep(3)} disabled={animationComplete} className="border text-white bg-transparent px-10 z-10">Próximo</Button>}
             <Stylesheet />
         </div>
     )

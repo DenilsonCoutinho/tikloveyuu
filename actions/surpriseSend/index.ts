@@ -19,14 +19,15 @@ export async function getSurpriseById(idSurprise: string) {
     }
 }
 
-export async function createSurpriseSend(idSurprise: string, message: string, image: string[],nameCoupleSurprise: string) {
+export async function createSurpriseSend(idSurprise: string, message: string, image: string[],nameCoupleSurprise: string,musicSpotify:string) {
     try {
         await prisma.surpriseSend.create({
             data: {
                 idSurprise,
                 nameCoupleSurprise,
                 message: message,
-                images: image
+                images: image,
+                spotifyMusic:musicSpotify
             },
 
 

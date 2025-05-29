@@ -5,17 +5,43 @@ import type { Variants } from "motion/react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { useCreateCard } from "@/lib/zustad/useCreateCard"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 export default function ImageCouples({ images }: { images?: string[] }) {
-    const { setStep, step } = useCreateCard()
 
+    const { setStep, step, setSpotifyMusic, spotifyMusic,hasHydrated } = useCreateCard()
+    // const [inputUrl, setInputUrl] = useState(spotifyMusic)
+
+    const [spotifyId, setSpotifyId] = useState<string | null>("")
+    const [type, setType] = useState<"track" | "playlist" | "album" | "">("")
+    const handleExtract = () => {
+        const regex = /spotify\.com\/(track|playlist|album)\/([a-zA-Z0-9]+)/;
+        const match = spotifyMusic?.match(regex)
+        console.log(spotifyMusic)
+        console.log(match)
+        if (match && match[1] && match[2]) {
+            setType(match[1] as "track" | "playlist" | "album")
+            setSpotifyId(match[2])
+        }
+    }
+
+    const getSpotifyEmbedUrl = () => {
+        // if (!spotifyId || !type) return ""
+        return `https://open.spotify.com/embed/${type}/${spotifyId}?utm_source=generator`
+    }
     useEffect(() => {
+       if(!hasHydrated) {
+          setSpotifyMusic(spotifyMusic)
+        }
+    }, [hasHydrated])
+    useEffect(() => {
+
         const jsConfetti = new JSConfetti()
         new Promise((resolve) => setTimeout(resolve, 2000))
         jsConfetti.addConfetti({
             emojis: ['💙', '💙', '💙', '💙', '💫', '💙'],
             confettiNumber: 20
         })
+        handleExtract()
         new Promise((resolve) => setTimeout(resolve, 6000)).then(() => {
 
             jsConfetti.clearCanvas()
@@ -27,7 +53,19 @@ export default function ImageCouples({ images }: { images?: string[] }) {
             {images?.map((images, i) => (
                 <Card i={10} image={images} hueA={240} hueB={10} key={i} />
             ))}
-            {<Button onClick={() => setStep(0)} className="border bg-transparent px-4 h-7 z-10 fixed top-2 left-4">Resetar</Button>}
+            {<Button onClick={() => setStep(0)} className="border bg-transparent px-4 h-7 z-10 fixed top-2 left-4 text-white">Resetar</Button>}
+            {/* {<Button onClick={() => handleExtract()} className="border bg-transparent px-4 h-7 z-10 fixed top-12 left-4">Resetar</Button>} */}
+
+            {spotifyMusic&&<iframe
+                className="rounded-2xl"
+                style={{ marginTop: 120, zIndex: 10, position: "relative" }}
+                src={getSpotifyEmbedUrl()}
+                width="100%"
+                height="80"
+                frameBorder="0px"
+                allow=""
+                loading="lazy"
+            ></iframe>}
         </div>
     )
 }
@@ -61,11 +99,11 @@ function Card({ image, hueA, hueB, i }: CardProps) {
 
 const cardVariants: Variants = {
     offscreen: {
-        y: 300,
+        y: 400,
     },
     onscreen: {
         y: 50,
-        rotate: -10,
+        rotate: -7,
         transition: {
             type: "spring",
             bounce: 0.4,
@@ -82,7 +120,7 @@ const hue = (h: number) => `hsl(${h}, 100%, 50%)`
 
 const container: React.CSSProperties = {
     margin: "10px auto",
-    maxWidth: 500,
+    maxWidth: 400,
     paddingBottom: 100,
     width: "100%",
 }
@@ -94,7 +132,7 @@ const cardContainer: React.CSSProperties = {
     alignItems: "center",
     position: "relative",
     paddingTop: 20,
-    marginBottom: -120,
+    marginBottom: -84,
 }
 
 const splash: React.CSSProperties = {

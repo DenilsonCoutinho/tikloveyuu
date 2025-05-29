@@ -50,6 +50,7 @@ export default function CreateSurpriseForm() {
     const [qrCode, setQrCode] = useState<string>("");
     const [copied, setCopied] = useState<boolean>(false);
     const [nameCoupleSurprise, setNameCoupleSurprise] = useState<string>("");
+    const [musicSpotify, setMusicSpotify] = useState<string>("");
     const [name, setName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [cpfCnpj, setCpfCnpj] = useState<string>("");
@@ -91,7 +92,7 @@ export default function CreateSurpriseForm() {
         }
         const { imgUpload } = await handleUploadCreateSurprise(image, idUser)
         if (!imgUpload) return alert("Erro na hora de enviar fotos")
-        const { success } = await createSurpriseSend(idUser, message, imgUpload, nameCoupleSurprise)
+        const { success } = await createSurpriseSend(idUser, message, imgUpload, nameCoupleSurprise,musicSpotify)
         if (success && formPayment === "1") {
             const { pixCustomersDataId } = await generatorPix(idUser as string, name, cpfCnpj, email, 5, "5")
             const { encodedImage, qrCode } = await getQrCodPix(pixCustomersDataId as string)
@@ -304,7 +305,23 @@ export default function CreateSurpriseForm() {
                                 />
                             </div>
                         </label>
-
+                        <label className="w-full text-white">
+                            <p className="text-white text-xs max-w-[400px] font-medium md:leading-7 leading-2 pt-2">
+                                Escolha uma musica do spotify para a surpresa (opcional):
+                            </p>
+                            <div className="relative">
+                                <Input
+                                    value={musicSpotify}
+                                    onChange={(e) => setMusicSpotify(e.target.value)}
+                                    type="text"
+                                    id="music_spotify"
+                                    placeholder={
+                                        "EX:... https://open.spotify.com/track/2g9fVupIy2qbQwabYzVnUv?si=t00Jwz_NQqS34cRM2ZlM6A"
+                                    }
+                                    className="text-white border border-white px-3 placeholder:text-slate-400 text-sm"
+                                />
+                            </div>
+                        </label>
                         <label className="w-full text-white">
                             <p className="text-white text-xs max-w-[400px] font-medium md:leading-7 leading-2 pt-2">
                                 Mensagem para o(a) amado(a):

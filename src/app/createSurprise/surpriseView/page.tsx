@@ -17,8 +17,8 @@ interface Surprise {
     idSurprise: string;
     typeSurprise: string | null;
     paid: string | null;
-    yesMove: boolean | null;
     message: string | null;
+    spotifyMusic: string | null;
     email: string | null;
     images: string[];
     nameCoupleSurprise: string | null;
@@ -46,11 +46,12 @@ function ContainerCreateCard() {
 
     useEffect(() => {
         async function getData() {
+    
             try {
                 const data = await getSurpriseById(code as string)
                 if (!data.res) throw new Error("Seu ID não está disponivel, Recarregue a página!")
                 setData(data)
-
+                setSpotifyMusic(data.res.spotifyMusic)
             } catch (error) {
                 if (error instanceof Error) {
                     toast({
@@ -64,7 +65,7 @@ function ContainerCreateCard() {
         }
         getData()
     }, [])
-    const { setStep, step } = useCreateCard()
+    const { setStep, step,setSpotifyMusic } = useCreateCard()
     return (
         <div className="flex flex-col justify-center items-center min-h-screen bg-defaultBg" >
             <Particles
@@ -87,7 +88,7 @@ function ContainerCreateCard() {
                     :
                     <>
                         <h1 className={`${dancing_Script.className} text-[#9500ff]   text-center font- text-5xl pt-10`}>{data?.res?.nameCoupleSurprise}</h1>
-                        <ImageCouples images={data?.res?.images}/>
+                        <ImageCouples images={data?.res?.images} />
                     </>
             }
         </div>

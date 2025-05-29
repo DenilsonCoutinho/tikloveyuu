@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
             success_url: typeProduct === 1 || typeProduct === 2 ?
                 `https://www.tikloveyuu.com/qrCode?id=${idUser}` :
                 `https://www.tikloveyuu.com/createSurprise/qrCode?id=${idUser}`, // Defina suas URLs
-            cancel_url: `https://www.tikloveyuu.com/cancel?status=cancelado`,
+            cancel_url: `https://www.tikloveyuu.com/createSurprise/cancel?id=${idUser}`,
         });
         if (typeProduct === 5) {
             await prisma.surpriseSend.update({

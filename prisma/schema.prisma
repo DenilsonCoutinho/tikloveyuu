@@ -38,8 +38,8 @@ model SurpriseSend {
   typeSurprise       String?
   nameCoupleSurprise String?
   paid               String?
-  yesMove            Boolean?
   message            String?
+  spotifyMusic       String?
   email              String?
   images             String[]
   idCostumerAsaas    String?

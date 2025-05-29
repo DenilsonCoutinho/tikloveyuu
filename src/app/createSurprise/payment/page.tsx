@@ -31,14 +31,7 @@ const AMOUNT = 19.99; // Valor fixo ou dinâmico
 
     return (
         <div
-            style={{
-                minHeight: '100vh',
-                background: '#f4f4f4',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: '16px'
-            }}
+            className='flex flex-col items-center justify-center py-10 bg-gray-200 overflow-y-auto'
         >
             <div
                 style={{
