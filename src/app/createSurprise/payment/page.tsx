@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import QRCode from 'react-qr-code';
 import { useSearchParams } from 'next/navigation';
 import SecurityBadge from '../components/SecurityBadge';
@@ -11,8 +11,7 @@ import { Button } from '@/components/ui/button';
 const PIX_KEY = '000.000.000-00'; // Substitua pela sua chave PIX
 const RECEIVER_NAME = 'Nome do Recebedor';
 const AMOUNT = 19.99; // Valor fixo ou dinâmico
-
-export default function PaymentPage() {
+ function PaymentPage() {
     const searchParams = useSearchParams();
     const [copied, setCopied] = useState(false);
     const [verifyEmail, setVerifyEmail] = useState(false);
@@ -233,5 +232,14 @@ export default function PaymentPage() {
                 </div>
             </div>
         </div>
+    );
+}
+
+
+export default function UserViewPayment() {
+    return (
+        <Suspense fallback={<div className="h-screen flex flex-col bg-defaultBg justify-center items-center"><div className="lds-heart" ><div></div></div></div >}>
+            {<PaymentPage />}
+        </Suspense>
     );
 }

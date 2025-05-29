@@ -7,7 +7,7 @@ import RoundSix from "../components/roundSix"
 import SmoothText from "../components/smoothText"
 import { Dancing_Script, } from 'next/font/google'
 import HoldToConfirmButton from "../components/holdButton"
-import { useEffect, useState } from "react"
+import { Suspense, useEffect, useState } from "react"
 import { getSurpriseById } from "../../../../actions/surpriseSend"
 import { useSearchParams } from "next/navigation"
 import { useToast } from "@/hooks/use-toast"
@@ -38,7 +38,7 @@ const dancing_Script = Dancing_Script({
 
 })
 
-export default function ContainerCreateCard() {
+function ContainerCreateCard() {
     const searchParams = useSearchParams();
     const [data, setData] = useState<SurpriseResponse | null>(null)
     const code = searchParams.get("id");
@@ -95,4 +95,11 @@ export default function ContainerCreateCard() {
 }
 
 
+export default function UserViewSurprise() {
+    return (
+        <Suspense fallback={<div className="h-screen flex flex-col bg-defaultBg justify-center items-center"><div className="lds-heart" ><div></div></div></div >}>
+            {<ContainerCreateCard />}
+        </Suspense>
+    );
+}
 
