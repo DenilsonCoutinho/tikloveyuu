@@ -231,7 +231,7 @@ const AMOUNT = 19.99; // Valor fixo ou dinâmico
 
 export default function UserViewPayment() {
     return (
-        <Suspense fallback={<div className="h-screen flex flex-col bg-defaultBg justify-center items-center"><div className="lds-heart" ><div></div></div></div >}>
+        <Suspense fallback={<div className="overflow-y-auto flex flex-col bg-defaultBg justify-center items-center"><div className="lds-heart" ><div></div></div></div >}>
             {<PaymentPage />}
         </Suspense>
     );
