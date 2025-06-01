@@ -53,6 +53,11 @@ function UserViewComponent() {
                     setIsError(true)
                     throw new Error("Seu ID não está disponivel, Recarregue a página!")
                 }
+                if (id === "c3") {
+                    route.replace('createSurprise/surpriseView?id=d1b849cf-8fca-48bc-8633-a0950c7f6854')
+                    await new Promise(resolve => setTimeout(resolve, 1000))
+                    return
+                }
                 const res = await getCoupleById(id)
                 if (res.error) {
                     setData(null)
@@ -61,6 +66,25 @@ function UserViewComponent() {
                 setData(res?.couple || null)
 
                 await new Promise(resolve => setTimeout(resolve, 1000))
+                emojiBlast({
+                    emojis: ["💝", "💞", "💖", "💜", "💘"],
+                    
+                    physics: {
+                        fontSize: { max: 24, min: 24 },
+                        gravity: 1,
+                        initialVelocities:{
+                            rotation:12
+                        },
+                    framerate:82
+                    },
+                    position: {
+                        x: innerWidth / 2,
+                        y: innerHeight / 12
+                    }
+                    ,
+                    emojiCount: () => 24
+
+                })
                 setLoading(false)
 
             } catch (error) {
@@ -127,7 +151,7 @@ function UserViewComponent() {
                     speed={0.08}
                     cameraDistance={52}
                     particleBaseSize={80}
-                    moveParticlesOnHover={isMobile() ? false : true}
+                    moveParticlesOnHover={false}
                     alphaParticles={false}
                     disableRotation={false}
                 />
@@ -162,7 +186,7 @@ function UserViewComponent() {
                             }
                         </div>
                         <div className="border-b border-white opacity-15 mb-3 px-3 max-w-72 mx-auto "></div>
-                        <p className="text-justify m-auto max-w-96 px-3 text-sm text-white  overflow-y-auto z-50 relative leading-8 ">{data?.messages}</p>
+                        <p className="text-center m-auto max-w-96 px-3 text-sm text-white  overflow-y-auto z-50 relative leading-8 ">{data?.messages}</p>
                         <div className="pt-5">
                             {
                                 data?.ytbMusic &&

@@ -92,7 +92,7 @@ export default function CreateSurpriseForm() {
         }
         const { imgUpload } = await handleUploadCreateSurprise(image, idUser)
         if (!imgUpload) return alert("Erro na hora de enviar fotos")
-        const { success } = await createSurpriseSend(idUser, message, imgUpload, nameCoupleSurprise,musicSpotify)
+        const { success } = await createSurpriseSend(idUser, message, imgUpload, nameCoupleSurprise, musicSpotify)
         if (success && formPayment === "1") {
             const { pixCustomersDataId } = await generatorPix(idUser as string, name, cpfCnpj, email, 5, "5")
             const { encodedImage, qrCode } = await getQrCodPix(pixCustomersDataId as string)
@@ -126,6 +126,7 @@ export default function CreateSurpriseForm() {
             await stripeClient.redirectToCheckout({ sessionId });
         } catch (error) {
             console.error('Erro ao redirecionar para o checkout:', error);
+            setLoading(false);
 
         }
     };
