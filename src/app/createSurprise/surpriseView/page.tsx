@@ -67,7 +67,7 @@ function ContainerCreateCard() {
     }, [])
     const { setStep, step,setSpotifyMusic } = useCreateCard()
     return (
-        <div className="flex flex-col justify-center items-center min-h-screen bg-defaultBg" >
+        <div className="flex flex-col justify-center items-center min-h-screen bg-defaultBg select-none" >
             <Particles
                 className='fixed top-0  z-10  h-screen w-full  '
                 particleColors={['#fff']}

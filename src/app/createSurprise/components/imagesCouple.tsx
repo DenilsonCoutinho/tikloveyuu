@@ -16,8 +16,7 @@ export default function ImageCouples({ images }: { images?: string[] }) {
     const handleExtract = () => {
         const regex = /spotify\.com\/(track|playlist|album)\/([a-zA-Z0-9]+)/;
         const match = spotifyMusic?.match(regex)
-        console.log(spotifyMusic)
-        console.log(match)
+       
         if (match && match[1] && match[2]) {
             setType(match[1] as "track" | "playlist" | "album")
             setSpotifyId(match[2])
