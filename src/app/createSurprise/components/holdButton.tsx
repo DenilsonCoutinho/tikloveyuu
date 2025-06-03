@@ -88,17 +88,16 @@ const HoldToConfirmButton: React.FC<HoldToConfirmButtonProps> = ({
   const strokeDashoffset = circumference - (progress / 100) * circumference;
 
   return (
-    <div className={`flex items-center justify-center w-full ${className}`}>
+    <div className={`flex items-center justify-center w-full noSelect ${className}`}>
       <div className="relative w-[90vw] max-w-[400px] aspect-square">
         {/* Glow */}
         <div
-          className={`absolute rounded-full transition-all duration-300 z-0 ${
-            isCompleted
+          className={`absolute rounded-full transition-all duration-300 z-0 ${isCompleted
               ? "blur-3xl scale-125"
               : isHolding
-              ? "blur-2xl scale-110"
-              : "blur-xl scale-100"
-          }`}
+                ? "blur-2xl scale-110"
+                : "blur-xl scale-100"
+            }`}
           style={{
             width: '100%',
             height: '100%',
@@ -107,8 +106,8 @@ const HoldToConfirmButton: React.FC<HoldToConfirmButtonProps> = ({
             background: isCompleted
               ? 'radial-gradient(circle, rgba(69, 0, 229, 0.4) 0%, rgba(102, 56, 198, 0.3) 100%)'
               : isHolding
-              ? 'radial-gradient(circle, rgba(69, 0, 229, 0.3) 0%, rgba(102, 56, 198, 0.2) 100%)'
-              : 'radial-gradient(circle, rgba(69, 0, 229, 0.2) 0%, rgba(102, 56, 198, 0.1) 100%)'
+                ? 'radial-gradient(circle, rgba(69, 0, 229, 0.3) 0%, rgba(102, 56, 198, 0.2) 100%)'
+                : 'radial-gradient(circle, rgba(69, 0, 229, 0.2) 0%, rgba(102, 56, 198, 0.1) 100%)'
           }}
         />
 
@@ -155,17 +154,15 @@ const HoldToConfirmButton: React.FC<HoldToConfirmButtonProps> = ({
         {/* Inner hearts */}
         <div className="absolute inset-0 flex items-center justify-center z-10">
           <div
-            className={`w-3/5 h-3/5 rounded-full border-2 transition-all duration-500 relative ${
-              isHolding ? "rotate-45 scale-110" : "rotate-0 scale-100"
-            }`}
+            className={`w-3/5 h-3/5 rounded-full border-2 transition-all duration-500 relative ${isHolding ? "rotate-45 scale-110" : "rotate-0 scale-100"
+              }`}
             style={{ borderColor: 'rgba(102, 56, 198, 0.2)' }}
           >
             {[...Array(6)].map((_, i) => (
               <div
                 key={i}
-                className={`absolute w-3 h-3 transition-all duration-500 ${
-                  isHolding ? "scale-125 opacity-100" : "scale-100 opacity-60"
-                }`}
+                className={`absolute w-3 h-3 transition-all duration-500 ${isHolding ? "scale-125 opacity-100" : "scale-100 opacity-60"
+                  }`}
                 style={{
                   left: `${50 + Math.cos(i * Math.PI / 3) * 40}%`,
                   top: `${50 + Math.sin(i * Math.PI / 3) * 40}%`,
@@ -180,12 +177,31 @@ const HoldToConfirmButton: React.FC<HoldToConfirmButtonProps> = ({
 
         {/* Botão */}
         <button
-          onMouseDown={startHold}
-          onMouseUp={stopHold}
-          onMouseLeave={stopHold}
-          onTouchStart={startHold}
-          onTouchEnd={stopHold}
-          onClick={isCompleted ? reset : undefined}
+          onMouseDown={(e) => {
+            e.preventDefault();
+            startHold();
+          }}
+          onMouseUp={(e) => {
+            e.preventDefault();
+            stopHold();
+          }}
+          onMouseLeave={(e) => {
+            e.preventDefault();
+            stopHold();
+          }}
+          onTouchStart={(e) => {
+            e.preventDefault();
+            startHold();
+          }}
+          onTouchEnd={(e) => {
+            e.preventDefault();
+            stopHold();
+          }}
+          // ⚠️ Evita bug de "duplo clique" em iOS
+          onClick={(e) => {
+            e.preventDefault();
+            if (isCompleted) reset();
+          }}
           className={`
             absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
             px-5 py-3 rounded-full font-semibold text-sm
@@ -195,26 +211,26 @@ const HoldToConfirmButton: React.FC<HoldToConfirmButtonProps> = ({
             ${isCompleted
               ? "text-white shadow-2xl scale-110"
               : isHolding
-              ? "text-purple-200 scale-95 shadow-lg"
-              : "text-purple-300 hover:scale-105"
+                ? "text-purple-200 scale-95 shadow-lg"
+                : "text-purple-300 hover:scale-105"
             }
           `}
           style={{
             backgroundColor: isCompleted
               ? '#6638C6'
               : isHolding
-              ? 'rgba(69, 0, 229, 0.3)'
-              : 'rgba(102, 56, 198, 0.1)',
+                ? 'rgba(69, 0, 229, 0.3)'
+                : 'rgba(102, 56, 198, 0.1)',
             borderColor: isCompleted
               ? '#4500E5'
               : isHolding
-              ? 'rgba(69, 0, 229, 0.5)'
-              : 'rgba(102, 56, 198, 0.3)',
+                ? 'rgba(69, 0, 229, 0.5)'
+                : 'rgba(102, 56, 198, 0.3)',
             boxShadow: isCompleted
               ? '0 25px 50px -12px rgba(102, 56, 198, 0.5)'
               : isHolding
-              ? '0 10px 25px -5px rgba(69, 0, 229, 0.3)'
-              : 'none',
+                ? '0 10px 25px -5px rgba(69, 0, 229, 0.3)'
+                : 'none',
           }}
         >
           <div className="flex items-center justify-center gap-2">

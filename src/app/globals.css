@@ -2231,7 +2231,10 @@ radial-gradient(at 79% 90%, hsla(17,100%,76%,1) 0px, transparent 50%);
 .palette:hover > #color-code {
   opacity: 0;
 }
-
+.noSelect{
+  user-select: none;
+  -webkit-user-select: none; /* Safari iOS */
+}
 .color {
   position: absolute;
   width: 300px;
