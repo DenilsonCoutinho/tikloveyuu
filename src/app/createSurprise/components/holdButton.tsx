@@ -88,7 +88,7 @@ const HoldToConfirmButton: React.FC<HoldToConfirmButtonProps> = ({
   const strokeDashoffset = circumference - (progress / 100) * circumference;
 
   return (
-    <div className={`flex items-center justify-center w-full noSelect ${className}`}>
+    <div className={`flex items-center justify-center w-full noSelect select-none ${className}`}>
       <div className="relative w-[90vw] max-w-[400px] aspect-square">
         {/* Glow */}
         <div
