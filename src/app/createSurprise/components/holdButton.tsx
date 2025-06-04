@@ -10,7 +10,7 @@ interface HoldToConfirmButtonProps {
 const HoldToConfirmButton: React.FC<HoldToConfirmButtonProps> = ({
   onConfirm,
   duration = 1000,
-  text = "Não aperte!",
+  text = "Não clique!",
   className = ""
 }) => {
   const [progress, setProgress] = useState(0);
@@ -45,14 +45,14 @@ const HoldToConfirmButton: React.FC<HoldToConfirmButtonProps> = ({
     if (intervalRef.current) clearInterval(intervalRef.current);
   }, []);
 
-  const circumference = 2 * Math.PI * 120; // Reduced radius for mobile
+  const circumference = 2 * Math.PI * 100;
   const strokeDasharray = circumference;
   const strokeDashoffset = circumference - (progress / 100) * circumference;
 
   return (
-    <div className={`flex items-center justify-center min-h-screen z-30 p-4 ${className}`} style={{ backgroundColor: '#0E0813' }}>
-      <div className="relative w-full max-w-[330px] h-[330px] flex items-center justify-center">
-        {/* Outer romantic glow effect - responsive */}
+    <div className={`flex items-center justify-center min-h-screen p-4 ${className}`} style={{ backgroundColor: '#0E0813' }}>
+      <div className="relative w-80 h-80 flex items-center justify-center">
+        {/* Outer romantic glow effect */}
         <div className={`absolute inset-0 rounded-full transition-all duration-300 ${
           isCompleted 
             ? "blur-2xl scale-110" 
@@ -67,12 +67,12 @@ const HoldToConfirmButton: React.FC<HoldToConfirmButtonProps> = ({
               : 'radial-gradient(circle, rgba(69, 0, 229, 0.2) 0%, rgba(102, 56, 198, 0.1) 100%)'
         }} />
         
-        {/* Background circle - responsive size */}
+        {/* Background circle */}
         <svg
-          width="100%"
-          height="100%"
-          viewBox="0 0 280 280"
-          className="transform -rotate-90 max-w-[280px] max-h-[280px]"
+          width="320"
+          height="320"
+          viewBox="0 0 240 240"
+          className="transform -rotate-90"
         >
           <defs>
             <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -97,21 +97,21 @@ const HoldToConfirmButton: React.FC<HoldToConfirmButtonProps> = ({
           
           {/* Background circle */}
           <circle
-            cx="140"
-            cy="140"
-            r="120"
+            cx="120"
+            cy="120"
+            r="100"
             stroke="url(#bgGradient)"
-            strokeWidth="12"
+            strokeWidth="10"
             fill="none"
           />
           
           {/* Progress circle */}
           <circle
-            cx="140"
-            cy="140"
-            r="120"
+            cx="120"
+            cy="120"
+            r="100"
             stroke="url(#progressGradient)"
-            strokeWidth="12"
+            strokeWidth="10"
             fill="none"
             strokeDasharray={strokeDasharray}
             strokeDashoffset={strokeDashoffset}
@@ -123,12 +123,12 @@ const HoldToConfirmButton: React.FC<HoldToConfirmButtonProps> = ({
           />
         </svg>
         
-        {/* Inner decorative hearts pattern - smaller for mobile */}
+        {/* Inner decorative hearts pattern */}
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-          <div className={`w-40 h-40 rounded-full border-2 transition-all duration-500 ${
+          <div className={`w-32 h-32 rounded-full border-2 transition-all duration-500 ${
             isLoading ? "rotate-45 scale-110" : "rotate-0 scale-100"
           }`} style={{ borderColor: 'rgba(102, 56, 198, 0.2)' }}>
-            {/* Small hearts around the circle - fewer for mobile */}
+            {/* Small hearts around the circle */}
             {[...Array(4)].map((_, i) => (
               <div
                 key={i}
@@ -145,12 +145,12 @@ const HoldToConfirmButton: React.FC<HoldToConfirmButtonProps> = ({
               </div>
             ))}
           </div>
-          <div className={`absolute top-2 left-2 w-36 h-36 rounded-full border transition-all duration-700 ${
+          <div className={`absolute top-2 left-2 w-28 h-28 rounded-full border transition-all duration-700 ${
             isLoading ? "rotate-90 scale-95" : "rotate-0 scale-100"
           }`} style={{ borderColor: 'rgba(69, 0, 229, 0.15)' }} />
         </div>
         
-        {/* Button - responsive size */}
+        {/* Button */}
         <button
           onClick={isCompleted ? reset : handleClick}
           disabled={isLoading}
@@ -158,7 +158,7 @@ const HoldToConfirmButton: React.FC<HoldToConfirmButtonProps> = ({
             absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
             px-4 py-3 rounded-full font-semibold text-sm
             transition-all duration-300 ease-out
-            select-none cursor-pointer min-w-[100px] max-w-[140px]
+            select-none cursor-pointer w-28 h-14
             backdrop-blur-sm border-2
             ${isCompleted 
               ? "text-white shadow-2xl scale-110" 
@@ -188,30 +188,30 @@ const HoldToConfirmButton: React.FC<HoldToConfirmButtonProps> = ({
             MozUserSelect: 'none'
           }}
         >
-          <div className="flex items-center justify-center gap-1">
+          <div className="flex flex-col items-center justify-center gap-0.5">
             {isCompleted ? (
               <>
                 <span className="text-base">💖</span>
-                <span className="text-xs">Love sent!</span>
+                <span className="text-xs leading-tight">Love sent!</span>
               </>
             ) : isLoading ? (
               <>
                 <div className="w-1.5 h-1.5 rounded-full bg-current animate-pulse scale-150" />
-                <span className="text-xs">Aguarde...</span>
+                <span className="text-xs leading-tight">Agurde...</span>
                 <span className="text-xs">💕</span>
               </>
             ) : (
               <>
                 {/* <div className="w-1.5 h-1.5 rounded-full bg-current scale-100" /> */}
-                <span className="text-xs">{text}</span>
+                <span className="text-xs leading-tight">{text}</span>
                 <span className="text-xs">💕</span>
               </>
             )}
           </div>
           
-          {/* Progress indicator inside button - smaller */}
+          {/* Progress indicator inside button */}
           {!isCompleted && (
-            <div className="absolute bottom-0.5 left-1/2 transform -translate-x-1/2 w-12 h-0.5 rounded-full overflow-hidden" style={{ backgroundColor: 'rgba(102, 56, 198, 0.2)' }}>
+            <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 w-10 h-0.5 rounded-full overflow-hidden" style={{ backgroundColor: 'rgba(102, 56, 198, 0.2)' }}>
               <div 
                 className="h-full transition-all duration-75 ease-out rounded-full"
                 style={{ 
@@ -223,20 +223,18 @@ const HoldToConfirmButton: React.FC<HoldToConfirmButtonProps> = ({
           )}
         </button>
         
-        {/* Floating hearts effect - fewer for mobile */}
-    
         
-        {/* Romantic sparkles - fewer for mobile */}
+        {/* Romantic sparkles */}
         <div className="absolute inset-0 pointer-events-none">
-          {[...Array(8)].map((_, i) => (
+          {[...Array(6)].map((_, i) => (
             <div
               key={i}
               className={`absolute w-0.5 h-0.5 rounded-full transition-all duration-1000 ${
                 isLoading ? "opacity-100 scale-150" : "opacity-30 scale-100"
               }`}
               style={{
-                left: `${25 + (i * 10) % 50}%`,
-                top: `${20 + (i * 13) % 60}%`,
+                left: `${25 + (i * 12) % 50}%`,
+                top: `${20 + (i * 15) % 60}%`,
                 animationDelay: `${i * 250}ms`,
                 backgroundColor: i % 2 === 0 ? '#6638C6' : '#4500E5'
               }}
