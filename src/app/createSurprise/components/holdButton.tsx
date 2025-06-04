@@ -197,7 +197,7 @@ const HoldToConfirmButton: React.FC<HoldToConfirmButtonProps> = ({
             ) : isLoading ? (
               <>
                 <div className="w-1.5 h-1.5 rounded-full bg-current animate-pulse scale-150" />
-                <span className="text-xs leading-tight">Agurde...</span>
+                <span className="text-xs leading-tight">Aguarde...</span>
                 <span className="text-xs">💕</span>
               </>
             ) : (
