@@ -67,7 +67,7 @@ function ContainerCreateCard() {
     }, [])
     const { setStep, step,setSpotifyMusic } = useCreateCard()
     return (
-        <div className="flex flex-col justify-center items-center min-h-screen bg-defaultBg select-none" >
+        <div className="flex flex-col  justify-center items-center min-h-screen bg-defaultBg select-none" >
             <Particles
                 className='fixed top-0  z-10  h-screen w-full  '
                 particleColors={['#fff']}
@@ -79,7 +79,7 @@ function ContainerCreateCard() {
                 alphaParticles={false}
                 disableRotation={false}
             />
-            {step === 0 ? <HoldToConfirmButton onConfirm={() => setStep(1)} />
+            {step === 0 ? <HoldToConfirmButton duration={1400} onConfirm={() => setStep(1)} />
                 : step === 1 ?
                     <>
                         <RoundSix />
