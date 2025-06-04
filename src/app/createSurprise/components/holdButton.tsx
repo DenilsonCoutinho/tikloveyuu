@@ -50,7 +50,7 @@ const HoldToConfirmButton: React.FC<HoldToConfirmButtonProps> = ({
   const strokeDashoffset = circumference - (progress / 100) * circumference;
 
   return (
-    <div className={`flex items-center justify-center min-h-screen p-4 ${className}`} style={{ backgroundColor: '#0E0813' }}>
+    <div className={`flex items-center justify-center min-h-screen z-30 p-4 ${className}`} style={{ backgroundColor: '#0E0813' }}>
       <div className="relative w-80 h-80 flex items-center justify-center">
         {/* Outer romantic glow effect */}
         <div className={`absolute inset-0 rounded-full transition-all duration-300 ${
