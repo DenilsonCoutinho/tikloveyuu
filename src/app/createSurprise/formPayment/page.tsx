@@ -1,14 +1,13 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useForm } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
 import { Button, Input, Textarea } from "@chakra-ui/react";
 import { Radio, RadioGroup } from "@/components/ui/radio";
-import { Checkbox } from "@/components/ui/checkbox";
 import { FileUploadList, FileUploadRoot, FileUploadTrigger } from "@/components/ui/file-button";
 import Image from "next/image";
 import Link from "next/link";
-import { FaCamera, FaCopy } from "react-icons/fa";
+import { FaCamera } from "react-icons/fa";
 import logo from "../../../assets/logoLove.png";
 import pix from "../../../assets/Logo-Pix.png";
 import card from "../../../assets/credit-card.png";
@@ -33,22 +32,19 @@ import FormPaymentInputsCreateCard from "@/app/components/formPaymentInputsCreat
 import { handleUploadCreateSurprise } from "@/services/uploadImagesCreateCard";
 import generatorPix from "@/services/generatorPix";
 import { getQrCodPix } from "@/services/getQrCodPix";
-import { createReqSend } from "../../../../actions/requestSend";
 import { createSurpriseSend } from "../../../../actions/surpriseSend";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import Affiliate from "../../../../actions/affiliate";
 
 
-export default function CreateSurpriseForm() {
+function CreateSurpriseForm() {
+    const searchParams = useSearchParams();
+
     const [typeRequest, setTypeRequest] = useState<string>("1");
     const [image, setImage] = useState<any[]>([]);
-    const [request, setRequest] = useState<string>("");
     const [message, setMessage] = useState<string>("");
-    const [loadingPayment, setLoadingPayment] = useState(false);
     const [formPayment, setFormPayment] = useState<string>("1");
-    const [imageQrCode, setImageQrCode] = useState<string>("");
     const [loading, setLoading] = useState(false);
-    const [qrCode, setQrCode] = useState<string>("");
-    const [copied, setCopied] = useState<boolean>(false);
     const [nameCoupleSurprise, setNameCoupleSurprise] = useState<string>("");
     const [musicSpotify, setMusicSpotify] = useState<string>("");
     const [name, setName] = useState<string>("");
@@ -85,6 +81,8 @@ export default function CreateSurpriseForm() {
 
     async function validateFieldsPix(data: ClientProps) {
         setLoading(true);
+        const ref = searchParams.get("ref");
+        console.log(ref)
         const validCpf = await validateCpf(data.cpfcnpj);
         if (!validCpf && formPayment === "1") {
             alert("CPF inválido!")
@@ -92,11 +90,14 @@ export default function CreateSurpriseForm() {
         }
         const { imgUpload } = await handleUploadCreateSurprise(image, idUser)
         if (!imgUpload) return alert("Erro na hora de enviar fotos")
-        const { success } = await createSurpriseSend(idUser, message, imgUpload, nameCoupleSurprise, musicSpotify)
+
+        const { success } = await createSurpriseSend(idUser, message, imgUpload, nameCoupleSurprise, musicSpotify,ref)
         if (success && formPayment === "1") {
             const { pixCustomersDataId } = await generatorPix(idUser as string, name, cpfCnpj, email, 5, "5")
             const { encodedImage, qrCode } = await getQrCodPix(pixCustomersDataId as string)
-            router.push(`/createSurprise/payment?encodedImage=${encodedImage}&qrCode=${encodeURIComponent(qrCode)}`);
+
+            location.href =  `/createSurprise/payment?encodedImage=${encodedImage}&qrCode=${encodeURIComponent(qrCode)}`
+          
         } else {
             return handleCheckout()
         }
@@ -147,7 +148,6 @@ export default function CreateSurpriseForm() {
         validateFieldsPix(data)
     };
 
-    let myeconder = `data:image/png;base64,${imageQrCode}`;
 
     return (
         <>
@@ -384,5 +384,13 @@ export default function CreateSurpriseForm() {
             </div>
             <Footer />
         </>
+    );
+}
+
+export default function FormPaymentSurprise() {
+    return (
+        <Suspense fallback={<div className="h-screen flex flex-col bg-defaultBg justify-center items-center"><div className="lds-heart" ><div></div></div></div >}>
+            {<CreateSurpriseForm />}
+        </Suspense>
     );
 }

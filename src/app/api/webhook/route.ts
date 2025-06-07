@@ -85,7 +85,7 @@ export async function POST(req: NextRequest) {
                 break
               }
 
-                if (checkout_session_completed.metadata.type === "5") {
+              if (checkout_session_completed.metadata.type === "5") {
                 await transporter.sendMail({
                   from: 'deni-desenvolvimentos <denidesenvolvimentos@gmail.com>', // sender address
                   to: checkout_session_completed.customer_details?.email, // list of receivers
@@ -121,12 +121,17 @@ export async function POST(req: NextRequest) {
                           </div>
                         `,
                 });
-                await prisma.user.update({
-                  where: { idCouple },
+                const productPrice = 19.99
+                const valueInCents = Math.round(productPrice * 100) // 1999
+                await prisma.surpriseSend.update({
+                  where: { idSurprise: idCouple },
                   data: {
                     email: checkout_session_completed.customer_details?.email,
+                    paid: "PAID",
+                    price: valueInCents
                   }
                 })
+
                 break
               }
               await transporter.sendMail({
@@ -185,7 +190,7 @@ export async function POST(req: NextRequest) {
             break;
           }
 
-            if (sessionExpired.metadata && sessionExpired.metadata.type === "5") {
+          if (sessionExpired.metadata && sessionExpired.metadata.type === "5") {
 
             await deleteFolderSurprise(sessionExpired.metadata.idUser)
             await deleteSurpriseById(sessionExpired.metadata.idUser)

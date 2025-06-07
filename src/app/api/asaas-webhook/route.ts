@@ -6,6 +6,7 @@ import { deleteFolder, deleteFolderMom, deleteFolderReq, deleteFolderSurprise } 
 import { db as prisma } from '@/lib/db';
 import { deleteMomById, getBycustomerIdMom } from "../../../../actions/mom";
 import { deleteSurpriseById, getBycustomerIdSurprise } from "../../../../actions/surpriseSend";
+import Decimal from 'decimal.js'
 
 const nodemailer = require("nodemailer");
 
@@ -168,9 +169,11 @@ export async function POST(req: NextRequest, res: NextResponse) {
           const resReceived = await prisma.surpriseSend.findFirst({
             where: { idCostumerAsaas: paymentReceived.customer },
           })
+          const productPrice = 19.99
+          const valueInCents = Math.round(productPrice * 100) // 1999
           await prisma.surpriseSend.update({
             where: { idSurprise: resReceived?.idSurprise },
-            data: { paid: "PAID" }
+            data: { paid: "PAID", price: valueInCents }
           })
           break;
         }

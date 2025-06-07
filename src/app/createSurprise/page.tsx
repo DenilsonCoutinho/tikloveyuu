@@ -1,23 +1,9 @@
 "use client"
 
-import { useCreateCard } from "@/lib/zustad/useCreateCard"
-import Particles from "../../../components/Particles/Particles"
-import ImageCouples from "./components/imagesCouple"
-import RoundSix from "./components/roundSix"
-import SmoothText from "./components/smoothText"
-import { Dancing_Script, } from 'next/font/google'
-import HoldToConfirmButton from "./components/holdButton"
-
-const dancing_Script = Dancing_Script({
-    subsets: ['latin'],
-    weight: '700',
-
-})
 
 export default function ContainerCreateCard() {
-    const { setStep, step } = useCreateCard()
     return (
-        <div className="flex flex-col justify-center items-center min-h-screen bg-defaultBg" >
+        <div className="flex flex-col justify-center items-center " >
             {/* <Particles
                 className='fixed top-0  z-10  h-screen w-full  '
                 particleColors={['#fff']}

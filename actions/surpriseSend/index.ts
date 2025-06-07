@@ -19,7 +19,7 @@ export async function getSurpriseById(idSurprise: string) {
     }
 }
 
-export async function createSurpriseSend(idSurprise: string, message: string, image: string[],nameCoupleSurprise: string,musicSpotify:string) {
+export async function createSurpriseSend(idSurprise: string, message: string, image: string[], nameCoupleSurprise: string, musicSpotify: string, afilliateID: string | null) {
     try {
         await prisma.surpriseSend.create({
             data: {
@@ -27,7 +27,9 @@ export async function createSurpriseSend(idSurprise: string, message: string, im
                 nameCoupleSurprise,
                 message: message,
                 images: image,
-                spotifyMusic:musicSpotify
+                spotifyMusic: musicSpotify,
+                affiliateId: afilliateID,
+                paid: "PENDING",
             },
 
 
@@ -76,5 +78,25 @@ export const deleteSurpriseById = async (id: string) => {
         return { success: "Categoria deletada com sucesso!" }
     } catch (error) {
         return { error: 'Algo deu errado!' }
+    }
+}
+
+export async function getAffiliateWithSurprise(affiliateCode: string) {
+    try {
+        const affiliate = await prisma.affiliate.findUnique({
+            where: { code: affiliateCode }, // Encontrando o afiliado pelo 'code'
+            include: {
+                surpriseSend: true, // Incluindo todos os usuários associados ao afiliado
+            },
+        });
+
+        if (!affiliate) {
+            return { error: 'Afiliado não encontrado' };
+        }
+
+        return { data: affiliate };
+    } catch (error) {
+        console.error(error);
+        return { error: 'Erro ao buscar afiliado com usuários' };
     }
 }
