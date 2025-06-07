@@ -179,6 +179,15 @@ export default function Presentation() {
                                 <Button className='shadow-[#4500E5] shadow-lg bg-[#4500E5] hover:bg-[#6638C6] hover:shadow-[#6638C6] m-auto text-white max-w-[300px] w-full ' onClick={() => scrollToDiv("Prices")}>
                                     Criar meu contador dinâmico
                                 </Button>
+                                <Link className=' max-w-[300px] w-full m-auto' href={"/createSurprise/formPayment"}>
+                                    <div></div>
+                                    <Button className='relative shadow-[#4500E5] shadow-lg bg-[#4500E5] hover:bg-[#6638C6] hover:shadow-[#6638C6] text-white max-w-[300px] w-full m-auto  px-4'>
+                                        <span className="absolute top-[-13px] right-[-10px] bg-[#ff8000] text-xs font-bold text-white px-2 py-1 rounded-full">
+                                            Destaque
+                                        </span>
+                                        Criar surpresa
+                                    </Button>
+                                </Link>
                                 <Link className=' max-w-[300px] w-full m-auto' href={"/sendRequest"}>
                                     <div></div>
                                     <Button className='relative shadow-[#4500E5] shadow-lg bg-[#4500E5] hover:bg-[#6638C6] hover:shadow-[#6638C6] text-white max-w-[300px] w-full m-auto  px-4'>
@@ -186,15 +195,7 @@ export default function Presentation() {
                                         Enviar um pedido especial
                                     </Button>
                                 </Link>
-                                <Link className=' max-w-[300px] w-full m-auto' href={"/cellPhone"}>
-                                    <div></div>
-                                    <Button className='relative shadow-[#4500E5] shadow-lg bg-[#4500E5] hover:bg-[#6638C6] hover:shadow-[#6638C6] text-white max-w-[300px] w-full m-auto  px-4'>
-                                        <span className="absolute top-[-13px] right-[-10px] bg-[#ff8000] text-xs font-bold text-white px-2 py-1 rounded-full">
-                                            Destaque
-                                        </span>
-                                        Presentear minha mãe
-                                    </Button>
-                                </Link>
+                                
                             </div>
                             <div className='DESTAQUES flex flex-col md:flex-row justify-center gap-4 md:my-20 my-14 items-center'>
                                 <p className='text-white text-xl'>Em destaque no</p>
