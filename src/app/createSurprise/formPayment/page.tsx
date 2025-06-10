@@ -91,13 +91,13 @@ function CreateSurpriseForm() {
         const { imgUpload } = await handleUploadCreateSurprise(image, idUser)
         if (!imgUpload) return alert("Erro na hora de enviar fotos")
 
-        const { success } = await createSurpriseSend(idUser, message, imgUpload, nameCoupleSurprise, musicSpotify,ref)
+        const { success } = await createSurpriseSend(idUser, message, imgUpload, nameCoupleSurprise, musicSpotify, ref)
         if (success && formPayment === "1") {
-            const { pixCustomersDataId } = await generatorPix(idUser as string, name, cpfCnpj, email, 5, "5")
+            const { pixCustomersDataId } = await generatorPix(idUser as string, name, cpfCnpj, email, 5, "5", 19.99)
             const { encodedImage, qrCode } = await getQrCodPix(pixCustomersDataId as string)
 
-            location.href =  `/createSurprise/payment?encodedImage=${encodedImage}&qrCode=${encodeURIComponent(qrCode)}`
-          
+            location.href = `/createSurprise/payment?encodedImage=${encodedImage}&qrCode=${encodeURIComponent(qrCode)}`
+
         } else {
             return handleCheckout()
         }
@@ -115,7 +115,7 @@ function CreateSurpriseForm() {
                 body: JSON.stringify({
                     typeRequest: 5,
                     idUser,
-                    productId:"price_1RTrvwHt6s00L0BL3ubKur65"
+                    productId: "price_1RTrvwHt6s00L0BL3ubKur65"
                 }),
             });
 
