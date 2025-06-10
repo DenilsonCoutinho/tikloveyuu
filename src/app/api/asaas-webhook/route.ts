@@ -38,8 +38,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
             from: 'deni-desenvolvimentos <denidesenvolvimentos@gmail.com>', // sender address
             to: res?.email, // list of receivers
             subject: "Seu link e QR Code", // Subject line
-            html: `
-                                  <div style="font-family: Arial, sans-serif; color: #333;">
+            html: `<div style="font-family: Arial, sans-serif; color: #333;">
                                     <div style="background-color: #0E0813; padding: 20px; text-align: center;">
                                       <h1 style="color: #4500E5;">Obrigado por sua compra!</h1>
                                     </div>

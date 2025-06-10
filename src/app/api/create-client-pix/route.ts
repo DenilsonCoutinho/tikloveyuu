@@ -4,13 +4,11 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
     const { name, cpfCnpj } = await req.json()
     try {
-        const customers = await fetch('https://api.asaas.com/v3/customers', {
+        const customers = await fetch(`${process.env.NEXT_PUBLIC_ASAAS_URL_CUSTOMERS}`, {
             method: 'POST',
-            // mode: 'no-cors',
             headers: {
                 accept: 'application/json',
                 'content-type': 'application/json',
-                // 'user-agent': 'tikloveyuu',
                 access_token: "$" + process.env.ASAAS_API_KEY as string // Substitua 'MyKey' pela sua chave de API real
 
             },

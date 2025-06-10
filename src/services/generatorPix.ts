@@ -10,7 +10,6 @@ export default async function generatorPix(idUser: string, name: string, cpfCnpj
         return { error: "CPF inválido!", pixCustomersDataId: "" }
     }
     if (!customerId) {
-        console.log(customerId)
         return { error: "Cliente inválido!", pixCustomersDataId: "" }
     }
     if (typeProduct === 1 || typeProduct === 2) {

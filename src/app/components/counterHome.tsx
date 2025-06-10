@@ -7,7 +7,6 @@ interface CountProps {
 }
 
 function ContadorEterno({ initialDate, initialHour }: CountProps) {
-  console.log(initialDate, initialHour)
   const [anos, setAnos] = useState<number | undefined>()
   const [meses, setMeses] = useState<number | undefined>()
   const [dias, setDias] = useState<number | undefined>()
