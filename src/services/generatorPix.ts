@@ -1,8 +1,9 @@
 import { updatecustomerId } from "../../actions/couple"
+import { updatecustomerReqId } from "../../actions/requestSend"
 import { updateSurpriseSend } from "../../actions/surpriseSend"
 import { generatoClient } from "./generatoClient"
 
-export default async function generatorPix(idUser: string, name: string, cpfCnpj: string, email: string, typeProduct: number, description: string): Promise<{ pixCustomersDataId?: string, error?: string }> {
+export default async function generatorPix(idUser: string, name: string, cpfCnpj: string, email: string, typeProduct: number, description: string, price: number): Promise<{ pixCustomersDataId?: string, error?: string }> {
 
     const { customerId, erro } = await generatoClient(name, cpfCnpj)
 
@@ -12,9 +13,14 @@ export default async function generatorPix(idUser: string, name: string, cpfCnpj
     if (!customerId) {
         return { error: "Cliente inválido!", pixCustomersDataId: "" }
     }
-    if (typeProduct === 1 || typeProduct === 2) {
+    if (typeProduct === 1) {
         await updatecustomerId(idUser, customerId, email)
     }
+
+    if (typeProduct === 2) {
+        await updatecustomerReqId(idUser, customerId, email)
+    }
+
 
     if (typeProduct === 5) {
         await updateSurpriseSend(idUser, customerId, email)
