@@ -135,14 +135,15 @@ export default function SendRequest() {
 
         try {
 
-            const response = await fetch(`/api/create-payment-intent-req`, {
+            const response = await fetch(`/api/create-payment-intent`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    typeRequest,
-                    idUser
+                    typeRequest:2,
+                    idUser,
+                    productId:"price_1QXCG5Ht6s00L0BLxhlcHgyL"
                 }),
             });
 
@@ -199,8 +200,8 @@ export default function SendRequest() {
         return { customerId: customer.customersData.id }
     }
     async function generatorPix() {
-
-        const { customerId, erro } = await generatoClient(name, cpfCnpj)
+        try {
+            const { customerId, erro } = await generatoClient(name, cpfCnpj)
 
         if (erro) {
             return alert("CPF inválido!")
@@ -210,7 +211,7 @@ export default function SendRequest() {
         }
         await updatecustomerReqId(idUser, customerId, email)
 
-        const res = await fetch('/api/create-pix-req', {
+        const res = await fetch('/api/create-pix', {
             method: 'POST',
             mode: 'no-cors',
             headers: {
@@ -224,6 +225,10 @@ export default function SendRequest() {
         })
         const pixCustomers = await res.json();
         await getQrCodPix(pixCustomers.pixCustomersData.id)
+        } catch (error) {
+            setLoadingPayment(false)
+        }
+        
     }
 
     async function getQrCodPix(paymentId: string) {
@@ -251,12 +256,16 @@ export default function SendRequest() {
             setImage(Array.from(event.target.files))
         }
     };
-   
+   const onSubmit = (data: any) => {
+        setLoading(true);
+
+        validateFieldsPix(data)
+    };
     
     return (
         <>
             {/* <Snowfall /> */}
-            <DialogContent className='bg-white'>
+            {/* <DialogContent className='bg-white'>
                 {
                     !loadingPayment ?
                         <>
@@ -336,7 +345,132 @@ export default function SendRequest() {
                             <Button bg={"green"} onClick={handleCopy} className='select-none ' ><p className=' text-white  font-medium px-2'>{copied ? "copiado" : "Copiar"}</p> <span className=' border border-white rounded-md p-1'><FaCopy className=' text-white' /></span></Button>
                         </>
                 }
-            </DialogContent>
+            </DialogContent> */}
+
+             <DialogContent className="bg-white">
+                            {
+                                <>
+                                    <DialogHeader>
+                                        <DialogTitle className="text-black">Escolha a forma de pagamento</DialogTitle>
+                                    </DialogHeader>
+                                    <DialogBody>
+                                        <RadioGroup
+                                            variant="subtle"
+                                            defaultValue="1"
+                                            value={formPayment}
+                                            onValueChange={(e) => setFormPayment(e.value)}
+                                        >
+                                            <div className="flex flex-row gap-3 items-center">
+                                                <Image quality={100} alt="pixlogo" width={30} height={30} src={pix} />
+                                                <Radio className="text-black" value="1">
+                                                    Pagar com Pix
+                                                </Radio>
+                                            </div>
+                                            {formPayment === "1" && (
+                                                <div className="flex flex-col gap-7">
+                                                    <div className="relative">
+                                                        <label>
+            
+                                                            <p className="text-black">
+                                                                Digite seu nome
+                                                            </p>
+                                                            <Input
+                                                                className="border px-2 text-black"
+                                                                {...register("name_client", {
+                                                                    required: "Nome é obrigatório",
+                                                                    pattern: {
+                                                                        value: /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/,
+                                                                        message: "Nome inválido"
+                                                                    }
+                                                                })}
+                                                                onChange={(e) => setName(e.target.value)}
+                                                                value={name}
+                                                                placeholder="Nome"
+                                                            />
+                                                        </label>
+                                                        {errors.name_client && (
+                                                            <p className="text-red-500 text-xs absolute">{errors.name_client.message}</p>
+                                                        )}
+                                                    </div>
+                                                    <div className="relative">
+                                                        <label>
+                                                            <p className="text-black">
+                                                                Digite seu CPF
+                                                            </p>
+                                                            <Input
+                                                                className="border px-2 text-black"
+                                                                {...register("cpfcnpj", {
+                                                                    required: "CPF é obrigatório",
+                                                                    pattern: {
+                                                                        value: cpfPattern,
+                                                                        message: "CPF inválido. Ex: 123.456.789-00"
+                                                                    }
+                                                                })}
+                                                                onChange={handleCpfChange}
+                                                                value={cpfCnpj}
+                                                                placeholder="CPF"
+                                                            />
+                                                        </label>
+                                                        {errors.cpfcnpj && (
+                                                            <p className="text-red-500 text-xs absolute">{errors.cpfcnpj?.message}</p>
+                                                        )}
+                                                    </div>
+                                                    <div className="relative">
+                                                        <label>
+                                                            <p className="text-black">
+                                                                Digite seu e-mail para receber o seu link
+                                                            </p>
+                                                            <Input
+                                                                className="border px-2 text-black"
+                                                                {...register("email", {
+                                                                    required: "Email é obrigatório para receber seu link",
+                                                                    pattern: {
+                                                                        value: emailPattern,
+                                                                        message: "Email inválido."
+                                                                    }
+                                                                })}
+                                                                placeholder="E-mail"
+                                                                onChange={(e) => setEmail(e.target.value)}
+                                                                value={email}
+                                                            />
+                                                        </label>
+                                                        {errors.email && (
+                                                            <p className="text-red-500 text-xs absolute">{errors.email?.message}</p>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            )}
+                                            <div className="flex gap-3 flex-row items-center pt-3">
+                                                <Image quality={100} alt="cardlogo" width={30} height={30} src={card} />
+                                                <Radio className="text-black" value="2">
+                                                    Pagar com cartão
+                                                </Radio>
+                                            </div>
+                                        </RadioGroup>
+                                    </DialogBody>
+                                    <DialogFooter>
+                                        <DialogActionTrigger asChild>
+                                            <Button disabled={loading} variant="outline" className="text-black">
+                                                Cancelar
+                                            </Button>
+                                        </DialogActionTrigger>
+                                        <Button
+                                            disabled={loading}
+                                            px={2}
+                                            bg={"blue.400"}
+                                            mr={3}
+                                            onClick={handleSubmit(onSubmit)}
+                                        >
+                                            <p className="flex gap-2 items-center justify-center font-bold rounded-lg text-xl text-white">
+                                                {loading ? "Aguarde" : "Fazer Pagamento"}
+                                                {loading && <div className="pt-1 lds-circle"><div></div></div>}
+                                            </p>
+                                        </Button>
+                                    </DialogFooter>
+                                    <DialogCloseTrigger />
+                                </>
+                            }
+                        </DialogContent>
             <div className="bg-defaultBg">
                 <Link href={"/"}>
                     <Image alt='logo' width={150} className='m-auto pb-10 py-2' src={logo} />

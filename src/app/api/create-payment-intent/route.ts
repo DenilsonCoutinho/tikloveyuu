@@ -6,31 +6,39 @@ import { db as prisma } from '@/lib/db';
 export async function POST(req: NextRequest) {
 
     try {
-        const { typeRequest, idUser } = await req.json();
+        const { typeRequest, idUser, productId } = await req.json();
 
         // Criação de uma sessão de checkout
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             line_items: [
                 {
-                    price: typeRequest === 1 ? process.env.STRIPE_PRICE_ID :
-                        typeRequest === 2 ? process.env.STRIPE_PRICE_ID6 :
-                            typeRequest === 5 ? process.env.STRIPE_PRICE_SURPRISE:"" ,
+                    price: productId as string,
 
                     quantity: 1,
                 },
             ],
             mode: 'payment',
             allow_promotion_codes: true, // Permite o uso de códigos promocionais
-            metadata: { idUser, type: typeRequest === 5 ? "5" : "1" },
-            success_url: typeRequest === 1 || typeRequest === 2 ?
+            metadata: { idUser, type: typeRequest === 1 ? "1" : typeRequest === 2 ? "2" : "5" },
+            success_url: typeRequest === 1 ?
                 `https://www.tikloveyuu.com/qrCode?id=${idUser}` :
-                `https://www.tikloveyuu.com/createSurprise/qrCode?id=${idUser}`, // Defina suas URLs
-            cancel_url: `https://www.tikloveyuu.com/createSurprise/cancel?id=${idUser}`,
+                typeRequest === 2 ?
+                    `https://www.tikloveyuu.com/copyLink?id=${idUser}` :
+                    `https://www.tikloveyuu.com/createSurprise/qrCode?id=${idUser}`, // Defina suas URLs
+            cancel_url: `https://www.tikloveyuu.com/`,
         });
         if (typeRequest === 5) {
             await prisma.surpriseSend.update({
                 where: { idSurprise: idUser },
+                data: { idSession: session.id }
+            });
+            return NextResponse.json({ sessionId: session.id });
+        }
+
+        if (typeRequest === 2) {
+            await prisma.requestSend.update({
+                where: { idRequestSend: idUser },
                 data: { idSession: session.id }
             });
             return NextResponse.json({ sessionId: session.id });
