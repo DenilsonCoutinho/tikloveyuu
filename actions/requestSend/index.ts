@@ -11,7 +11,8 @@ export async function createReqSend(idRequestSend: string, requestSend: string, 
                 noMove: noMove,
                 message: message,
                 typeRequestSend:typeRequestSend,
-                images:image
+                images:image,
+                paid:"PENDING"
             },
 
 

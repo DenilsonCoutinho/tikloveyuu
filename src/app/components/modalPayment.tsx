@@ -93,8 +93,10 @@ export default function ModalPayment({ typeProduct, dataCouple, hour, message, n
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    typeProduct,
-                    idUser
+                    typeProduct:1,
+                    idUser,
+                    productId:typeProduct === 1 ?  "price_1Q7LyLHt6s00L0BLMVBkSQwZ" : "price_1Q6nShHt6s00L0BLJmUzKgCc"
+                   
                 }),
             });
 

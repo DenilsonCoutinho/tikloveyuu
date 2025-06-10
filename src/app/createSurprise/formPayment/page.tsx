@@ -114,7 +114,8 @@ function CreateSurpriseForm() {
                 },
                 body: JSON.stringify({
                     typeRequest: 5,
-                    idUser
+                    idUser,
+                    productId:"price_1RTrvwHt6s00L0BL3ubKur65"
                 }),
             });
 
