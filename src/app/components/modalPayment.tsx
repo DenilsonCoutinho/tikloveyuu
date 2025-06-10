@@ -119,8 +119,6 @@ export default function ModalPayment({ typeProduct, dataCouple, hour, message, n
         const validCpf = await validateCpf(data.cpfcnpj);
 
         try {
-            console.log("1")
-
             if (!validCpf && formPayment === "1") throw new Error("CPF inválido!");
             setLoading(true)
             const uploadImages = await handleUpload(imageCouple, userId as string)

@@ -191,11 +191,11 @@ export default function Presentation() {
                                 <Link className=' max-w-[300px] w-full m-auto' href={"/sendRequest"}>
                                     <div></div>
                                     <Button className='relative shadow-[#4500E5] shadow-lg bg-[#4500E5] hover:bg-[#6638C6] hover:shadow-[#6638C6] text-white max-w-[300px] w-full m-auto  px-4'>
-                                       
+
                                         Enviar um pedido especial
                                     </Button>
                                 </Link>
-                                
+
                             </div>
                             <div className='DESTAQUES flex flex-col md:flex-row justify-center gap-4 md:my-20 my-14 items-center'>
                                 <p className='text-white text-xl'>Em destaque no</p>
@@ -216,11 +216,11 @@ export default function Presentation() {
                 </div>
                 <Viral />
                 <HowItWorks />
-                <Prices setSelectedInput={(e) => { setTypeProduct(e);setYoutubeLink('') }} />
+                <Prices setSelectedInput={(e) => { setTypeProduct(e); setYoutubeLink('') }} />
                 <div className="flex md:flex-row flex-col px-3 max-w-[1100px] pb-10 m-auto justify- items-center md:gap-10 gap-5">
                     <section className="w-full">
                         <div className='' id='my_form'>
-                            <FormPaymentInputs setSelectedInput={(e) =>{ setTypeProduct(e);setYoutubeLink('')}} />
+                            <FormPaymentInputs setSelectedInput={(e) => { setTypeProduct(e); setYoutubeLink('') }} />
                             <form className="flex md:flex-row flex-col items-end md:gap-4 gap-4 mt-5 w-full">
                                 <label className="w-full text-white">
                                     <p className="text-white text-xs  max-w-[900px] font-medium md:leading-7 leading-2 pt-2">
@@ -275,7 +275,7 @@ export default function Presentation() {
                     <aside className='w-full md:w-72 flex gap-4 flex-col items-center'>
                         <Image width={180} quality={100} alt='comovaificar ' src={comovaificar} />
                         <div className="flex md:w-72 w-full flex-col ">
-                            <div className="overflow-hidden relative border border-redDefault shadow-md shadow-redDefault bg-[#180d21] rounded-xl max-h-[540px] myscroll overflow-y-auto ">
+                            <div className="overflow-hidden mb-2 relative border border-redDefault shadow-md shadow-redDefault bg-[#180d21] rounded-xl max-h-[540px] myscroll overflow-y-auto ">
                                 <Particles
                                     className='absolute  z-10  h-screen w-full  '
                                     particleColors={['#fff']}
@@ -300,21 +300,7 @@ export default function Presentation() {
                                             <Image alt="icon-imagem" src={iconImg} width={40} height={40} className='z-50' />
                                     }
                                 </div>
-                                <ButtonLike onClick={() => {
-                                    emojiBlast({
-                                        emojis: ["💝", "💞", "💖", "💜", "💘"],
-                                        physics: {
-                                            fontSize: { max: 24, min: 24 }
-                                        },
-                                        position: {
-                                            x: innerWidth / 2,
-                                            y: innerHeight / 6
-                                        }
-                                        ,
-                                        emojiCount: () => 4
-
-                                    })
-                                }} />
+                                <ButtonLike />
                                 {hour && <ContadorEternoHome initialDate={dataCouple} initialHour={hour} />}
                                 <div className="border-b relative z-40 border-white opacity-15 mb-3 px-3 max-w-64 w-full  mx-auto "></div>
 

@@ -12,7 +12,6 @@ interface inputProps {
 }
 export default function Prices({setSelectedInput}:inputProps) {
 
-    const [typeProduct, setTypeProduct] = useState<number>(1)
     const { setSelectPlan } = usePlan()
 
     return (
