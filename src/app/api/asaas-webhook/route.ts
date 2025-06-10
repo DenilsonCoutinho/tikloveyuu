@@ -33,8 +33,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
         const paymentReceived = body.payment;
         if (paymentReceived.description === "1") {
           const res = await getBycustomerId(paymentReceived.customer)
-          console.log("EMAIL: ", res?.email)
-          console.log("datas: ", res)
 
           await transporter.sendMail({
             from: 'deni-desenvolvimentos <denidesenvolvimentos@gmail.com>', // sender address
