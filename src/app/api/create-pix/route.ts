@@ -7,7 +7,7 @@ export async function POST(req: NextRequest) {
     const dueDate = tomorrow.toISOString().split('T')[0];
     const { value, customerid, description } = await req.json();
     try {
-        const pixCustomers = await fetch(`${process.env.NEXT_PUBLIC_ASAAS_URL_PAYMENTS}`, {
+        const pixCustomers = await fetch(`${process.env.NEXT_PUBLIC_ASAAS_URL_PAYMENTS as string}`, {
             method: 'POST',
             mode: 'no-cors',
             headers: {

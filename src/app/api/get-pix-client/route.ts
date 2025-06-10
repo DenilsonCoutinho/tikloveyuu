@@ -5,7 +5,7 @@ export async function POST(req: NextRequest) {
     const { paymentId } = await req.json();
     console.log(paymentId);
     try {
-        const pixCustomers = await fetch(`${process.env.NEXT_PUBLIC_ASAAS_URL_ID_PAYMENTS}/${paymentId}/pixQrCode`, {
+        const pixCustomers = await fetch(`${process.env.NEXT_PUBLIC_ASAAS_URL_ID_PAYMENTS as string}/${paymentId}/pixQrCode`, {
             method: 'GET',
             mode: 'no-cors',
             headers: {
