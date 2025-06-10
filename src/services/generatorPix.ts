@@ -32,7 +32,7 @@ export default async function generatorPix(idUser: string, name: string, cpfCnpj
             'content-type': 'application/json',
         },
         body: JSON.stringify({
-            value: typeProduct === 1 ? 14.99 : typeProduct === 2 ? 34.99 : 19.99, // Certifique-se que o valor está correto (3499 representa R$ 34,99)
+            value: price, // Certifique-se que o valor está correto (3499 representa R$ 34,99)
             customerid: customerId,
             description: description
         })
