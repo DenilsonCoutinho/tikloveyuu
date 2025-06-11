@@ -137,6 +137,13 @@ export default function Presentation() {
                 mouseConstraintStiffness={0.9} />
         </div>
     }
+
+
+    const getYoutubeVideoId = (url: string) => {
+        const regex = /(?:\?v=|\/embed\/|\.be\/)([a-zA-Z0-9_-]{11})/;
+        const match = url.match(regex);
+        return match ? match[1] : null;
+    };
     return (
         <div className='overflow-hidden'>
 
@@ -305,9 +312,17 @@ export default function Presentation() {
                                 <div className="border-b relative z-40 border-white opacity-15 mb-3 px-3 max-w-64 w-full  mx-auto "></div>
 
                                 {message && <p className='px-2 relative z-40 text-white text-center mt-3 text-xs text-wrap max-w-72 w-full leading-8  mx-auto'>{message}</p>}
-                                {youtubeLink &&
-                                    <iframe width="100%" height="176" className="m-auto rounded-2xl z-50 mt-4" src={`https://www.youtube.com/embed/${new URL(youtubeLink || "").pathname.split('/')[1]}?autoplay=1&mute=1`} title="YouTube video player" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
-                                }
+                                {youtubeLink && getYoutubeVideoId(youtubeLink) && (
+                                    <iframe
+                                        width="100%"
+                                        height="176"
+                                        className="m-auto rounded-2xl z-50 mt-4"
+                                        src={`https://www.youtube.com/embed/${getYoutubeVideoId(youtubeLink)}?autoplay=1&mute=1`}
+                                        title="YouTube video player"
+                                        referrerPolicy="strict-origin-when-cross-origin"
+                                        allowFullScreen
+                                    />
+                                )}
                             </div>
                             {
                                 !nameCouple || !dataCouple || !hour || imageCouple.length < 1 ?

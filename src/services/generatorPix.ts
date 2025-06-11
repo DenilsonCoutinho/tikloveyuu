@@ -4,7 +4,6 @@ import { updateSurpriseSend } from "../../actions/surpriseSend"
 import { generatoClient } from "./generatoClient"
 
 export default async function generatorPix(idUser: string, name: string, cpfCnpj: string, email: string, typeProduct: number, description: string, price: number): Promise<{ pixCustomersDataId?: string, error?: string }> {
-
     const { customerId, erro } = await generatoClient(name, cpfCnpj)
 
     if (erro) {

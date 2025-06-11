@@ -128,10 +128,12 @@ export default function ModalPayment({ typeProduct, dataCouple, hour, message, n
             const idUser = localStorage.getItem("idUserMyLoverTik");
             
             const price = typeProduct === 1 ? 14.99 : 34.99
-            const create_Couple = await createCouple(idUser as string, nameCouple, dataCouple, hour, uploadImages.imgUpload!, message, youtubeLink, price)
-            if (create_Couple?.error?.message) throw new Error("Erro ao criar casal");
+            
+            await createCouple(idUser as string, nameCouple, dataCouple, hour, uploadImages.imgUpload!, message, youtubeLink, price)
+          
             if (formPayment === "1") {
-                const { pixCustomersDataId } = await generatorPix(idUser as string, name, cpfCnpj, email, typeProduct, "1", price)
+
+                const { pixCustomersDataId } = await generatorPix(idUser as string, name, cpfCnpj, email, 1, "1", price)
                 const { encodedImage, qrCode } = await getQrCodPix(pixCustomersDataId as string)
                 setQrCode(qrCode)
                 setEncoder(encodedImage)
@@ -145,7 +147,7 @@ export default function ModalPayment({ typeProduct, dataCouple, hour, message, n
         } catch (error) {
             if (error instanceof Error) {
                 setLoading(false)
-                console.log(error.message)
+                console.log(error.name)
             }
         }
 
