@@ -6,7 +6,7 @@ import { db as prisma } from '@/lib/db';
 export async function POST(req: NextRequest) {
 
     try {
-        const { typeRequest, idUser, productId } = await req.json();
+        const { typeProduct, idUser, productId } = await req.json();
 
         // Criação de uma sessão de checkout
         const session = await stripe.checkout.sessions.create({
@@ -20,15 +20,15 @@ export async function POST(req: NextRequest) {
             ],
             mode: 'payment',
             allow_promotion_codes: true, // Permite o uso de códigos promocionais
-            metadata: { idUser, type: typeRequest === 1 ? "1" : typeRequest === 2 ? "2" : "5" },
-            success_url: typeRequest === 1 ?
+            metadata: { idUser, type: typeProduct === 1 ? "1" : typeProduct === 2 ? "2" : "5" },
+            success_url: typeProduct === 1 ?
                 `https://www.tikloveyuu.com/qrCode?id=${idUser}` :
-                typeRequest === 2 ?
+                typeProduct === 2 ?
                     `https://www.tikloveyuu.com/copyLink?id=${idUser}` :
                     `https://www.tikloveyuu.com/createSurprise/qrCode?id=${idUser}`, // Defina suas URLs
             cancel_url: `https://www.tikloveyuu.com/`,
         });
-        if (typeRequest === 5) {
+        if (typeProduct === 5) {
             await prisma.surpriseSend.update({
                 where: { idSurprise: idUser },
                 data: { idSession: session.id }
@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ sessionId: session.id });
         }
 
-        if (typeRequest === 2) {
+        if (typeProduct === 2) {
             await prisma.requestSend.update({
                 where: { idRequestSend: idUser },
                 data: { idSession: session.id }
