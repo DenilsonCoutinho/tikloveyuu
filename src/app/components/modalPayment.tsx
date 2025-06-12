@@ -158,7 +158,7 @@ export default function ModalPayment({ typeProduct, dataCouple, hour, message, n
             const text = navigator.clipboard.writeText(qrCode);
             setCopied(true)
         } catch (err) {
-            console.error("Falha ao colar conteúdo: ", err);
+            console.error("Falha ao colar conteúdo:: ", err);
         }
     };
     useEffect(() => {
