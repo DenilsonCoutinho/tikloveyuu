@@ -13,7 +13,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model userCouple {
   id              String     @id @default(auto()) @map("_id") @db.ObjectId
   nameCouple      String?
   email           String?
@@ -88,6 +88,6 @@ model Affiliate {
   percentage   Int
   keyPix       String
   createdAt    DateTime       @default(now())
-  users        User[]         @relation("AffiliateUsers")
+  users        userCouple[]         @relation("AffiliateUsers")
   surpriseSend SurpriseSend[] @relation("AffiliateSurprise")
 }

@@ -6,7 +6,7 @@ export async function createCouple(idCouple: string, nameCouple: string, initalD
     
     try {
       
-        await prisma.user.create({
+        await prisma.userCouple.create({
             data: {
                 ytbMusic: youtubeLink ,
                 messages: message,
@@ -28,7 +28,7 @@ export async function createCouple(idCouple: string, nameCouple: string, initalD
 }
 export async function updateEmailCouple(email: string, idCouple: string) {
     try {
-        await prisma.user.update({
+        await prisma.userCouple.update({
             where: { idCouple },
             data: {
                 email: email || null,
@@ -46,7 +46,7 @@ export async function updateEmailCouple(email: string, idCouple: string) {
 
 export async function updatecustomerId(idUser: string, customerId: string, email: string) {
     try {
-        await prisma.user.update({
+        await prisma.userCouple.update({
             where: { idCouple: idUser },
             data: { idCostumerAsaas: customerId, email: email }
         })
@@ -64,7 +64,7 @@ export async function updatecustomerId(idUser: string, customerId: string, email
 
 export async function getBycustomerId(customerId: string,) {
 
-    const res = await prisma.user.findFirst({
+    const res = await prisma.userCouple.findFirst({
         where: { idCostumerAsaas: customerId }
     })
     return res
@@ -75,7 +75,7 @@ export async function getBycustomerId(customerId: string,) {
 export async function getCoupleById(idCouple: string) {
     try {
         if (!idCouple) throw new Error("Seu ID não está correto, Entre em contato com o suporte!")
-        const res = await prisma.user.findFirst({
+        const res = await prisma.userCouple.findFirst({
             where: { idCouple }
         })
         return { couple: res }
@@ -90,7 +90,7 @@ export async function getCoupleById(idCouple: string) {
 }
 
 export async function getCoupleByUniqueId(idCouple: string) {
-    const res = await prisma.user.findUnique({
+    const res = await prisma.userCouple.findUnique({
         where: { idCouple }
     })
     return res
@@ -103,7 +103,7 @@ export const deleteCoupleById = async (id: string) => {
     }
 
     try {
-        await prisma.user.delete({
+        await prisma.userCouple.delete({
             where: { idCouple: id }
         })
         return { success: "Categoria deletada com sucesso!" }

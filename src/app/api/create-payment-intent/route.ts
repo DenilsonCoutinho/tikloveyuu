@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
             });
             return NextResponse.json({ sessionId: session.id });
         }
-        await prisma.user.update({
+        await prisma.userCouple.update({
             where: { idCouple: idUser },
             data: { idSession: session.id }
         });

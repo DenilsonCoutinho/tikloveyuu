@@ -76,7 +76,7 @@ export async function POST(req: NextRequest) {
                           </div>
                         `,
                 });
-                await prisma.user.update({
+                await prisma.userCouple.update({
                   where: { idCouple },
                   data: {
                     email: checkout_session_completed.customer_details?.email,

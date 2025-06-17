@@ -68,10 +68,10 @@ export async function POST(req: NextRequest, res: NextResponse) {
                                   </div>
                                 `,
           });
-          const resReceived = await prisma.user.findFirst({
+          const resReceived = await prisma.userCouple.findFirst({
             where: { idCostumerAsaas: paymentReceived.customer },
           })
-          await prisma.user.update({
+          await prisma.userCouple.update({
             where: { idCouple: resReceived?.idCouple },
             data: { paid: "PAID" }
           })
@@ -180,7 +180,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
         const paymentOverdue = body.payment;
         if (paymentOverdue.description === "1") {
 
-          const resOverdue = await prisma.user.findFirst({
+          const resOverdue = await prisma.userCouple.findFirst({
             where: { idCostumerAsaas: paymentOverdue.customer },
           })
           if (resOverdue) {
