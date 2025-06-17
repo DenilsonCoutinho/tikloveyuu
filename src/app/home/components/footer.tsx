@@ -1,6 +1,5 @@
 import Image from "next/image";
-import logo from "../../assets/logoLove.png"
-import me from "../../assets/me.png"
+import logo from "../../../assets/logoLove.png"
 import { FaEnvelope, FaInstagram, FaLinkedin, FaTiktok, FaYoutube } from "react-icons/fa";
 import Link from "next/link";
 export default function Footer() {

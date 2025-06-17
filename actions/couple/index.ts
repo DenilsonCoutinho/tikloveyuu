@@ -21,6 +21,7 @@ export async function createCouple(idCouple: string, nameCouple: string, initalD
                 idCostumerAsaas: null,
             },
         })
+        console.log("Criado com sucesso!")
         return { success: "Criado com sucesso! " }
     } catch (err) {
             return { error: "erro desconhecido" }
@@ -34,10 +35,8 @@ export async function updateEmailCouple(email: string, idCouple: string) {
                 email: email || null,
             }
         })
-        console.log("Updatoud certo")
         return { success: "Criado com sucesso!" }
     } catch (err) {
-        console.log("Deur merda", err)
 
         return { error: err }
 
@@ -50,7 +49,6 @@ export async function updatecustomerId(idUser: string, customerId: string, email
             where: { idCouple: idUser },
             data: { idCostumerAsaas: customerId, email: email }
         })
-        console.log("Updatoud certo")
         return { success: "Criado com sucesso!" }
     } catch (err) {
 

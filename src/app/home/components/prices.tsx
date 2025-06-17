@@ -1,9 +1,8 @@
 import Image from "next/image";
-import bear from '../../assets/bear.webp'
-import heart_fire from '../../assets/heart-fire.webp'
-import { scrollToDiv } from "../../../utils/scrollToDiv";
-import { useState } from "react";
-import { usePlan } from "../../../context/changePlanContext";
+import bear from '../../../assets/bear.webp'
+import heart_fire from '../../../assets/heart-fire.webp'
+import { scrollToDiv } from "../../../../utils/scrollToDiv";
+import { usePlan } from "../../../../context/changePlanContext";
 
 
 interface inputProps {

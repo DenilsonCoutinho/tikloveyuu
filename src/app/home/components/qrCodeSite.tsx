@@ -1,8 +1,8 @@
 import Image from 'next/image'
-import qrCode from '../../assets/qrCodeSite.png'
+import qrCode from '../../../assets/qrCodeSite.png'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
-import { scrollToDiv } from '../../../utils/scrollToDiv'
+import { scrollToDiv } from '../../../../utils/scrollToDiv'
 export default function QrCodeSite() {
     return (
         <div className='px-3'>

@@ -1,10 +1,13 @@
 "use client"
+import { FormUserProvider } from "../../context/FormUserContext";
 import Presentation from "./home/page";
 export default function Home() {
- 
+
   return (
-    <div className="bg-defaultBg ">
+    <FormUserProvider>
+      <div className="bg-defaultBg ">
         <Presentation />
-    </div>
+      </div>
+    </FormUserProvider>
   );
 }

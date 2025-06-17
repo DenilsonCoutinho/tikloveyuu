@@ -8,7 +8,7 @@ import ButtonRandomNo from "../../components/buttonRandomNo";
 import Image from "next/image";
 import { FaCheckCircle } from "react-icons/fa";
 import logo from '../../../assets/logoLove.png'
-import Footer from "@/app/components/footer";
+import Footer from "@/app/home/components/footer";
 import Link from "next/link";
 import Flowers from "@/app/components/flower";
 import Snowfall from "react-snowfall";

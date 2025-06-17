@@ -13,7 +13,7 @@ interface ReqProps {
     idSession: string | null;
     ytbMusic: string | null;
 }
-import Footer from "@/app/components/footer";
+import Footer from "@/app/home/components/footer";
 import { Button } from "@/components/ui/button";
 import { Suspense, useEffect, useState } from "react";
 import { FaCopy } from "react-icons/fa";

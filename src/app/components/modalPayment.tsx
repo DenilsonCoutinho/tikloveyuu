@@ -5,11 +5,9 @@ interface customerProps {
 }
 
 interface ClientProps {
-    name_couple: string;
-    date: string;
-    time_couple: string;
     cpfcnpj: string;
     name_client: string;
+    email: string;
 }
 import {
     DialogActionTrigger,
@@ -27,6 +25,7 @@ import card from '../../assets/credit-card.png'
 import { Radio, RadioGroup } from '@/components/ui/radio';
 import { Button, Input, useDisclosure } from "@chakra-ui/react";
 import Image from "next/image";
+import { v4 as uuidv4 } from 'uuid';
 
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -46,8 +45,6 @@ export default function ModalPayment({ typeProduct, dataCouple, hour, message, n
     const [formPayment, setFormPayment] = useState<string>('');
     const [copied, setCopied] = useState<boolean>(false)
     const [name, setName] = useState<string>("")
-    const [previewURLs, setPreviewURLs] = useState<[]>([])
-    // const [imageCouple, setImageCouple] = useState<any>([])
     const [cpfCnpj, setCpfCnpj] = useState<string>("")
     const [email, setEmail] = useState<string>("");
     const [qrCode, setQrCode] = useState<string>("");
@@ -55,20 +52,16 @@ export default function ModalPayment({ typeProduct, dataCouple, hour, message, n
     const [loading, setLoading] = useState(false);
     const [timeLeft, setTimeLeft] = useState<number>(340); // Tempo total: 240 segundos (4 minutos)
     const [progress, setProgress] = useState<number>(100)
-    const { onOpen, onClose } = useDisclosure()
 
     const { register, handleSubmit, watch, getValues, formState: { errors } } = useForm({
         defaultValues: {
-            name_couple: "",
-            date: "",
-            time_couple: "",
             cpfcnpj: "",
             name_client: "",
             email: ""
         }
     });
 
-
+    console.log(getValues())
     const handleCpfChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         let value = e.target.value.replace(/\D/g, ''); // Remove tudo que não é dígito
         if (value.length > 11) value = value.substring(0, 11); // Limita o CPF a 11 dígitos
@@ -117,7 +110,6 @@ export default function ModalPayment({ typeProduct, dataCouple, hour, message, n
 
     async function validateFieldsPix(data: ClientProps) {
         const userId = localStorage.getItem("idUserMyLoverTik");
-
         const validCpf = await validateCpf(data.cpfcnpj);
 
         try {
@@ -126,11 +118,12 @@ export default function ModalPayment({ typeProduct, dataCouple, hour, message, n
             const uploadImages = await handleUpload(imageCouple, userId as string)
             if (uploadImages?.errorImg) throw new Error(uploadImages.errorImg);
             const idUser = localStorage.getItem("idUserMyLoverTik");
-            
+
             const price = typeProduct === 1 ? 14.99 : 34.99
-            
+            console.log("aqyu")
+
             await createCouple(idUser as string, nameCouple, dataCouple, hour, uploadImages.imgUpload!, message, youtubeLink, price)
-          
+
             if (formPayment === "1") {
 
                 const { pixCustomersDataId } = await generatorPix(idUser as string, name, cpfCnpj, email, 1, "1", price)
@@ -293,7 +286,6 @@ export default function ModalPayment({ typeProduct, dataCouple, hour, message, n
                         <Button bg={"green"} onClick={handleCopy} className='select-none ' ><p className=' text-white  font-medium px-2'>{copied ? "copiado" : "Copiar"}</p> <span className=' border border-white rounded-md p-1'><FaCopy className=' text-white' /></span></Button>
                     </>
             }
-            {/* </DialogContent> */}
         </>
     )
 }

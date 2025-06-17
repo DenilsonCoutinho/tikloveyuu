@@ -11,7 +11,7 @@ import { FaCamera } from "react-icons/fa";
 import logo from "../../../assets/logoLove.png";
 import pix from "../../../assets/Logo-Pix.png";
 import card from "../../../assets/credit-card.png";
-import Footer from "../../components/footer";
+import Footer from "../../home/components/footer";
 import { validateCpf } from "../../../../utils/cpfValid"
 import { loadStripe } from '@stripe/stripe-js';
 interface ClientProps {

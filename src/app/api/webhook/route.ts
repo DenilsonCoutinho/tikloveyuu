@@ -80,6 +80,7 @@ export async function POST(req: NextRequest) {
                   where: { idCouple },
                   data: {
                     email: checkout_session_completed.customer_details?.email,
+                    paid: "PAID",
                   }
                 })
                 break

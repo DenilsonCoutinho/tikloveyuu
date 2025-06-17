@@ -30,7 +30,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { FaCamera } from "react-icons/fa";
 
 import { useEffect, useState } from "react"
-import Footer from "../../components/footer"
+import Footer from "../../home/components/footer"
 import Image from "next/image"
 import Link from "next/link"
 import { useForm } from "react-hook-form"

@@ -7,7 +7,7 @@ interface inputProps {
 
 export default function FormPaymentInputs({ setSelectedInput }: inputProps) {
     // const [selectInput, setSelectInput] = useState(false)
-    const { setPlan, plan, setSelectPlan, selectPlan } = usePlan()
+    const { setPlan, setSelectPlan, selectPlan } = usePlan()
 
     useEffect(() => {
         setPlan(1)
