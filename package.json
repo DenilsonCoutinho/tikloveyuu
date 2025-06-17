@@ -9,11 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@auth/prisma-adapter": "^2.9.1",
     "@chakra-ui/react": "^3.0.0-next.32",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@konami-emoji-blast/react": "^0.0.1",
-    "@prisma/client": "^5.20.0",
+    "@prisma/client": "^5.22.0",
     "@radix-ui/react-toast": "^1.2.6",
     "@stripe/react-stripe-js": "^2.8.0",
     "@stripe/stripe-js": "^4.6.0",
@@ -33,6 +34,7 @@
     "motion": "^12.15.0",
     "motion-plus": "^0.1.9",
     "next": "^14.2.13",
+    "next-auth": "^5.0.0-beta.28",
     "next-themes": "^0.3.0",
     "ngrok": "^5.0.0-beta.2",
     "nodemailer": "^6.9.15",
@@ -62,7 +64,7 @@
     "@types/react-dom": "^18",
     "@types/uuid": "^10.0.0",
     "postcss": "^8",
-    "prisma": "^5.20.0",
+    "prisma": "^5.22.0",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }
