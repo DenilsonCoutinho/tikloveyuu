@@ -30,12 +30,6 @@ export default function Presentation() {
         youtubeLink, setYoutubeLink,
     } = useFormUserContext();
 
-    console.log( dataCouple,
-        hour,
-        imageCouple,
-        nameCouple,
-        message,
-        typeProduct,)
     return (
         <div className='overflow-hidden'>
             <DialogContent className='bg-white FORM_PAYMENT_CONTENT'>

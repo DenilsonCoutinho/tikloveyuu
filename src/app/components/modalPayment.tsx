@@ -1,9 +1,4 @@
 "use client"
-interface customerProps {
-    customerId?: string;
-    erro?: string;
-}
-
 interface ClientProps {
     cpfcnpj: string;
     name_client: string;
@@ -13,19 +8,15 @@ import {
     DialogActionTrigger,
     DialogBody,
     DialogCloseTrigger,
-    DialogContent,
     DialogFooter,
     DialogHeader,
-    DialogRoot,
     DialogTitle,
-    DialogTrigger,
 } from "@/components/ui/dialog"
 import pix from '../../assets/Logo-Pix.png'
 import card from '../../assets/credit-card.png'
 import { Radio, RadioGroup } from '@/components/ui/radio';
-import { Button, Input, useDisclosure } from "@chakra-ui/react";
+import { Button, Input } from "@chakra-ui/react";
 import Image from "next/image";
-import { v4 as uuidv4 } from 'uuid';
 
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -61,7 +52,6 @@ export default function ModalPayment({ typeProduct, dataCouple, hour, message, n
         }
     });
 
-    console.log(getValues())
     const handleCpfChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         let value = e.target.value.replace(/\D/g, ''); // Remove tudo que não é dígito
         if (value.length > 11) value = value.substring(0, 11); // Limita o CPF a 11 dígitos
@@ -120,7 +110,6 @@ export default function ModalPayment({ typeProduct, dataCouple, hour, message, n
             const idUser = localStorage.getItem("idUserMyLoverTik");
 
             const price = typeProduct === 1 ? 14.99 : 34.99
-            console.log("aqyu")
 
             await createCouple(idUser as string, nameCouple, dataCouple, hour, uploadImages.imgUpload!, message, youtubeLink, price)
 
@@ -160,7 +149,6 @@ export default function ModalPayment({ typeProduct, dataCouple, hour, message, n
             setTimeLeft((prev) => {
                 const newTime = prev - 1;
 
-                // Atualiza a barra de progresso
                 setProgress((newTime / 340) * 100);
 
                 if (newTime <= 0) {
@@ -179,7 +167,6 @@ export default function ModalPayment({ typeProduct, dataCouple, hour, message, n
     const emailPattern = /^[a-zA-Z0-9._%+-]+@(gmail|hotmail|outlook|yahoo)\.com$/
     return (
         <>
-            {/* <DialogContent className='bg-white'> */}
             {
                 !loadingPayment ?
                     <>
