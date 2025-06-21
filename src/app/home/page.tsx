@@ -16,6 +16,7 @@ import ModalPayment from '../components/modalPayment';
 import Hero from './components/hero';
 import FormCouple from "./components/form/formCouple";
 import { useFormUserContext } from "../../../context/FormUserContext";
+import { deleteCouple } from "../../../actions/couple";
 
 
 export default function Presentation() {

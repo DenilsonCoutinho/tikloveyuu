@@ -109,3 +109,16 @@ export const deleteCoupleById = async (id: string) => {
         return { error: 'Algo deu errado!' }
     }
 }
+
+
+export const deleteCouple = async (id?: string) => {
+
+    try {
+        await prisma.userCouple.deleteMany({
+            where: { paid: "PENDING" }
+        })
+        return { success: "Categoria deletada com sucesso!" }
+    } catch (error) {
+        return { error: 'Algo deu errado!' }
+    }
+}

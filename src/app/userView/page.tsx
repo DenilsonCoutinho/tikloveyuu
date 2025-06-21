@@ -53,11 +53,7 @@ function UserViewComponent() {
                     setIsError(true)
                     throw new Error("Seu ID não está disponivel, Recarregue a página!")
                 }
-                if (id === "c3") {
-                    route.replace('createSurprise/surpriseView?id=d1b849cf-8fca-48bc-8633-a0950c7f6854')
-                    await new Promise(resolve => setTimeout(resolve, 1000))
-                    return
-                }
+               
                 const res = await getCoupleById(id)
                 if (res.error) {
                     setData(null)
