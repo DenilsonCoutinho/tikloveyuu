@@ -36,7 +36,7 @@ export default function HowItWorks() {
             id: "step3",
             content: (
                 <div className="h-full w-full flex items-center justify-center">
-                    <div className='h-96 border-gray-800 border md:max-w-72 w-full flex flex-col justify-center items-center bg-gradient-to-b from-[#0E0813] to-redDefault  rounded-md overflow-hidden'>
+                    <div className='h- border-gray-800 border md:max-w-72 w-full flex flex-col justify-center items-center bg-gradient-to-b from-[#0E0813] to-redDefault  rounded-md overflow-hidden'>
                         <h1 className='text-white p-5  text-center  font-bold'>3 - Receba seu QR Code no <br />e-mail</h1>
                         <Image className='m-auto  p-5 translate-y-14' quality={100} height={250} width={250} alt='email' src={emailCouple} />
                     </div>
@@ -48,11 +48,9 @@ export default function HowItWorks() {
             content: (
                
                 <div className="h-full w-full flex items-center justify-center">
-                    <div className=' border-gray-800 border md:max-w-72 w-full flex flex-col justify-center items-center bg-gradient-to-t from-[#0e081370] to-[#0e0813fa]  rounded-md overflow-hidden'>
-                        <h1 className='text-white p-5  text-center  font-bold'>4 - Surpreenda seu amor</h1>
-
-                        <Image className='m-auto p-5 ' quality={100} height={250} width={350} alt='iPhone' src={iPhone} />
-
+                    <div className=' border-gray-800 border md:max-w-72 w-full flex flex-col justify-center items-center bg-gradient-to-t from-[#0e0813] to-[#0e0813fa]  rounded-md overflow-hidden'>
+                        <h1 className='text-white p-5  text-center font-bold'>4 - Surpreenda seu amor</h1>
+                        <Image className='m-auto p-5 ' quality={100} height={250} width={270} alt='iPhone' src={iPhone} />
                     </div>
                 </div>
             ),
@@ -94,7 +92,7 @@ export default function HowItWorks() {
 
             <ScrollStack
                 items={stackItems}
-                className="scroll-stack-container md:hidden flex"
+                className="scroll-stack-container md:hidden "
                 stackHeight="100vh"
             />
         </>
