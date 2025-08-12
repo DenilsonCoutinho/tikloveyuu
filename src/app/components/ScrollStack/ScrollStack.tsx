@@ -83,7 +83,7 @@ const ScrollStack = ({ items, className = "", stackHeight = "100vh" }: ScrollSta
       {items.map((item, index) => (
         <div
           key={item.id}
-          ref={el => itemsRef.current[index] = el}
+          ref={el => {itemsRef.current[index] = el}}
           className={`relative w-full overflow-hidden ${item.className || ''}`}
           style={{ 
             height: stackHeight,
