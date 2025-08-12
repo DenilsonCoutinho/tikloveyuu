@@ -6,6 +6,7 @@ import { FaTiktok } from "react-icons/fa";
 import RotatingText from "../../../../components/RotatingText/RotatingText";
 import logo from '../../../assets/logoLove.png'
 import FallingText from "../../../../components/FallingText/FallingText";
+import objectAnimated from '@/assets/home/EllipseTikLoveyuu.svg'
 import { scrollToDiv } from "../../../../utils/scrollToDiv";
 function isSafari() {
     if (typeof window === "undefined") return false; // Garante que está no browser
@@ -15,8 +16,11 @@ function isSafari() {
 export default function Hero() {
     return (
         <>
-            <div className='useViewBg md:h-[33rem]  overflow-hidden  '>
-                <div className='max-w-[1100px] m-auto px-3'>
+            <div className='md:h-[33rem] relative    '>
+                 <div className="absolute md:-right-20 -right-48 z-[1] md:max-w-[650px] max-w-[350px] h-[300px] ">
+                    <Image src={objectAnimated} alt="objectAnimated" className=" object-cover elementAnimated" />
+                </div>
+                <div className='max-w-[1100px] m-auto px-3  z-10 relative'>
                     <div>
                         <Image alt='logo' width={150} className='m-auto pb-10 py-2' src={logo} />
                     </div>
@@ -50,22 +54,21 @@ export default function Hero() {
                                 gravity={0.56}
                                 mouseConstraintStiffness={0.9} />}
                         <div className='flex md:flex-row flex-col justify-center items-center gap-4 mt-3 max-w-[600px] mx-auto'>
-                            <Button className='shadow-[#4500E5] shadow-lg bg-[#4500E5] hover:bg-[#6638C6] hover:shadow-[#6638C6] m-auto text-white max-w-[300px] w-full ' onClick={() => scrollToDiv("Prices")}>
+                            <Button className='shadow-[#4500E5] rounded-3xl shadow-lg bg-[#4500E5] hover:bg-[#6638C6] hover:shadow-[#6638C6] m-auto text-white max-w-[300px] w-full ' onClick={() => scrollToDiv("Prices")}>
                                 Criar meu contador dinâmico
                             </Button>
                             <Link className=' max-w-[300px] w-full m-auto' href={"/createSurprise/formPayment"}>
                                 <div></div>
-                                <Button className='relative shadow-[#4500E5] shadow-lg bg-[#4500E5] hover:bg-[#6638C6] hover:shadow-[#6638C6] text-white max-w-[300px] w-full m-auto  px-4'>
+                                {/* <Button className='relative shadow-[#4500E5] shadow-lg bg-[#4500E5] hover:bg-[#6638C6] hover:shadow-[#6638C6] text-white max-w-[300px] w-full m-auto  px-4'>
                                     <span className="absolute top-[-13px] right-[-10px] bg-[#ff8000] text-xs font-bold text-white px-2 py-1 rounded-full">
                                         Destaque
                                     </span>
                                     Criar surpresa
-                                </Button>
+                                </Button> */}
                             </Link>
                             <Link className=' max-w-[300px] w-full m-auto' href={"/sendRequest"}>
                                 <div></div>
-                                <Button className='relative shadow-[#4500E5] shadow-lg bg-[#4500E5] hover:bg-[#6638C6] hover:shadow-[#6638C6] text-white max-w-[300px] w-full m-auto  px-4'>
-
+                                <Button className='relative rounded-3xl shadow-[#4500E5] shadow-lg bg-[#4500E5] hover:bg-[#6638C6] hover:shadow-[#6638C6] text-white max-w-[300px] w-full m-auto  px-4'>
                                     Enviar um pedido especial
                                 </Button>
                             </Link>

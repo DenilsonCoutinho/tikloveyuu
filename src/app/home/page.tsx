@@ -38,7 +38,7 @@ export default function Presentation() {
             </DialogContent>
             <main className="m-auto">
                 <Hero />
-                <Viral />
+                {/* <Viral /> */}
                 <HowItWorks />
                 <Prices setSelectedInput={(e) => { setTypeProduct(e); setYoutubeLink('') }} />
                 <FormCouple />
