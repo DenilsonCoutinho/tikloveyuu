@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
             ],
             mode: 'payment',
             allow_promotion_codes: true, // Permite o uso de códigos promocionais
-            metadata: { idUser, type: typeProduct === 1 ? "1" : typeProduct === 2 ? "2" : "5" },
+            metadata: { app:"eternity-counter",idUser, type: typeProduct === 1 ? "1" : typeProduct === 2 ? "2" : "5" },
             success_url: typeProduct === 1 ?
                 `https://www.tikloveyuu.com/qrCode?id=${idUser}` :
                 typeProduct === 2 ?
