@@ -37,6 +37,9 @@ export async function POST(req: NextRequest) {
 
         case 'checkout.session.completed':
           const checkout_session_completed = event.data.object; // Acesse os detalhes da sessão
+          if (checkout_session_completed.metadata?.app === "eternity-counter") {
+        return new Response("Not my event", { status: 200 })
+      }
           if (event.data.object.payment_status === "paid") {
             if (checkout_session_completed.customer_details?.email && checkout_session_completed?.metadata) {
               let idCouple = checkout_session_completed.metadata.idUser
