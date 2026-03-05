@@ -12,6 +12,7 @@ interface MemoryItem {
 
 export default function Memorys({ data }: { data: { memories: any} }) {
   const [selectedMemory, setSelectedMemory] = useState<MemoryItem | null>(null)
+  const [open, setOpen] = useState<boolean>(true)
 
   if (selectedMemory) {
     return (

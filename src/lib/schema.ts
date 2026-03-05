@@ -10,7 +10,7 @@ const memorySchema = z.object({
     .max(120, "A frase pode ter no máximo 120 caracteres."),
   date: z.string().min(1, "Escolha a data desse momento."),
   // Ajustado para aceitar string vazia corretamente
-  title: z.string().max(15, "Máximo 15 caracteres.").optional().or(z.literal("")),
+  title: z.string().max(20, "Máximo 20 caracteres.").optional().or(z.literal("")),
 })
 
 const emptyMemory = z.object({

@@ -144,21 +144,21 @@ export function MemoryCard({ index }: { index: number }) {
                   Título que descreva o momento
                 </FormLabel>
                 <span
-                  className={`text-xs tabular-nums ${charCountTitle > 15
+                  className={`text-xs tabular-nums ${charCountTitle > 20
                     ? "text-destructive"
                     : charCountTitle > 100
                       ? "text-primary"
                       : "text-muted-foreground"
                     }`}
                 >
-                  {charCountTitle}/15
+                  {charCountTitle}/20
                 </span>
               </div>
               <FormControl>
                 <Textarea
                   placeholder="Escreva algo especial sobre esse momento..."
                   className="resize-none"
-                  maxLength={15}
+                  maxLength={20}
                   {...field}
                 />
               </FormControl>

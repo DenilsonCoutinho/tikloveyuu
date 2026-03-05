@@ -36,7 +36,6 @@ export function MemoriesForm() {
   })
 
   async function onSubmit(data: MemoriesFormValues) {
-    console.log(data.memories)
    
     try {
 
@@ -51,7 +50,7 @@ export function MemoriesForm() {
     }
    
   }
-
+ 
   return (
     <>
       {/* Formulário — permanece montado (oculto quando no pagamento) para preservar previews */}
