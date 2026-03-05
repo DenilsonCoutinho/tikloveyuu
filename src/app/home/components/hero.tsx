@@ -59,23 +59,9 @@ export default function Hero() {
                         }
                         <div className='flex md:flex-row flex-col justify-center items-center gap-4 mt-3 max-w-[600px] mx-auto'>
                             <Button className='shadow-[#4500E5] rounded-3xl shadow-lg bg-[#4500E5] hover:bg-[#6638C6] hover:shadow-[#6638C6] m-auto text-white max-w-[300px] w-full ' onClick={() => scrollToDiv("Prices")}>
-                                Criar meu contador dinâmico
+                                Criar minha timeline infinita
                             </Button>
-                            <Link className=' max-w-[300px] w-full m-auto' href={"/createSurprise/formPayment"}>
-                                <div></div>
-                                {/* <Button className='relative shadow-[#4500E5] shadow-lg bg-[#4500E5] hover:bg-[#6638C6] hover:shadow-[#6638C6] text-white max-w-[300px] w-full m-auto  px-4'>
-                                    <span className="absolute top-[-13px] right-[-10px] bg-[#ff8000] text-xs font-bold text-white px-2 py-1 rounded-full">
-                                        Destaque
-                                    </span>
-                                    Criar surpresa
-                                </Button> */}
-                            </Link>
-                            <Link className=' max-w-[300px] w-full m-auto' href={"/sendRequest"}>
-                                <div></div>
-                                <Button className='relative rounded-3xl shadow-[#4500E5] shadow-lg bg-[#4500E5] hover:bg-[#6638C6] hover:shadow-[#6638C6] text-white max-w-[300px] w-full m-auto  px-4'>
-                                    Enviar um pedido especial
-                                </Button>
-                            </Link>
+                          
 
                         </div>
                         <div className='DESTAQUES flex flex-col md:flex-row justify-center gap-4 md:my-20 my-14 items-center'>

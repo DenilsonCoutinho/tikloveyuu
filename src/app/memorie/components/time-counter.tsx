@@ -72,19 +72,19 @@ export function TimeCounter({ date }: { date: string }) {
   ]
 
   return (
-    <div className="flex flex-wrap items-center justify-center  px-3 ">
+    <div className="flex flex-wrap items-center justify-center border border-slate-200/10 p-2 rounded-xl ">
       {units.map((unit) => (
         <div
           key={unit.label}
-          className="flex flex-col items-center rounded-xl text-white px-3 py-2  md:py-3"
+          className="flex flex-col items-center rounded-xl text-white px-1 py-2  md:py-3"
         >
           <span
-            className="text-sm  text-white "
+            className="text-xs  bg-gradient-to-r from-[#7a49ed] via-blue-400 to-white bg-clip-text text-transparent "
           >
-            {String(unit.value).padStart(2, "0")}
+            {unit.value === 0 ? "" : String(unit.value).padStart(2, "0") + " " + unit.label}
           </span>
-          <span className="text-xs uppercase tracking-wider text-muted-foreground md:text-xs">
-            {unit.label}
+          <span className="text-xs uppercase tracking-wider text-muted-foreground ">
+
           </span>
         </div>
       ))}

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { ReactEventHandler, useState } from "react"
 import {
   Heart,
   QrCode,
@@ -21,28 +21,100 @@ import Image from "next/image"
 import logo from '@/assets/logoLove.png'
 import { getQrCodPix } from "@/services/getQrCodPix"
 import generatorPix from "@/services/generatorPix"
+import { useForm } from "react-hook-form"
+import { memoriesFormSchema, MemoriesFormValues } from "@/lib/schema"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { toast } from "sonner"
+import { createMemories } from "../../../../actions/uploadImage"
 interface PaymentSectionProps {
   onBack: () => void
+  data: {
+    image?: File;
+    description?: string;
+    date?: string;
+    title?: string | undefined;
+  }[]
 }
 
-export function PaymentSection({ onBack }: PaymentSectionProps) {
+export function PaymentSection({ onBack, data }: PaymentSectionProps) {
   const [copied, setCopied] = useState(false)
+  const [name, setName] = useState("")
+  const [cpf, setCpf] = useState("")
+  const [email, setEmail] = useState("")
+
+  function formatCPF(value: string) {
+    const numbers = value.replace(/\D/g, "").slice(0, 11)
+
+    return numbers
+      .replace(/(\d{3})(\d)/, "$1.$2")
+      .replace(/(\d{3})(\d)/, "$1.$2")
+      .replace(/(\d{3})(\d{1,2})$/, "$1-$2")
+  }
   const [processingCard, setProcessingCard] = useState(false)
   const [qrCode, setQrCode] = useState<string>('');
   const [encoder, setEncoder] = useState<string>('')
   const [paymentMethod, setPaymentMethod] = useState<"pix" | "card">("pix")
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [submitted, setSubmitted] = useState(false)
-  const [cardData, setCardData] = useState({
-    number: "",
-    name: "",
-    expiry: "",
-    cvv: "",
-  })
 
-  // TODO: Substituir pela chave Pix real gerada pelo Asaas
+  const form = useForm<MemoriesFormValues>({
+    defaultValues: {
+      memories: data as MemoriesFormValues["memories"],
+    }
+  })
+  const handleCopy = async () => {
+    try {
+      const text = navigator.clipboard.writeText(qrCode);
+      setCopied(true)
+      await new Promise(resolve => setTimeout(resolve, 1500))
+      setCopied(false)
+    } catch (err) {
+      console.error("Falha ao colar conteúdo:: ", err);
+    }
+  };
   const PIX_CODE =
     "00020126580014br.gov.bcb.pix0136exemplo-chave-pix-aqui5204000053039865802BR5925Nome Exemplo6009SAO PAULO62070503***6304ABCD"
+
+  function handleCpfChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setCpf(formatCPF(e.target.value))
+  }
+
+  async function submit(e: MemoriesFormValues) {
+    setIsSubmitting(true)
+
+    const formData = new FormData()
+    e.memories.forEach((memory, index) => {
+      // 1. Para Imagem: Se não houver arquivo, manda um Blob vazio ou ignora
+      // Como o FormData exige Blob/File ou string:
+      if (memory.image instanceof File) {
+        formData.append(`image-${index}`, memory.image)
+      } else {
+        // Se o índice for opcional e estiver vazio, você pode mandar uma string vazia
+        formData.append(`image-${index}`, "")
+      }
+
+      // 2. Para os demais campos: Garante que sejam string com o ?? ""
+      formData.append(`description-${index}`, memory.description ?? "")
+      formData.append(`date-${index}`, memory.date ?? "")
+      formData.append(`title-${index}`, memory.title ?? "")
+    })
+
+    const data = await createMemories(formData)
+    const { pixCustomersDataId } = await generatorPix({
+      id: data.id,
+      name: name,
+      cpfCnpj: cpf,
+      description: "tikloveyuu",
+      email: email,
+      price: 19.90
+    })
+    const { encodedImage, qrCode } = await getQrCodPix(pixCustomersDataId as string)
+    if (encodedImage === "") throw new Error("Erro ao gerar pix!")
+    setQrCode(qrCode)
+    setEncoder(encodedImage)
+    setSubmitted(true)
+    setIsSubmitting(false)
+  }
 
   function handleCopyPix() {
     navigator.clipboard.writeText(PIX_CODE)
@@ -50,22 +122,9 @@ export function PaymentSection({ onBack }: PaymentSectionProps) {
     setTimeout(() => setCopied(false), 2500)
   }
 
-  function formatCardNumber(value: string) {
-    const digits = value.replace(/\D/g, "").slice(0, 16)
-    return digits.replace(/(\d{4})(?=\d)/g, "$1 ")
-  }
-
-  function formatExpiry(value: string) {
-    const digits = value.replace(/\D/g, "").slice(0, 4)
-    if (digits.length >= 3) {
-      return digits.slice(0, 2) + "/" + digits.slice(2)
-    }
-    return digits
-  }
-
   async function handlePixPayment() {
     try {
-      
+
     } catch (error: unknown) {
       setIsSubmitting(false)
       setSubmitted(false)
@@ -74,19 +133,30 @@ export function PaymentSection({ onBack }: PaymentSectionProps) {
     }
   }
 
-  async function handleCardPayment() {
-    setProcessingCard(true)
+  {
+    if (submitted) return (
+      <div className="flex flex-col items-center gap-2">
+        <div className="flex flex-col items-center justify-center rounded-xl  max-w-72">
+          <Image width={300} height={300} className='m-auto' alt='qrCode' src={`data:image/png;base64,${encoder}`} />
+          <div className='flex flex-col items-center bg-gray-100 p-1'>
+            <p className='font-bold text-xs text-yellow-600 uppercase'>Atenção</p>
+            <p className='text-center text-black text-xs font-semibold px-2 wrap-break-word'>Assim que fizer o pagamento você receberá no e-mail a sua Timeline Infinita!</p>
+          </div>
+        </div>
+        <Button onClick={() => {
+          handleCopy(); toast.success("Copiado com sucesso!", {
+            style: {
+              background: "#00c950"
+            },
+            position: "top-center"
 
-    // TODO: Integrar com Stripe Checkout / Payment Intent
-    // POST /api/payments/stripe/checkout
-    console.log("[v0] Cartão enviado — integração Stripe pendente", {
-      lastFour: cardData.number.replace(/\s/g, "").slice(-4),
-      name: cardData.name,
-    })
-
-    await new Promise((resolve) => setTimeout(resolve, 2500))
-    setProcessingCard(false)
-    alert("Pagamento processado com sucesso!")
+          })
+        }} className='select-none hover:bg-green-500 bg-green-700 ' ><p className=' text-white  font-medium px-2'>{copied ? "Copiado" : "Copiar"}</p> <span className=' border border-white rounded-md p-1'><Copy className=' text-white' /></span></Button>
+        <p className="text-xs text-muted-foreground">
+          Aguardando confirmação...
+        </p>
+      </div>
+    )
   }
 
   return (
@@ -97,7 +167,7 @@ export function PaymentSection({ onBack }: PaymentSectionProps) {
           className="">
           <Image width={180} src={logo} alt="logo" />
         </div>
-        <h2 className="font-serif text-3xl text-foreground text-balance">
+        <h2 className="font-serif text-3xl text-white text-balance">
           Quase lá!
         </h2>
         <p className="max-w-sm text-muted-foreground leading-relaxed">
@@ -129,241 +199,117 @@ export function PaymentSection({ onBack }: PaymentSectionProps) {
       {/* Seleção de método — Pix (Asaas) / Cartão (Stripe) */}
       <Tabs
         defaultValue="pix"
-        className="flex flex-col gap-4"
+        className=" "
         onValueChange={(val) => setPaymentMethod(val as "pix" | "card")}
       >
-        <TabsList className="grid w-full grid-cols-2 h-12 bg-secondary">
+        <TabsList className="  w-full  bg-secondary">
           <TabsTrigger
             value="pix"
-            className="gap-2 text-sm font-medium data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+            className="gap-2  text-sm font-medium data-[state=active]:bg-defaultBg data-[state=active]:text-primary-foreground"
           >
             <QrCode className="size-4" />
             Pix
           </TabsTrigger>
-          <TabsTrigger
-            value="card"
-            className="gap-2 text-sm font-medium data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
-          >
-            <CreditCard className="size-4" />
-            Cartão
-          </TabsTrigger>
+
         </TabsList>
-
-        {/* ─── Pix via Asaas ─── */}
-        <TabsContent value="pix" className="mt-0">
-          <Card className="border-border/60">
-            <CardContent className="flex flex-col items-center gap-5 py-6">
-              {/* Badge gateway */}
-              <span className="rounded-full bg-accent px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
-                Pagamento via Pix
-              </span>
-
-              {/* QR Code — será substituído pela imagem gerada pelo Asaas */}
-              <div
-                className="flex size-48 items-center justify-center rounded-xl border-2 border-dashed border-primary/30 bg-secondary/50"
-                style={{ boxShadow: "inset 0 2px 8px rgba(0, 0, 0, 0.2)" }}
-              >
-                <QrCode className="size-24 text-primary/60" />
-              </div>
-
-              <p className="text-center text-sm text-muted-foreground leading-relaxed">
-                Escaneie o QR Code acima ou copie o código Pix abaixo
-              </p>
-
-              <Separator className="bg-border/50" />
-
-              {/* Código Pix copia e cola */}
-              <div className="flex w-full flex-col gap-2">
-                <Label className="text-xs uppercase tracking-wide text-muted-foreground">
-                  Código Pix Copia e Cola
-                </Label>
-                <div className="flex gap-2">
-                  <div className="flex-1 truncate rounded-lg border border-border bg-secondary/50 px-3 py-2.5 text-sm text-muted-foreground">
-                    {PIX_CODE.slice(0, 40)}...
-                  </div>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="icon"
-                    className="shrink-0 border-primary/30 hover:bg-primary/10"
-                    onClick={handleCopyPix}
-                    aria-label="Copiar código Pix"
-                  >
-                    {copied ? (
-                      <Check className="size-4 text-green-400" />
-                    ) : (
-                      <Copy className="size-4" />
-                    )}
-                  </Button>
-                </div>
-                {copied && (
-                  <span className="text-xs text-green-400">
-                    Código copiado!
-                  </span>
-                )}
-              </div>
-
-              {/* Botão de confirmar pagamento Pix */}
-              <Button
-                type="button"
-                size="lg"
-                className="h-12 w-full text-base font-semibold"
-                style={{ boxShadow: "0 2px 35px rgba(69, 0, 229, 0.39)" }}
-                onClick={handlePixPayment}
-              >
-                Já fiz o pagamento
-              </Button>
-
-              <div className="flex items-center gap-2 text-xs text-muted-foreground/70">
-                <ShieldCheck className="size-3.5" />
-                <span>Pagamento instantâneo e seguro via Pix</span>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        {/* ─── Cartão via Stripe ─── */}
-        <TabsContent value="card" className="mt-0">
-          <Card className="border-border/60">
-            <CardContent className="flex flex-col gap-5 py-6">
-              {/* Badge gateway */}
-              <div className="flex justify-center">
-                <span className="rounded-full bg-accent px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
-                  Pagamento via cartão
-                </span>
-              </div>
-
-              {/* Número do cartão */}
-              <div className="flex flex-col gap-2">
-                <Label
-                  htmlFor="card-number"
-                  className="text-xs uppercase tracking-wide text-muted-foreground"
-                >
-                  Número do cartão
-                </Label>
-                <Input
-                  id="card-number"
-                  placeholder="0000 0000 0000 0000"
-                  value={cardData.number}
-                  onChange={(e) =>
-                    setCardData((prev) => ({
-                      ...prev,
-                      number: formatCardNumber(e.target.value),
-                    }))
-                  }
-                  maxLength={19}
-                  inputMode="numeric"
-                  className="h-11 bg-secondary/50 border-border"
-                />
-              </div>
-
-              {/* Nome no cartão */}
-              <div className="flex flex-col gap-2">
-                <Label
-                  htmlFor="card-name"
-                  className="text-xs uppercase tracking-wide text-muted-foreground"
-                >
-                  Nome no cartão
-                </Label>
-                <Input
-                  id="card-name"
-                  placeholder="Como está no cartão"
-                  value={cardData.name}
-                  onChange={(e) =>
-                    setCardData((prev) => ({
-                      ...prev,
-                      name: e.target.value,
-                    }))
-                  }
-                  className="h-11 bg-secondary/50 border-border"
-                />
-              </div>
-
-              {/* Validade e CVV */}
-              <div className="grid grid-cols-2 gap-4">
-                <div className="flex flex-col gap-2">
-                  <Label
-                    htmlFor="card-expiry"
-                    className="text-xs uppercase tracking-wide text-muted-foreground"
-                  >
-                    Validade
-                  </Label>
-                  <Input
-                    id="card-expiry"
-                    placeholder="MM/AA"
-                    value={cardData.expiry}
-                    onChange={(e) =>
-                      setCardData((prev) => ({
-                        ...prev,
-                        expiry: formatExpiry(e.target.value),
-                      }))
-                    }
-                    maxLength={5}
-                    inputMode="numeric"
-                    className="h-11 bg-secondary/50 border-border"
-                  />
-                </div>
-                <div className="flex flex-col gap-2">
-                  <Label
-                    htmlFor="card-cvv"
-                    className="text-xs uppercase tracking-wide text-muted-foreground"
-                  >
-                    CVV
-                  </Label>
-                  <Input
-                    id="card-cvv"
-                    placeholder="000"
-                    value={cardData.cvv}
-                    onChange={(e) =>
-                      setCardData((prev) => ({
-                        ...prev,
-                        cvv: e.target.value.replace(/\D/g, "").slice(0, 4),
-                      }))
-                    }
-                    maxLength={4}
-                    inputMode="numeric"
-                    type="password"
-                    className="h-11 bg-secondary/50 border-border"
-                  />
-                </div>
-              </div>
-
-              <Button
-                type="button"
-                size="lg"
-                className="h-12 w-full text-base font-semibold"
-                style={{ boxShadow: "0 2px 35px rgba(69, 0, 229, 0.39)" }}
-                disabled={processingCard}
-                onClick={handleCardPayment}
-              >
-                {processingCard ? (
-                  <>
-                    <Loader2 className="size-5 animate-spin" />
-                    Processando...
-                  </>
-                ) : (
-                  "Pagar R$ 19,90"
-                )}
-              </Button>
-
-              <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground/70">
-                <ShieldCheck className="size-3.5" />
-                <span>Pagamento seguro e criptografado</span>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
       </Tabs>
 
-      {/* Voltar */}
-      <button
-        type="button"
-        onClick={onBack}
-        className="flex items-center justify-center gap-2 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+      <form
+        onSubmit={form.handleSubmit(submit)}
+        className="max-w-md mx-auto w-full space-y-4 p-4 bg-white rounded-xl shadow"
       >
-        <ArrowLeft className="size-4" />
-        Voltar e editar memórias
-      </button>
+        <h2 className="text-xl font-semibold">
+          Dados pessoais
+        </h2>
+
+        <div className="flex flex-col gap-1">
+          <label className="text-sm font-medium">
+            Nome completo
+          </label>
+
+          <input
+            type="text"
+            placeholder="Digite seu nome completo"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="border rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>
+        <div className="flex flex-col gap-1">
+          <label className="text-sm font-medium">
+            E-mail
+          </label>
+
+          <input
+            type="text"
+            placeholder="Seu melhor Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="border rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>
+        <div className="flex flex-col gap-1">
+          <label className="text-sm font-medium">
+            CPF
+          </label>
+
+          <input
+            type="text"
+            placeholder="000.000.000-00"
+            value={cpf}
+            onChange={handleCpfChange}
+            className="border rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>
+
+        <Button
+          type="submit"
+          size="lg"
+          disabled={isSubmitting}
+          className={`h-12 w-full text-base font-semibold bg-[#4500E5] hover:bg-[#4500E5] flex items-center justify-center gap-2 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+          style={{ boxShadow: "0 2px 35px rgba(69, 0, 229, 0.39)" }}
+        >
+          {isSubmitting && (
+            <svg
+              className="animate-spin h-5 w-5 text-white"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              ></circle>
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+              ></path>
+            </svg>
+          )}
+          {isSubmitting ? 'Processando...' : 'Confirmar forma de pagamento'}
+        </Button>
+      </form>
+
+      {/* Voltar */}
+      {submitted ?
+        <></>
+        :
+        <button
+          type="button"
+          onClick={onBack}
+          className="flex items-center justify-center gap-2 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+        >
+          <ArrowLeft className="size-4" />
+          Voltar e editar memórias
+        </button>}
     </div>
   )
 }

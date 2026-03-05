@@ -31,8 +31,8 @@ export function MemoryCard({ index }: { index: number }) {
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [preview, setPreview] = useState<string | null>(null)
 
-  const description = form.watch(`memories.${index}.description`) ?? ""
-  const title = form.watch(`memories.${index}.title`) ?? ""
+  const description = form.watch(`memories.${index}.description` as any) ?? ""
+  const title = form.watch(`memories.${index}.title` as any) ?? ""
   const charCount = description.length
   const charCountTitle = title.length
 
@@ -40,7 +40,7 @@ export function MemoryCard({ index }: { index: number }) {
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0]
       if (file) {
-        form.setValue(`memories.${index}.image`, file, {
+        form.setValue(`memories.${index}.image` as any, file, {
           shouldValidate: true,
         })
         const url = URL.createObjectURL(file)
@@ -51,7 +51,7 @@ export function MemoryCard({ index }: { index: number }) {
   )
 
   const handleRemoveImage = useCallback(() => {
-    form.setValue(`memories.${index}.image`, undefined as unknown as File, {
+    form.setValue(`memories.${index}.image`as any, undefined as unknown as File, {
       shouldValidate: true,
     })
     setPreview(null)
@@ -82,7 +82,7 @@ export function MemoryCard({ index }: { index: number }) {
         {/* Image upload */}
         <FormField
           control={form.control}
-          name={`memories.${index}.image`}
+          name={`memories.${index}.image` as any}
           render={() => (
             <FormItem>
               <FormLabel className="text-muted-foreground text-xs uppercase tracking-wide">
@@ -99,13 +99,14 @@ export function MemoryCard({ index }: { index: number }) {
                     aria-label={`Enviar foto do momento ${index + 1}`}
                   />
                   {preview ? (
-                    <div className="relative md:aspect-[19/11] aspect-[12/17]  overflow-hidden rounded-lg">
+                    <div className="relative overflow-hidden rounded-lg">
                       <Image
-                        width={2}
-                        height={2}
+                        width={300}
+                        height={300}
+                        quality={100}
                         src={preview}
                         alt={`Preview do momento ${index + 1}`}
-                        className=" w-96 h-96 object-contain"
+                        className="aspect-[9/16] w-full bg-center object-cover swing-in-right-fwd "
                       />
                       <button
                         type="button"
@@ -135,7 +136,7 @@ export function MemoryCard({ index }: { index: number }) {
         />
         <FormField
           control={form.control}
-          name={`memories.${index}.title`}
+          name={`memories.${index}.title`as any}
           render={({ field }) => (
             <FormItem>
               <div className="flex items-center justify-between">
@@ -144,10 +145,10 @@ export function MemoryCard({ index }: { index: number }) {
                 </FormLabel>
                 <span
                   className={`text-xs tabular-nums ${charCountTitle > 15
-                      ? "text-destructive"
-                      : charCountTitle > 100
-                        ? "text-primary"
-                        : "text-muted-foreground"
+                    ? "text-destructive"
+                    : charCountTitle > 100
+                      ? "text-primary"
+                      : "text-muted-foreground"
                     }`}
                 >
                   {charCountTitle}/15
@@ -168,7 +169,7 @@ export function MemoryCard({ index }: { index: number }) {
         {/* Description */}
         <FormField
           control={form.control}
-          name={`memories.${index}.description`}
+          name={`memories.${index}.description`as any}
           render={({ field }) => (
             <FormItem>
               <div className="flex items-center justify-between">
@@ -177,10 +178,10 @@ export function MemoryCard({ index }: { index: number }) {
                 </FormLabel>
                 <span
                   className={`text-xs tabular-nums ${charCount > 120
-                      ? "text-destructive"
-                      : charCount > 100
-                        ? "text-primary"
-                        : "text-muted-foreground"
+                    ? "text-destructive"
+                    : charCount > 100
+                      ? "text-primary"
+                      : "text-muted-foreground"
                     }`}
                 >
                   {charCount}/120
@@ -202,7 +203,7 @@ export function MemoryCard({ index }: { index: number }) {
         {/* Date */}
         <FormField
           control={form.control}
-          name={`memories.${index}.date`}
+          name={`memories.${index}.date`as any}
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-muted-foreground text-xs uppercase tracking-wide">

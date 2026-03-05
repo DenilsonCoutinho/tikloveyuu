@@ -7,10 +7,10 @@ import {
 export default function Faq() {
 
     const items = [
-        { value: "a", title: "O que é a Tikloveyuu?", text: "Tikloveyuu é uma plataforma que permite criar páginas personalizadas de relacionamento para casais ou enviar pedidos especiais. Você pode adicionar fotos, uma mensagem especial e um contador que mostra há quanto tempo vocês estão juntos." },
-        { value: "b", title: "Como recebo minha página personalizada ou meu pedido especial após o pagamento?", text: "Após a conclusão do pagamento, você receberá um QR code caso o produto for o contado dinâmico para compartilhar com seu parceiro(a) e um link via e-mail para acessar a página. Se for o pedido especial, você apenas receberá um link no email." },
+        { value: "a", title: "O que é a Tikloveyuu?", text: "Tikloveyuu é uma plataforma que permite criar páginas personalizadas de relacionamento para casais." },
+        { value: "b", title: "Como recebo minha timeline Infinita após o pagamento?", text: "Após a conclusão do pagamento, você receberá a timeline Infinita para compartilhar com seu parceiro(a) e um link via e-mail para acessar a página." },
         { value: "c", title: "Quais são as formas de pagamento?", text: "No momento, aceitamos pagamentos por Pix e cartão de crédito." },
-        { value: "d", title: "Quanto tempo demora para receber o QR Code no e-mail?", text: "Pagamentos com cartão de crédito e Pix ficam prontos na hora." },
+        { value: "d", title: "Quanto tempo demora para receber o QR Code no e-mail?", text: "Pagamentos Pix ficam prontos na hora." },
         { value: "e", title: "Como posso entrar em contato com o suporte ao cliente?", text: "Você pode entrar em contato com nosso suporte ao cliente através do e-mail denidesenvolvimentos@gmail.com" },
     ]
     return (

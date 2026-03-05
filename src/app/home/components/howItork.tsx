@@ -1,4 +1,4 @@
-import fields from '../../../assets/howWork/fields.svg'
+import fields from '../../../assets/howWork/image 2.png'
 import emailCouple from '../../../assets/howWork/email-phone 1.svg'
 import iPhone from '../../../assets/howWork/iPhone 13 Pro.png'
 import couple from '../../../assets/eu i kai.svg'

@@ -820,7 +820,7 @@ class InfiniteGridMenu {
     }
   }
 
-   private initTexture(): void {
+  private initTexture(): void {
     if (!this.gl) return;
     const gl = this.gl;
     this.tex = createAndSetupTexture(gl, gl.LINEAR, gl.LINEAR, gl.CLAMP_TO_EDGE, gl.CLAMP_TO_EDGE);
@@ -1113,6 +1113,7 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [], scale = 1.0, onSelect
   return (
     <div className="relative w-full h-full">
       <canvas
+        onClick={handleButtonClick}
         id="infinite-grid-menu-canvas"
         ref={canvasRef}
         className="cursor-grab w-full h-full overflow-hidden relative outline-none active:cursor-grabbing"
@@ -1120,8 +1121,6 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [], scale = 1.0, onSelect
 
       {activeItem && (
         <>
-          
-
           <p
             className={`
           select-none
@@ -1130,7 +1129,7 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [], scale = 1.0, onSelect
           max-w-[16ch]
           md:text-[1.5rem]
           md:top-1/2 top-1/4
-          md:right-[1%] right-[-12%]
+          md:right-[1%] right-[22%]
           transition-all
           ease-[cubic-bezier(0.25,0.1,0.25,1.0)]
           ${isMoving
@@ -1142,7 +1141,7 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [], scale = 1.0, onSelect
             {activeItem.title}
           </p>
 
-          <div
+          {/* <div
             onClick={handleButtonClick}
             className={`
           absolute
@@ -1166,7 +1165,7 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [], scale = 1.0, onSelect
         `}
           >
             <p className="select-none relative text-[#060010] top-[2px] text-[26px]">&#x2197;</p>
-          </div>
+          </div> */}
         </>
       )}
     </div>

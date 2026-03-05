@@ -28,7 +28,7 @@ export function MemoryDetail({
   onBack: () => void
 }) {
   return (
-    <div className="flex min-h-dvh flex-col items-center bg-defaultBg px-4 py-8 md:py-12">
+    <div className="flex h-vh flex-col items-center bg-defaultBg  py-8 md:py-12">
       {/* Back button */}
       <div className="mb-8 w-full max-w-[440px]">
         <Button
@@ -49,12 +49,12 @@ export function MemoryDetail({
           {/* Image */}
           <div className="overflow-hidden rounded-[2rem]">
             <Image
-              width={300}
-              height={300}
+              width={200}
+              height={200}
               quality={100}
               src={memory.imageUrl}
               alt={memory.description}
-              className="aspect-[9/16] w-full object-cover swing-in-right-fwd "
+              className="aspect-[7/9] w-full object-cover swing-in-right-fwd "
               crossOrigin="anonymous"
             />
           </div>
@@ -62,19 +62,19 @@ export function MemoryDetail({
       </div>
 
       {/* Description */}
-      <div className="mb-6 max-w-[340px] text-center">
+      <div className="mb- max-w-[340px] text-center">
         <p
           className="font-serif text-xl text-wrap  break-words  leading-relaxed text-white md:text-2xl"
         >
           {memory.description}
         </p>
       </div>
-
+    <div className="border-t border-white/10 h-1 max-w-[300px] w-full"></div>
       {/* Decorative heart divider */}
-      <div className="mb-6 flex items-center gap-3">
-        <div className="h-px w-12 bg-primary/20" />
+      <div className="mb- flex items-center gap-3">
+        <div className=" w-12 bg-primary/20" />
         <Heart className="h-4 w-4 fill-red-700 text-primary" />
-        <div className="h-px w-12 bg-primary/20" />
+        <div className=" w-12 bg-primary/20" />
       </div>
 
       {/* Date */}
@@ -84,7 +84,7 @@ export function MemoryDetail({
 
       {/* Message */}
       <p
-        className="mt-6 text-center text-base text-white md:text-lg"
+        className="mt-2 text-center text-base text-white md:text-lg"
       >
         {"Já fazem:"}
       </p>
