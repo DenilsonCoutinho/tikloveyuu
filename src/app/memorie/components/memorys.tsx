@@ -23,7 +23,7 @@ export default function Memorys({ data }: { data: { memories: any} }) {
   }
 
  return (
-    <div className="h-screen " style={{ position: "relative", width: "100%" }}>
+    <div className="h-dvh " style={{ position: "relative", width: "100%" }}>
       <InfiniteMenu
         items={data.memories}
         scale={1}

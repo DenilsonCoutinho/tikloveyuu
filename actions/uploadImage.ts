@@ -23,7 +23,7 @@ export async function createMemories(formData: FormData) {
       .webp({ quality: 89 })
       .toBuffer()
 
-    const fileName = `memories/${crypto.randomUUID()}.webp`
+    const fileName = `temp/${crypto.randomUUID()}.webp`
 
     await r2.send(
       new PutObjectCommand({
@@ -38,11 +38,11 @@ export async function createMemories(formData: FormData) {
       imageUrl: `${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/${fileName}`,
       description,
       date: new Date(date),
-      title:title
+      title: title
     })
   }
 
-  await prisma.userMemories.create({
+  const data = await prisma.userMemories.create({
     data: {
       userId: crypto.randomUUID(),
       memories: {
@@ -50,4 +50,5 @@ export async function createMemories(formData: FormData) {
       },
     },
   })
+  return data
 }

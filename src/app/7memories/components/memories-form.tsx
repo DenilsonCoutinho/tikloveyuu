@@ -8,13 +8,11 @@ import { Form } from "@/components/ui/form"
 import { Button } from "@/components/ui/button"
 import { memoriesFormSchema, type MemoriesFormValues } from "@/lib/schema"
 import { MemoryCard } from "./memory-card"
-import { PasswordSection } from "./password-section"
 import { PaymentSection } from "./payment-section"
 import Image from "next/image"
 import logo from '../../../assets/logoLove.png'
-import { createMemories } from "../../../../actions/uploadImage"
 
-const DEFAULT_MEMORIES = Array.from({ length: 2 }, () => ({
+const DEFAULT_MEMORIES = Array.from({ length: 7 }, () => ({
   image: undefined as unknown as File,
   description: "",
   date: "",
@@ -29,7 +27,8 @@ export function MemoriesForm() {
     resolver: zodResolver(memoriesFormSchema),
 
     defaultValues: {
-      memories: DEFAULT_MEMORIES,
+
+      memories: DEFAULT_MEMORIES  as MemoriesFormValues["memories"],
       password: "",
       confirmPassword: "",
     },
@@ -38,18 +37,11 @@ export function MemoriesForm() {
 
   async function onSubmit(data: MemoriesFormValues) {
     console.log(data.memories)
-    const formData = new FormData()
-
-    data.memories.forEach((memory, index) => {
-      formData.append(`image-${index}`, memory.image)
-      formData.append(`description-${index}`, memory.description)
-      formData.append(`date-${index}`, memory.date)
-      formData.append(`title-${index}`, memory.title??"")
-    })
+   
     try {
 
-      setIsSubmitting(true)
-      await createMemories(formData)
+     
+      setStep("payment")
       setIsSubmitting(false)
 
     } catch (error) {
@@ -57,16 +49,7 @@ export function MemoriesForm() {
       setIsSubmitting(false)
 
     }
-    return
-    await new Promise((resolve) => setTimeout(resolve, 1500))
-
-    console.log("[v0] Formulário enviado:", {
-      memoriesCount: data.memories.length,
-      hasPassword: !!data.password,
-    })
-
-    setIsSubmitting(false)
-    setStep("payment")
+   
   }
 
   return (
@@ -95,7 +78,7 @@ export function MemoriesForm() {
 
             {/* Cards de memórias */}
             <div className="flex flex-col gap-5">
-              {Array.from({ length: 2 }, (_, i) => (
+              {Array.from({ length: 7 }, (_, i) => (
                 <MemoryCard key={i} index={i} />
               ))}
             </div>
@@ -117,7 +100,7 @@ export function MemoriesForm() {
                   Criando...
                 </>
               ) : (
-                "Criar nossa página"
+                "Criar minha timeline infinita"
               )}
             </Button>
           </form>
@@ -126,7 +109,7 @@ export function MemoriesForm() {
 
       {/* Pagamento — exibido após envio do formulário */}
       {step === "payment" && (
-        <PaymentSection onBack={() => setStep("form")} />
+        <PaymentSection data={form.getValues().memories} onBack={() => setStep("form")} />
       )}
     </>
   )
