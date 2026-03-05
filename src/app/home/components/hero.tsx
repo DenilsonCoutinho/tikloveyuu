@@ -17,7 +17,7 @@ export default function Hero() {
     return (
         <>
             <div className='md:h-[33rem] relative    '>
-                 <div className="absolute md:-right-20 -right-48 z-[1] md:max-w-[650px] max-w-[350px] h-[300px] ">
+                <div className="absolute md:-right-20 -right-48 z-[1] md:max-w-[650px] max-w-[350px] h-[300px] ">
                     <Image src={objectAnimated} alt="objectAnimated" className=" object-cover elementAnimated" />
                 </div>
                 <div className='max-w-[1100px] m-auto px-3  z-10 relative'>
@@ -45,14 +45,18 @@ export default function Hero() {
                             Celebre cada momento do seu relacionamento com um contador dinâmico exclusivo! Preencha o formulário e receba um site personalizado com um QRCode especial para compartilhar com quem você ama. Agora, aproveite também a opção de criar um pedido especial!
                         </p>
                             :
-                            <FallingText text={` Celebre cada momento do seu relacionamento com um contador dinâmico exclusivo! Preencha o formulário e receba um site personalizado com um QRCode especial para compartilhar com quem você ama. Agora, aproveite também a opção de criar um pedido especial!`}
-                                highlightWords={["Celebre", "momento", "relacionamento", "exclusivo!", "experiência", "QRCode"]}
-                                className='mx-auto py-10 md:text-xl text-xs md:max-w-[1100px] sm:max-w-[400px] text-white'
-                                trigger="click"
-                                backgroundColor="transparent"
-                                wireframes={false}
-                                gravity={0.56}
-                                mouseConstraintStiffness={0.9} />}
+                            <div className="text-white text-center ">
+                                <FallingText text={`Celebre cada momento do seu relacionamento com um contador dinâmico exclusivo! Preencha o formulário e receba um site personalizado com um QRCode especial para compartilhar com quem você ama. Agora, aproveite também a opção de criar um pedido especial!`}
+                                    highlightWords={["Celebre", "momento", "relacionamento", "exclusivo!", "experiência", "QRCode"]}
+                                    // className='mx-auto py-10 md:text-xl text-xs md:max-w-[1100px] sm:max-w-[400px] text-white'
+                                    trigger="click"
+                                    backgroundColor="transparent"
+                                    wireframes={false}
+                                    gravity={0.56}
+                                    fontSize="16px"
+                                    mouseConstraintStiffness={0.9} />
+                            </div>
+                        }
                         <div className='flex md:flex-row flex-col justify-center items-center gap-4 mt-3 max-w-[600px] mx-auto'>
                             <Button className='shadow-[#4500E5] rounded-3xl shadow-lg bg-[#4500E5] hover:bg-[#6638C6] hover:shadow-[#6638C6] m-auto text-white max-w-[300px] w-full ' onClick={() => scrollToDiv("Prices")}>
                                 Criar meu contador dinâmico

@@ -3,7 +3,6 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
 
     const { paymentId } = await req.json();
-    console.log(paymentId);
     try {
         const pixCustomers = await fetch(`${process.env.NEXT_PUBLIC_ASAAS_URL_ID_PAYMENTS as string}/${paymentId}/pixQrCode`, {
             method: 'GET',
@@ -11,7 +10,7 @@ export async function POST(req: NextRequest) {
             headers: {
                 accept: 'application/json',
                 'content-type': 'application/json',
-                'user-agent': 'tikloveyuu',
+                'user-agent': 'contador-eterno',
                 access_token: "$" + process.env.ASAAS_API_KEY as string // Substitua 'MyKey' pela sua chave de API real
             },
 

@@ -3,12 +3,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Montserrat } from 'next/font/google'
 
-import { Provider } from "@/components/ui/provider"
-import { DialogRoot } from "@/components/ui/dialog";
 import Script from "next/script";
 import { PlanProvider } from "../../context/changePlanContext";
 import { Toaster } from "./components/toaster";
-import { FormUserProvider } from "../../context/FormUserContext";
 
 
 const montserrat = Montserrat({
@@ -40,16 +37,10 @@ export default function RootLayout({
 
       </head>
       <body className={`${montserrat.className}   antialiased`}>
-        <FormUserProvider>
           <PlanProvider>
-            <Provider>
               <Toaster />
-              <DialogRoot placement="center" closeOnInteractOutside={false}>
                 {children}
-              </DialogRoot>
-            </Provider>
           </PlanProvider>
-        </FormUserProvider>
       </body>
     </html>
   );

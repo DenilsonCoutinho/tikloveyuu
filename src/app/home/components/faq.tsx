@@ -1,8 +1,8 @@
 import {
-    AccordionItem,
-    AccordionItemContent,
-    AccordionItemTrigger,
-    AccordionRoot,
+     Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
 } from "@/components/ui/accordion"
 export default function Faq() {
 
@@ -18,15 +18,15 @@ export default function Faq() {
             <h1 className="text-white font-bold text-3xl text-center py-4">Perguntas Frequentes
 
             </h1>
-            <AccordionRoot collapsible >
+            <Accordion type="single" >
 
                 {items.map((item, index) => (
                     <AccordionItem key={index} value={item.value} className="border-b">
-                        <AccordionItemTrigger className="text-white py-4 font-semibold">{item.title}</AccordionItemTrigger>
-                        <AccordionItemContent className="text-white text-md">{item.text}</AccordionItemContent>
+                        <AccordionTrigger className="text-white py-4 font-semibold">{item.title}</AccordionTrigger>
+                        <AccordionContent className="text-white text-md">{item.text}</AccordionContent>
                     </AccordionItem>
                 ))}
-            </AccordionRoot>
+            </Accordion>
 
         </div>
     )
