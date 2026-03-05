@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
             headers: {
                 accept: 'application/json',
                 'content-type': 'application/json',
-                'user-agent': 'tikloveyuu',
+                'user-agent': 'contador-eterno',
                 access_token: "$" + process.env.ASAAS_API_KEY as string // Substitua 'MyKey' pela sua chave de API real
 
             },
