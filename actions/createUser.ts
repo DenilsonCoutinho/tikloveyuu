@@ -10,9 +10,7 @@ type MemoryInput = {
 }
 
 type CreateUserInput = {
-    name: string
     email: string
-    cpf: string
     memories: MemoryInput[]
 }
 

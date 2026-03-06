@@ -25,7 +25,7 @@ import { useForm } from "react-hook-form"
 import { memoriesFormSchema, MemoriesFormValues } from "@/lib/schema"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { toast } from "sonner"
-import { uploadImage } from "../../../../actions/uploadImage"
+import { generateUploadUrls, } from "../../../../actions/uploadImage"
 import { createUser } from "../../../../actions/createUser"
 interface PaymentSectionProps {
   onBack: () => void
@@ -78,99 +78,103 @@ export function PaymentSection({ onBack, data }: PaymentSectionProps) {
     setCpf(formatCPF(e.target.value))
   }
 
+ async function uploadToR2(file: File, uploadUrl: string) {
+
+  const response = await fetch(uploadUrl, {
+    method: "PUT",
+    body: file,
+    headers: {
+      "Content-Type": file.type
+    }
+  })
+
+  if (!response.ok) {
+    throw new Error("Erro ao enviar imagem para R2")
+  }
+
+}
   async function submit(e: MemoriesFormValues) {
-  try {
-    setIsSubmitting(true)
 
-    // -------------------------
-    // 1. ENVIAR IMAGENS
-    // -------------------------
+    try {
 
-    const formData = new FormData()
+      setIsSubmitting(true)
 
-    e.memories.forEach((memory, index) => {
-      if (memory.image instanceof File) {
-        formData.append(`image-${index}`, memory.image)
-      }
-    })
+      // pegar apenas memórias com imagem
+      const memoriesWithImage = e.memories
+        .map((memory, index) => ({ memory, index }))
+        .filter(m => m.memory.image instanceof File)
 
-    // upload das imagens
-    const uploadedImages = await uploadImage(formData)
-
-    // uploadedImages exemplo:
-    // [
-    //   { index: 0, url: "https://r2.dev/temp/abc.webp" },
-    //   { index: 2, url: "https://r2.dev/temp/xyz.webp" }
-    // ]
-
-    // -------------------------
-    // 2. MONTAR MEMÓRIAS COM URL
-    // -------------------------
-
-    const memories = e.memories.map((memory, index) => {
-
-      const uploaded = uploadedImages.find(
-        (img: { index: number; url: string }) => img.index === index
+      // gerar URLs de upload
+      const uploadUrls = await generateUploadUrls(
+        memoriesWithImage.length
       )
 
-      return {
-        imageUrl: uploaded ? uploaded.url : null,
-        description: memory.description ?? "",
-        date: memory.date ?? "",
-        title: memory.title ?? ""
-      }
-    })
+      // enviar imagens
+      await Promise.all(
 
-    // -------------------------
-    // 3. SALVAR NO BANCO
-    // -------------------------
+        memoriesWithImage.map(async (item, i) => {
 
-    const create = await createUser({
-      memories,
-      name,
-      cpf,
-      email
-    })
+          const file = item.memory.image as File
 
-    // -------------------------
-    // 4. GERAR PIX
-    // -------------------------
+          await uploadToR2(
+            file,
+            uploadUrls[i].uploadUrl
+          )
 
+        })
+      )
+
+      // montar memórias finais
+      const memories = memoriesWithImage.map((item, i) => ({
+
+        imageUrl: uploadUrls[i].fileUrl,
+        description: item.memory.description ?? "",
+        title: item.memory.title ?? "",
+        date: item.memory.date ?? ""
+
+      }))
+
+      // salvar no banco
+      const create = await createUser({
+        email,
+        memories
+      })
+
+     
+    // -------------------------
+    // 6. Gerar PIX
+    // -------------------------
     const { pixCustomersDataId } = await generatorPix({
       id: create.id,
-      name: name,
+      name,
       cpfCnpj: cpf,
       description: "tikloveyuu",
-      email: email,
+      email,
       price: 19.9
     })
 
     // -------------------------
-    // 5. PEGAR QR CODE
+    // 7. Gerar QR Code
     // -------------------------
+    const { encodedImage, qrCode } = await getQrCodPix(pixCustomersDataId as string)
 
-    const { encodedImage, qrCode } = await getQrCodPix(
-      pixCustomersDataId as string
-    )
-
-    if (!encodedImage) {
-      throw new Error("Erro ao gerar pix!")
-    }
+    if (!encodedImage) throw new Error("Erro ao gerar pix!")
 
     setQrCode(qrCode)
     setEncoder(encodedImage)
     setSubmitted(true)
 
-  } catch (error) {
+    } catch (error) {
 
-    console.error(error)
+      console.error(error)
 
-  } finally {
+    } finally {
 
-    setIsSubmitting(false)
+      setIsSubmitting(false)
+
+    }
 
   }
-}
 
   function handleCopyPix() {
     navigator.clipboard.writeText(encoder)
@@ -178,16 +182,7 @@ export function PaymentSection({ onBack, data }: PaymentSectionProps) {
     setTimeout(() => setCopied(false), 2500)
   }
 
-  async function handlePixPayment() {
-    try {
 
-    } catch (error: unknown) {
-      setIsSubmitting(false)
-      setSubmitted(false)
-
-      throw new Error("Erro interno")
-    }
-  }
 
   {
     if (submitted) return (
