@@ -76,16 +76,14 @@ export function TimeCounter({ date }: { date: string }) {
       {units.map((unit) => (
         <div
           key={unit.label}
-          className="flex flex-col items-center rounded-xl text-white px-1 py-2  md:py-3"
+          className="items-center rounded-xl text-white "
         >
           <span
-            className="text-xs  bg-gradient-to-r from-[#7a49ed] via-blue-400 to-white bg-clip-text text-transparent "
+            className="text-xs px-2 bg-gradient-to-r from-[#7a49ed] via-blue-400 to-white bg-clip-text text-transparent "
           >
-            {unit.value === 0 ? "" : String(unit.value).padStart(2, "0") + " " + unit.label}
+            {String(unit.value).padStart(2, "0") + " " + unit.label}
           </span>
-          <span className="text-xs uppercase tracking-wider text-muted-foreground ">
-
-          </span>
+          
         </div>
       ))}
     </div>

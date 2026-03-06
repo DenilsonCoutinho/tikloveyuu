@@ -207,7 +207,7 @@ export function MemoryCard({ index }: { index: number }) {
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-muted-foreground text-xs uppercase tracking-wide">
-                Data
+                Data da imagem (pode ser uma data aproximada)
               </FormLabel>
               <FormControl>
                 <Input type="date" {...field} />

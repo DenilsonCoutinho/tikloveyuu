@@ -11,6 +11,7 @@ import { MemoryCard } from "./memory-card"
 import { PaymentSection } from "./payment-section"
 import Image from "next/image"
 import logo from '../../../assets/logoLove.png'
+import { toast } from "sonner"
 
 const DEFAULT_MEMORIES = Array.from({ length: 7 }, () => ({
   image: undefined as unknown as File,
@@ -36,10 +37,34 @@ export function MemoriesForm() {
   })
 
   async function onSubmit(data: MemoriesFormValues) {
-   
+   console.log(data)
     try {
 
-     
+     const invalidMemory = data.memories.some((memory) => {
+      const hasImage =
+        memory.image instanceof File && memory.image.size > 0
+
+      if (!hasImage) return false
+
+      return (
+        !memory.title?.trim() ||
+        !memory.description?.trim() ||
+        !memory.date
+      )
+    })
+   console.log(invalidMemory)
+
+    if (invalidMemory) {
+      toast.error("Há campos com imagens que estão sem título ou descrição! Verifique!",{
+        style:{
+          background:"red",
+          color:'white'
+        },
+        position:"top-center"
+      })
+      setIsSubmitting(false)
+      return
+    }
       setStep("payment")
       setIsSubmitting(false)
 

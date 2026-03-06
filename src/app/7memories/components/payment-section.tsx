@@ -25,7 +25,8 @@ import { useForm } from "react-hook-form"
 import { memoriesFormSchema, MemoriesFormValues } from "@/lib/schema"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { toast } from "sonner"
-import { createMemories } from "../../../../actions/uploadImage"
+import { uploadImage } from "../../../../actions/uploadImage"
+import { createUser } from "../../../../actions/createUser"
 interface PaymentSectionProps {
   onBack: () => void
   data: {
@@ -72,52 +73,107 @@ export function PaymentSection({ onBack, data }: PaymentSectionProps) {
       console.error("Falha ao colar conteúdo:: ", err);
     }
   };
-  const PIX_CODE =
-    "00020126580014br.gov.bcb.pix0136exemplo-chave-pix-aqui5204000053039865802BR5925Nome Exemplo6009SAO PAULO62070503***6304ABCD"
 
   function handleCpfChange(e: React.ChangeEvent<HTMLInputElement>) {
     setCpf(formatCPF(e.target.value))
   }
 
   async function submit(e: MemoriesFormValues) {
+  try {
     setIsSubmitting(true)
 
+    // -------------------------
+    // 1. ENVIAR IMAGENS
+    // -------------------------
+
     const formData = new FormData()
+
     e.memories.forEach((memory, index) => {
-      // 1. Para Imagem: Se não houver arquivo, manda um Blob vazio ou ignora
-      // Como o FormData exige Blob/File ou string:
       if (memory.image instanceof File) {
         formData.append(`image-${index}`, memory.image)
-      } else {
-        // Se o índice for opcional e estiver vazio, você pode mandar uma string vazia
-        formData.append(`image-${index}`, "")
       }
-
-      // 2. Para os demais campos: Garante que sejam string com o ?? ""
-      formData.append(`description-${index}`, memory.description ?? "")
-      formData.append(`date-${index}`, memory.date ?? "")
-      formData.append(`title-${index}`, memory.title ?? "")
     })
 
-    const data = await createMemories(formData)
+    // upload das imagens
+    const uploadedImages = await uploadImage(formData)
+
+    // uploadedImages exemplo:
+    // [
+    //   { index: 0, url: "https://r2.dev/temp/abc.webp" },
+    //   { index: 2, url: "https://r2.dev/temp/xyz.webp" }
+    // ]
+
+    // -------------------------
+    // 2. MONTAR MEMÓRIAS COM URL
+    // -------------------------
+
+    const memories = e.memories.map((memory, index) => {
+
+      const uploaded = uploadedImages.find(
+        (img: { index: number; url: string }) => img.index === index
+      )
+
+      return {
+        imageUrl: uploaded ? uploaded.url : null,
+        description: memory.description ?? "",
+        date: memory.date ?? "",
+        title: memory.title ?? ""
+      }
+    })
+
+    // -------------------------
+    // 3. SALVAR NO BANCO
+    // -------------------------
+
+    const create = await createUser({
+      memories,
+      name,
+      cpf,
+      email
+    })
+
+    // -------------------------
+    // 4. GERAR PIX
+    // -------------------------
+
     const { pixCustomersDataId } = await generatorPix({
-      id: data.id,
+      id: create.id,
       name: name,
       cpfCnpj: cpf,
       description: "tikloveyuu",
       email: email,
-      price: 19.90
+      price: 19.9
     })
-    const { encodedImage, qrCode } = await getQrCodPix(pixCustomersDataId as string)
-    if (encodedImage === "") throw new Error("Erro ao gerar pix!")
+
+    // -------------------------
+    // 5. PEGAR QR CODE
+    // -------------------------
+
+    const { encodedImage, qrCode } = await getQrCodPix(
+      pixCustomersDataId as string
+    )
+
+    if (!encodedImage) {
+      throw new Error("Erro ao gerar pix!")
+    }
+
     setQrCode(qrCode)
     setEncoder(encodedImage)
     setSubmitted(true)
+
+  } catch (error) {
+
+    console.error(error)
+
+  } finally {
+
     setIsSubmitting(false)
+
   }
+}
 
   function handleCopyPix() {
-    navigator.clipboard.writeText(PIX_CODE)
+    navigator.clipboard.writeText(encoder)
     setCopied(true)
     setTimeout(() => setCopied(false), 2500)
   }
