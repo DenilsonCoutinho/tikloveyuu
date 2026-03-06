@@ -72,14 +72,14 @@ export function TimeCounter({ date }: { date: string }) {
   ]
 
   return (
-    <div className="flex flex-wrap items-center justify-center border border-slate-200/10 p-2 rounded-xl ">
+    <div className="flex flex-wrap relative z-10 mb-10 items-center justify-center border border-slate-200/10 p-2 rounded-xl ">
       {units.map((unit) => (
         <div
           key={unit.label}
           className="items-center rounded-xl text-white "
         >
           <span
-            className="text-xs px-2 bg-gradient-to-r from-[#7a49ed] via-blue-400 to-white bg-clip-text text-transparent "
+            className="text-sm px-2 bg-gradient-to-r from-[#ffffff] via-blue-400 to-white bg-clip-text text-transparent "
           >
             {String(unit.value).padStart(2, "0") + " " + unit.label}
           </span>
