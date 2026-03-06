@@ -1,4 +1,5 @@
 // pages/api/payments-webhook.js
+import { deleteImages } from "../../../../actions/deleteImg";
 import { moveImgObject } from "../../../../actions/moveImgObject";
 import { prisma } from "../../../../prisma";
 import { NextRequest, NextResponse } from "next/server";
@@ -28,6 +29,15 @@ export async function POST(req: NextRequest) {
         const dataTikLoveyu = await prisma.userMemories.findFirst({
           where: {
             idCostumerAsaas: paymentReceived.customer as string
+          },
+
+          select: {
+            memories: true,
+            email: true,
+            idCostumerAsaas: true,
+            userId: true,
+            paid: true,
+            id: true
           }
         })
         if (!dataTikLoveyu) return NextResponse.json({ error: 'Não encontrado' }, { status: 404 });
@@ -111,19 +121,7 @@ export async function POST(req: NextRequest) {
           data: { paid: "PAID" }
         })
 
-        // if (dataTikLoveyu) {
 
-        //   await moveImgObject(
-        //     dataTikLoveyu?.image,
-        //     `paid/${dataTikLoveyu.}.webp`)
-        //   await prisma.eternityCounter.update({
-        //     where: { idCount: dataTikLoveyu.idCount },
-        //     data: {
-        //       paid: "PAID",
-        //       image: `paid/${dataTikLoveyu.idCount}.webp`
-        //     }
-        //   })
-        // }
         break;
 
       case 'PAYMENT_OVERDUE':
@@ -131,11 +129,24 @@ export async function POST(req: NextRequest) {
 
         const resOverdue = await prisma.userMemories.findFirst({
           where: { idCostumerAsaas: paymentOverdue.customer },
+          select: {
+              memories: true,
+              email: true,
+              idCostumerAsaas: true,
+              userId: true,
+              paid: true,
+              id: true
+            }
         })
         if (resOverdue) {
           await prisma.userMemories.delete({
-            where: { userId: resOverdue?.userId }
+            where: { userId: resOverdue?.userId },
+            
           })
+
+          const imagesToMove = resOverdue.memories.map((m) => (m.imageUrl));
+          await deleteImages(imagesToMove)
+          // await moveImgObject(imagesToMove)
           break;
         }
 

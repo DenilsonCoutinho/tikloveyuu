@@ -2502,8 +2502,8 @@ radial-gradient(at 79% 90%, hsla(17,100%,76%,1) 0px, transparent 50%);
 }
 
 .swing-in-right-fwd {
-	-webkit-animation: swing-in-right-fwd 2.5s cubic-bezier(0.175, 0.885, 0.320, 1.275) both;
-	        animation: swing-in-right-fwd 2.5s cubic-bezier(0.175, 0.885, 0.320, 1.275) both;
+	-webkit-animation: swing-in-right-fwd 0.5s cubic-bezier(0.175, 0.885, 0.320, 1.275) both;
+	        animation: swing-in-right-fwd 0.5s cubic-bezier(0.175, 0.885, 0.320, 1.275) both;
 }
 
 /* ----------------------------------------------

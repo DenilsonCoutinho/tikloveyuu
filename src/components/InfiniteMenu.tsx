@@ -1117,7 +1117,9 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [], scale = 1.0, onSelect
         id="infinite-grid-menu-canvas"
         ref={canvasRef}
         className="cursor-grab w-full h-full overflow-hidden relative outline-none active:cursor-grabbing"
-      />
+      >
+        <h1 className='text-2xl text-white'>TESTE</h1>
+      </canvas>
 
       {activeItem && (
         <>
@@ -1126,7 +1128,7 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [], scale = 1.0, onSelect
           select-none
           text-white
           absolute font-black
-          max-w-[16ch]
+          
           md:text-[1.5rem]
           md:top-1/2 top-1/4
           md:right-[1%] right-[22%]
@@ -1134,7 +1136,7 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [], scale = 1.0, onSelect
           ease-[cubic-bezier(0.25,0.1,0.25,1.0)]
           ${isMoving
                 ? 'opacity-0 pointer-events-none duration-[100ms] translate-x-[-60%] -translate-y-1/2'
-                : 'opacity-100 pointer-events-auto duration-[500ms] translate-x-[-90%] -translate-y-1/2'
+                : 'opacity-100 pointer-events-auto duration-[500ms]  -translate-y-1/2'
               }
         `}
           >
