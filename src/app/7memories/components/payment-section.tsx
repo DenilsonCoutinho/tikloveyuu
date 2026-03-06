@@ -1,21 +1,16 @@
 "use client"
+import imageCompression from "browser-image-compression"
 
-import { ReactEventHandler, useState } from "react"
+import {  useState } from "react"
 import {
-  Heart,
   QrCode,
-  CreditCard,
   Copy,
-  Check,
   ArrowLeft,
-  Loader2,
-  ShieldCheck,
+  
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { Card, CardContent } from "@/components/ui/card"
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
+import { Tabs, TabsList, TabsTrigger, } from "@/components/ui/tabs"
 import { Separator } from "@/components/ui/separator"
 import Image from "next/image"
 import logo from '@/assets/logoLove.png'
@@ -93,6 +88,17 @@ export function PaymentSection({ onBack, data }: PaymentSectionProps) {
   }
 
 }
+
+async function compressImage(file: File): Promise<File> {
+  const options = {
+    maxSizeMB: 0.5,          // tamanho máximo da imagem em MB
+    maxWidthOrHeight: 1024,  // largura ou altura máxima
+    useWebWorker: true,
+    fileType: "image/webp",  // converte para WebP
+    initialQuality: 0.8,     // qualidade inicial 0-1
+  }
+  return await imageCompression(file, options)
+}
   async function submit(e: MemoriesFormValues) {
 
     try {
@@ -115,9 +121,10 @@ export function PaymentSection({ onBack, data }: PaymentSectionProps) {
         memoriesWithImage.map(async (item, i) => {
 
           const file = item.memory.image as File
+        const compressedFile = await compressImage(item.memory.image as File)
 
           await uploadToR2(
-            file,
+            compressedFile,
             uploadUrls[i].uploadUrl
           )
 
@@ -197,7 +204,8 @@ export function PaymentSection({ onBack, data }: PaymentSectionProps) {
         <Button onClick={() => {
           handleCopy(); toast.success("Copiado com sucesso!", {
             style: {
-              background: "#00c950"
+              background: "#00c950",
+              color:"white"
             },
             position: "top-center"
 
