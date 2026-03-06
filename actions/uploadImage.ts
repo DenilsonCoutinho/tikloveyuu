@@ -1,47 +1,37 @@
 "use server"
 
-import sharp from "sharp"
 import { r2 } from "@/lib/r2"
 import { PutObjectCommand } from "@aws-sdk/client-s3"
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner"
 
-export async function uploadImage(formData: FormData) {
+export async function generateUploadUrls(count: number) {
 
-  const uploadedImages: { index: number; url: string }[] = []
+  const uploads: {
+    uploadUrl: string
+    fileUrl: string
+  }[] = []
 
-  for (let i = 0; i < 7; i++) {
+  for (let i = 0; i < count; i++) {
 
-    const file = formData.get(`image-${i}`) as File | null
+    const key = `temp/${crypto.randomUUID()}.webp`
 
-    if (!file || file.size === 0) continue
+    const command = new PutObjectCommand({
+      Bucket: process.env.R2_BUCKET!,
+      Key: key,
+      ContentType: "image/webp"
+    })
 
-    const arrayBuffer = await file.arrayBuffer()
+    const uploadUrl = await getSignedUrl(r2, command, {
+      expiresIn: 60
+    })
 
-    const optimizedBuffer = await sharp(Buffer.from(arrayBuffer))
-      .resize(1024, 1024, {
-        fit: "inside",
-        withoutEnlargement: true
-      })
-      .webp({ quality: 90 })
-      .toBuffer()
+    const fileUrl = `${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/${key}`
 
-    const fileName = `temp/${crypto.randomUUID()}.webp`
-
-    await r2.send(
-      new PutObjectCommand({
-        Bucket: process.env.R2_BUCKET!,
-        Key: fileName,
-        Body: optimizedBuffer,
-        ContentType: "image/webp"
-      })
-    )
-
-    const url = `${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/${fileName}`
-
-    uploadedImages.push({
-      index: i,
-      url
+    uploads.push({
+      uploadUrl,
+      fileUrl
     })
   }
 
-  return uploadedImages
+  return uploads
 }
