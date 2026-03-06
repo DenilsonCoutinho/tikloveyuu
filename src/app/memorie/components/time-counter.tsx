@@ -72,7 +72,8 @@ export function TimeCounter({ date }: { date: string }) {
   ]
 
   return (
-    <div className="flex flex-wrap relative z-10 mb-10 items-center justify-center border border-slate-200/10 p-2 rounded-xl ">
+    
+    <div className="flex flex-wrap relative  mb-10 items-center bg-white/10 z-40 justify-center border border-slate-200/10 p-2 rounded-xl ">
       {units.map((unit) => (
         <div
           key={unit.label}
