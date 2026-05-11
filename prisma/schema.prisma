@@ -1,0 +1,93 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model UserCouple {
+  id              String     @id @default(auto()) @map("_id") @db.ObjectId
+  nameCouple      String?
+  email           String?
+  idCouple        String     @unique
+  images          String[]
+  initialDate     String
+  initialHours    String
+  idCostumerAsaas String?
+  paid            String?
+  messages        String?
+  ytbMusic        String?
+  createdAt       DateTime   @default(now())
+  idSession       String?
+  price           Float?
+  affiliateId     String?
+  affiliate       Affiliate? @relation("AffiliateUsers", fields: [affiliateId], references: [code])
+}
+
+model SurpriseSend {
+  id                 String     @id @default(auto()) @map("_id") @db.ObjectId
+  idSurprise         String     @unique
+  typeSurprise       String?
+  nameCoupleSurprise String?
+  paid               String?
+  message            String?
+  spotifyMusic       String?
+  email              String?
+  images             String[]
+  idCostumerAsaas    String?
+  idSession          String?
+  price              Int?
+  createdAt          DateTime   @default(now())
+  affiliateId        String?
+  affiliate          Affiliate? @relation("AffiliateSurprise", fields: [affiliateId], references: [code])
+}
+
+model RequestSend {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  requestSend     String
+  idRequestSend   String   @unique
+  typeRequestSend String?
+  responsePeople  String?
+  paid            String?
+  yesMove         Boolean?
+  noMove          Boolean?
+  message         String?
+  email           String?
+  images          String?
+  idCostumerAsaas String?
+  idSession       String?
+  ytbMusic        String?
+  createdAt       DateTime @default(now())
+}
+
+model CellPhone {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  nameCall        String?
+  // imageCall String?
+  images          String[]
+  idCall          String   @unique
+  email           String?
+  paid            String?
+  messages        String?
+  idCostumerAsaas String?
+}
+
+model Affiliate {
+  id           String         @id @default(auto()) @map("_id") @db.ObjectId // Mapeia o campo 'id' para '_id' do MongoDB
+  code         String         @unique // 'code' será único, mas o MongoDB gerenciará o '_id'
+  name         String
+  email        String         @unique
+  percentage   Int
+  keyPix       String
+  createdAt    DateTime       @default(now())
+  users        UserCouple[]         @relation("AffiliateUsers")
+  surpriseSend SurpriseSend[] @relation("AffiliateSurprise")
+}
