@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+     overflow-y: scroll;
+  }
+}
+
+
+@keyframes pulsarSombra {
+  0% {
+    text-shadow: 0 0 5px rgba(198, 7, 7, 0.4); /* Sombra mais sutil */
+  }
+  50% {
+    text-shadow: 0 0 10px rgba(219, 10, 10, 0.9); /* Sombra mais intensa */
+  }
+  100% {
+    text-shadow: 0 0 5px rgba(230, 0, 0, 0.4);
+  }
+}
+
