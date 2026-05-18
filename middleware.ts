@@ -14,10 +14,15 @@ export function middleware(request: NextRequest) {
     return NextResponse.next()
   }
 
+
+  // Redireciona todas as outras rotas para a página de encerramento
+  return NextResponse.redirect(new URL("/encerramento", request.url))
+
 }
 
 export const config = {
   matcher: [
+
     "/((?!_next/static|_next/image|favicon.ico).*)",
   ],
 }
