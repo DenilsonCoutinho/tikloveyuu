@@ -7,14 +7,15 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ["@chakra-ui/react"],
   },
-  async redirects() {
-    return [
-      {
-        source: '/:path((?!_next|api|favicon.ico).*)',
-        destination: '/',
-        permanent: false,
-      },
-    ];
+  async rewrites() {
+    return {
+      fallback: [
+        {
+          source: '/:path*',
+          destination: '/',
+        },
+      ],
+    };
   },
 };
 
