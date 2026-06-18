@@ -1,16 +1,33 @@
 "use server"
 
 import { db as prisma } from "../../src/lib/db";
+import type { UserCouple } from "@prisma/client";
 
-export async function createCouple(idCouple: string, nameCouple: string, initalDate: string, initalHours: string, images: string[], message: string, youtubeLink: string | null, price: number,) {
-    
+type UserCoupleView = Omit<UserCouple, "createdAt"> & {
+    createdAt: string;
+};
+
+function serializeUserCouple(couple: UserCouple): UserCoupleView {
+    return {
+        ...couple,
+        createdAt: couple.createdAt.toISOString(),
+    };
+}
+
+function getErrorMessage(err: unknown) {
+    return err instanceof Error ? err.message : "erro desconhecido";
+}
+
+export async function createCouple(idCouple: string, nameCouple: string, initalDate: string, initalHours: string, images: string[], message: string, youtubeLink: string | null, price: number) {
     try {
-      
+        const normalizedIdCouple = idCouple?.trim();
+        if (!normalizedIdCouple) throw new Error("ID do casal invalido.");
+
         await prisma.userCouple.create({
             data: {
-                ytbMusic: youtubeLink ,
+                ytbMusic: youtubeLink,
                 messages: message,
-                idCouple: idCouple,
+                idCouple: normalizedIdCouple,
                 nameCouple: nameCouple,
                 images: images,
                 initialHours: initalHours,
@@ -21,88 +38,94 @@ export async function createCouple(idCouple: string, nameCouple: string, initalD
                 idCostumerAsaas: null,
             },
         })
-        console.log("Criado com sucesso!")
-        return { success: "Criado com sucesso! " }
+
+        return { success: "Criado com sucesso!" }
     } catch (err) {
-            return { error: "erro desconhecido" }
+        const message = getErrorMessage(err);
+        console.error("Erro ao criar casal:", err);
+        return { error: message }
     }
 }
+
 export async function updateEmailCouple(email: string, idCouple: string) {
     try {
+        const normalizedIdCouple = idCouple?.trim();
+        if (!normalizedIdCouple) throw new Error("ID do casal invalido.");
+
         await prisma.userCouple.update({
-            where: { idCouple },
+            where: { idCouple: normalizedIdCouple },
             data: {
                 email: email || null,
             }
         })
         return { success: "Criado com sucesso!" }
     } catch (err) {
-
-        return { error: err }
-
+        return { error: getErrorMessage(err) }
     }
 }
 
 export async function updatecustomerId(idUser: string, customerId: string, email: string) {
     try {
+        const normalizedIdCouple = idUser?.trim();
+        if (!normalizedIdCouple) throw new Error("ID do casal invalido.");
+
         await prisma.userCouple.update({
-            where: { idCouple: idUser },
+            where: { idCouple: normalizedIdCouple },
             data: { idCostumerAsaas: customerId, email: email }
         })
         return { success: "Criado com sucesso!" }
     } catch (err) {
-
-
-        return { error: err }
-
+        return { error: getErrorMessage(err) }
     }
 }
 
+export async function getBycustomerId(customerId: string) {
+    const normalizedCustomerId = customerId?.trim();
+    if (!normalizedCustomerId) return null;
 
-
-export async function getBycustomerId(customerId: string,) {
-
-    const res = await prisma.userCouple.findFirst({
-        where: { idCostumerAsaas: customerId }
+    return prisma.userCouple.findFirst({
+        where: { idCostumerAsaas: normalizedCustomerId }
     })
-    return res
-
 }
-
 
 export async function getCoupleById(idCouple: string) {
     try {
-        if (!idCouple) throw new Error("Seu ID não está correto, Entre em contato com o suporte!")
-        const res = await prisma.userCouple.findFirst({
-            where: { idCouple }
+        const normalizedIdCouple = idCouple?.trim();
+        if (!normalizedIdCouple) throw new Error("Seu ID nao esta correto, entre em contato com o suporte!");
+
+        const couple = await prisma.userCouple.findUnique({
+            where: { idCouple: normalizedIdCouple }
         })
-        return { couple: res }
 
-    } catch (error) {
-        if (error instanceof Error) {
-            return { error: error.message }
+        if (!couple) {
+            throw new Error("Site nao encontrado. Verifique se o link esta correto.");
         }
-        return { erro: error }
 
+        return { couple: serializeUserCouple(couple) }
+    } catch (error) {
+        return { error: getErrorMessage(error) }
     }
 }
 
 export async function getCoupleByUniqueId(idCouple: string) {
-    const res = await prisma.userCouple.findUnique({
-        where: { idCouple }
+    const normalizedIdCouple = idCouple?.trim();
+    if (!normalizedIdCouple) return null;
+
+    return prisma.userCouple.findUnique({
+        where: { idCouple: normalizedIdCouple }
     })
-    return res
 }
 
 export const deleteCoupleById = async (id: string) => {
+    const normalizedIdCouple = id?.trim();
 
-    if (!id) {
+    if (!normalizedIdCouple) {
         return { error: 'Algo deu errado!' }
     }
 
     try {
         await prisma.userCouple.delete({
-            where: { idCouple: id }
+            where: { idCouple: normalizedIdCouple }
         })
         return { success: "Categoria deletada com sucesso!" }
     } catch (error) {
@@ -110,9 +133,7 @@ export const deleteCoupleById = async (id: string) => {
     }
 }
 
-
-export const deleteCouple = async (id?: string) => {
-
+export const deleteCouple = async () => {
     try {
         await prisma.userCouple.deleteMany({
             where: { paid: "PENDING" }

@@ -1,17 +1,21 @@
 import { PrismaClient } from "@prisma/client";
 
-declare global {
-    var cachedPrisma: PrismaClient
+if (process.env.DATABASE_URL?.includes(".mongodb.net/tiklover")) {
+  process.env.DATABASE_URL = process.env.DATABASE_URL.replace(".mongodb.net/tiklover", ".mongodb.net/tikLover");
 }
 
-let prisma: PrismaClient
-if (process.env.ENV_PD as string === 'production') {
-    prisma = new PrismaClient()
-} else {
-    if (!global.cachedPrisma) {
-        global.cachedPrisma = new PrismaClient()
-    }
-    prisma = global.cachedPrisma
+if (process.env.DATABASE_URL?.includes(".mongodb.net/?")) {
+  process.env.DATABASE_URL = process.env.DATABASE_URL.replace(".mongodb.net/?", ".mongodb.net/tikLover?");
 }
 
-export const db = prisma
+const globalForPrisma = globalThis as unknown as {
+  prisma?: PrismaClient;
+};
+
+export const db =
+  globalForPrisma.prisma ??
+  new PrismaClient({
+    log: process.env.NODE_ENV === "development" ? ["error", "warn"] : ["error"]
+  });
+
+if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = db;
